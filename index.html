@@ -3018,8 +3018,8 @@ function updateHomeBars(wDone, sDone, tDone, tTotal, mcqBest, mcqAttempts) {
   const qDone  = progress.quoteId.correct || 0;
 
   // overall
-  const totalItems = 6 + 5 + tTotal + 3;
-  const doneItems  = wDone + sDone + tDone + eDone;
+  const totalItems = 6 + 5 + tTotal + 3 + 11;
+  const doneItems  = wDone + sDone + tDone + eDone + mcqAttempts;
   const overallPct = Math.round((doneItems / totalItems) * 100);
   setBar('bar-overall', overallPct);
   setText('overall-pct', overallPct + '%');
