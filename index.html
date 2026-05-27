@@ -99,7 +99,6 @@ body {
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.15s ease;
-  border-left: 4px solid transparent;
   position: relative;
   text-decoration: none;
   color: var(--text-primary);
@@ -110,7 +109,6 @@ body {
 }
 .nav-item.active {
   background: rgba(45,90,39,0.08);
-  border-left-color: var(--accent-primary);
 }
 .nav-item.active .nav-label {
   font-weight: 600;
@@ -567,7 +565,6 @@ body {
   margin-top: 14px;
   padding: 12px 16px;
   border-radius: 8px;
-  border-left: 3px solid var(--border);
   background: rgba(255,255,255,0.5);
 }
 .work-quote cite {
@@ -616,7 +613,7 @@ body {
 .gilded-volta { background: rgba(188,71,73,0.08) !important; border-left-color: var(--brick) !important; }
 
 /* MILL theme */
-.mill-hero { background: linear-gradient(135deg, #e8eae4 0%, #d8ddd0 100%); border-bottom: 4px solid #4a5a3a; }
+.mill-hero { background: linear-gradient(135deg, #e8eae4 0%, #d8ddd0 100%); }
 .mill-hero .work-title { color: #2a3820; }
 .mill-tag { background: rgba(42,56,32,0.1); color: #2a3820; border-color: #6a8050; }
 .mill-quote { border-left-color: #4a5a3a; background: rgba(42,56,32,0.05); }
@@ -681,7 +678,7 @@ body {
 /* school block */
 .school-block { }
 .school-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.school-list li { font-size: 14px; padding-left: 8px; border-left: 2px solid var(--border); line-height: 1.6; }
+.school-list li { font-size: 14px; padding-left: 14px; line-height: 1.6; }
 
 /* contrast block */
 .contrast-block { background: #faf7f2; }
@@ -696,7 +693,7 @@ body {
 .contrast-negative { }
 .contrast-label { font-weight: 700; font-size: 13px; color: var(--accent-primary); margin-bottom: 8px; }
 .contrast-col ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-.contrast-col li { font-size: 13px; color: var(--text-primary); padding-left: 6px; border-left: 2px solid var(--border); }
+.contrast-col li { font-size: 13px; color: var(--text-primary); padding-left: 10px; }
 .contrast-note { font-size: 12px; color: var(--text-secondary); font-style: italic; }
 
 /* key lines */
@@ -712,7 +709,7 @@ body {
   border: 1px solid var(--border);
 }
 .kl-quote { font-family: 'Lora', serif; font-style: italic; font-size: 13px; color: var(--text-primary); }
-.kl-meaning { font-size: 13px; color: var(--text-secondary); border-left: 2px solid var(--border); padding-left: 10px; }
+.kl-meaning { font-size: 13px; color: var(--text-secondary); padding-left: 10px; }
 
 /* exam block */
 .exam-block { background: rgba(188,71,73,0.04); }
@@ -1230,7 +1227,6 @@ body {
   font-size: 15px;
   color: var(--accent-primary);
   background: rgba(200,232,74,0.12);
-  border-left: 3px solid var(--accent-mid);
   padding: 10px 14px;
   border-radius: 6px;
 }
@@ -1333,7 +1329,7 @@ body {
   line-height: 1.8;
   color: var(--text-primary);
   background: white;
-  border-left: 3px solid var(--accent-mid);
+  border: 1px solid var(--border);
   border-radius: 6px;
   padding: 10px 14px;
 }
@@ -1346,8 +1342,8 @@ body {
   line-height: 1.7;
   color: var(--text-primary);
   background: white;
-  border-left: 4px solid var(--accent-mid);
-  border-radius: 0 10px 10px 0;
+  border: 1px solid var(--border);
+  border-radius: 10px;
   padding: 18px 22px;
   margin: 0 0 20px 0;
 }
@@ -1427,7 +1423,7 @@ body {
     <div style="font-size:12px; margin-top:2px;">May 31 · 11:30–13:30</div>
     <span id="countdown">–</span>
     <div style="font-size:11px; margin-top:2px;">days to go</div>
-    <div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px;">
+    <div style="margin-top:12px;padding-top:12px;">
       <button class="reset-btn" onclick="resetProgress()">🗑 Reset Progress</button>
     </div>
   </div>
@@ -2224,7 +2220,7 @@ body {
 
       <!-- NATURALISM -->
       <div class="work-page active" id="school-naturalism">
-        <div class="work-hero" style="background:linear-gradient(135deg,#e8f0e4,#d4e8d0);border-left:5px solid var(--accent-primary)">
+        <div class="work-hero" style="background:linear-gradient(135deg,#e8f0e4,#d4e8d0)">
           <h2 class="work-title" style="color:var(--accent-primary)">🌿 Naturalism</h2>
           <div class="work-meta">1880s–1910s</div>
           <p style="margin-top:10px;font-size:14px;font-style:italic;color:var(--text-secondary)">Literature that treats humans like animals — products of biology, environment, and forces they cannot control.</p>
@@ -2255,7 +2251,7 @@ body {
             <li><strong>"The Open Boat"</strong> (Stephen Crane) — Naturalism combined with Impressionism</li>
           </ul>
         </div>
-        <div class="work-block" style="background:rgba(45,90,39,0.05);border-left:4px solid var(--accent-mid)">
+        <div class="work-block" style="background:rgba(45,90,39,0.05)">
           <h3 class="block-title">Exam Trigger Phrases</h3>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
             <span class="pill-tag">"indifferent to human suffering"</span>
@@ -2307,7 +2303,7 @@ body {
             <li><strong>Key distinction:</strong> Naturalism = the sea does not care. Impressionism = we experience the sea through the correspondent's fear. Crane uses BOTH.</li>
           </ul>
         </div>
-        <div class="work-block" style="background:rgba(42,85,64,0.05);border-left:4px solid #5a9e7a">
+        <div class="work-block" style="background:rgba(42,85,64,0.05)">
           <h3 class="block-title">Exam Trigger Phrases</h3>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
             <span class="pill-tag ocean-tag">"subjective perception"</span>
@@ -2360,7 +2356,7 @@ body {
             <li>Mark Twain's "A True Story" (Week 5 — context only)</li>
           </ul>
         </div>
-        <div class="work-block" style="background:rgba(139,105,20,0.05);border-left:4px solid #c8a84a">
+        <div class="work-block" style="background:rgba(139,105,20,0.05)">
           <h3 class="block-title">Exam Trigger Phrases</h3>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
             <span class="pill-tag editorial-tag">"ordinary life"</span>
@@ -2381,7 +2377,7 @@ body {
 
       <!-- MODERNISM -->
       <div class="work-page" id="school-modernism">
-        <div class="work-hero" style="background:linear-gradient(135deg,#e8eaf0,#d8dce8);border-top:4px solid #4a4a8a">
+        <div class="work-hero" style="background:linear-gradient(135deg,#e8eaf0,#d8dce8)">
           <h2 class="work-title" style="color:#2a2a6a">⚡ Modernism</h2>
           <div class="work-meta">1900s–1940s</div>
           <p style="margin-top:10px;font-size:14px;font-style:italic;color:var(--text-secondary)">Literature that breaks traditional forms and questions whether meaning, order, or progress are even real.</p>
@@ -2415,7 +2411,7 @@ body {
             <li><strong>"The Mill"</strong> — Modernist restraint, industrial despair</li>
           </ul>
         </div>
-        <div class="work-block" style="background:rgba(74,74,138,0.05);border-left:4px solid #4a4a8a">
+        <div class="work-block" style="background:rgba(74,74,138,0.05)">
           <h3 class="block-title">Exam Trigger Phrases</h3>
           <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
             <span class="pill-tag" style="background:rgba(74,74,138,0.1);color:#2a2a6a;border-color:#9090c0">"disillusionment"</span>
@@ -2437,7 +2433,7 @@ body {
 
       <!-- REGIONALISM -->
       <div class="work-page" id="school-regionalism">
-        <div class="work-hero" style="background:linear-gradient(135deg,#f0ede0,#e8e0c8);border-left:5px solid #8b7840">
+        <div class="work-hero" style="background:linear-gradient(135deg,#f0ede0,#e8e0c8)">
           <h2 class="work-title" style="color:#4a3a10">🌾 Regionalism</h2>
           <div class="work-meta">1865–1895</div>
           <p style="margin-top:10px;font-size:14px;font-style:italic;color:var(--text-secondary)">Literature that focuses on the specific culture, dialect, and landscape of a particular geographic region of America.</p>
@@ -3242,24 +3238,23 @@ function answerMCQ(chosen) {
   const fb = document.getElementById('mcq-feedback');
   fb.style.display = 'block';
 
-  const expHtml = q.explanation ? `<div class="mcq-explanation">💡 ${q.explanation}</div>` : '';
-
   if (isCorrect) {
     mcqState.score++;
     mcqState.streak++;
     fb.className = 'mcq-feedback correct-fb';
     const streakMsg = mcqState.streak >= 3 ? `🔥 ${mcqState.streak} in a row! Correct.` : '✓ Correct!';
-    fb.innerHTML = `<strong>${streakMsg}</strong>${expHtml}`;
-    // confetti
+    fb.innerHTML = `<strong>${streakMsg}</strong>`;
     if (mcqState.streak >= 3) {
       confetti({ particleCount: 120, spread: 100, origin: { y: 0.55 }, colors: ['#c8e84a','#2d5a27','#7bc043','#f2e8cf','#bc4749'] });
     } else {
       confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 }, colors: ['#c8e84a','#2d5a27','#7bc043','#f2e8cf','#bc4749'] });
     }
+    if (q.explanation) fb.insertAdjacentHTML('beforeend', `<div class="mcq-explanation">💡 ${q.explanation}</div>`);
   } else {
     mcqState.streak = 0;
     fb.className = 'mcq-feedback wrong-fb';
-    fb.innerHTML = `<strong>✗ Incorrect. Correct answer: ${q.options[correct]}</strong>${expHtml}`;
+    fb.innerHTML = `<strong>✗ Incorrect. Correct answer: ${q.options[correct]}</strong>`;
+    if (q.explanation) fb.insertAdjacentHTML('beforeend', `<div class="mcq-explanation">💡 ${q.explanation}</div>`);
   }
 
   document.getElementById('mcq-next-row').style.display = 'block';
@@ -3444,6 +3439,12 @@ function showSection(id) {
     ['bar-overall','bar-works','bar-schools','bar-terms','bar-essay','bar-mcq','bar-quoteid']
       .forEach(bid => { const el = document.getElementById(bid); if (el) el.style.width = '0%'; });
     setTimeout(() => updateUI(), 80);
+  }
+  if (id === 'schools') {
+    // restore last viewed school or default to naturalism
+    const activeSchool = document.querySelector('#section-schools .work-page.active');
+    if (!activeSchool) showSchool('naturalism');
+    restoreSchoolDoneState();
   }
   if (id === 'mcq') {
     document.getElementById('mcq-start').style.display = 'block';
