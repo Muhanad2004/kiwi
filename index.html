@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>American Survey II — Revision Site</title>
+<link rel="icon" type="image/png" href="kiwi.png">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
 <style>
@@ -28,6 +29,9 @@
   --border: #b8d98a;
   --sidebar-width: 240px;
 }
+
+/* Arabic annotation — no italic */
+.ar-note { font-style: normal; }
 
 /* ── RESET ─────────────────────────────────────────────────── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -1453,30 +1457,6 @@ body {
         <div class="hero-sub">Final exam · May 31 · 11:30–13:30</div>
       </div>
 
-      <!-- OVERALL BAR -->
-      <div class="overall-progress-wrap">
-        <div class="overall-progress-header">
-          <span class="overall-progress-label">Overall readiness</span>
-          <span class="overall-progress-pct" id="overall-pct">0%</span>
-        </div>
-        <div class="home-bar-track" style="height:10px">
-          <div class="home-bar-fill home-bar-overall" id="bar-overall" style="width:0%"></div>
-        </div>
-      </div>
-
-      <div class="exam-callout">
-        <h3>📌 What the exam will test</h3>
-        <ul>
-          <li><strong>Essay (1 question):</strong> write a structured analytical paragraph using the 7-step model — almost certain to be on "To Build a Fire." Prepare a claim about Naturalism and Determinism and know your quote.</li>
-          <li><strong>Excerpt identification:</strong> she gives you a passage and asks "which work is this from?" — know the distinctive lines from all 6 works, especially the poems.</li>
-          <li><strong>Short analytical questions:</strong> explain a theme, a literary device, or a concept in 2–3 sentences. E.g. "What does the dog represent?" or "Why is the oiler's death significant?"</li>
-          <li><strong>MCQ:</strong> link a school to a work or author, identify a device, explain a concept. Analytical connections between works are likely.</li>
-          <li><strong>Line meaning questions:</strong> she said to read the poems line by line. She may give one line and ask: what does it mean? Who wrote it? What device is this?</li>
-          <li><strong>Comparison questions:</strong> Doc Hill vs Abel Melveny, Richard Cory vs The Mill, Naturalism vs Impressionism in "The Open Boat" — know these cold.</li>
-          <li><strong>Core concepts to master:</strong> Naturalism, Determinism, Impressionism, hubris, indifference of nature, instinct vs intellect, dramatic monologue, volta, narrative ellipsis.</li>
-        </ul>
-      </div>
-
       <div class="jump-grid">
         <div class="jump-card" onclick="showSection('works')">
           <span class="jump-emoji">📖</span>
@@ -1537,6 +1517,30 @@ body {
               <div class="home-bar-fill home-bar-quoteid" id="bar-quoteid" style="width:0%"></div>
             </div>
           </div>
+        </div>
+      </div>
+
+      <div class="exam-callout">
+        <h3>📌 What the exam will test</h3>
+        <ul>
+          <li><strong>Essay (1 question):</strong> write a structured analytical paragraph using the 7-step model — almost certain to be on "To Build a Fire." Prepare a claim about Naturalism and Determinism and know your quote.</li>
+          <li><strong>Excerpt identification:</strong> she gives you a passage and asks "which work is this from?" — know the distinctive lines from all 6 works, especially the poems.</li>
+          <li><strong>Short analytical questions:</strong> explain a theme, a literary device, or a concept in 2–3 sentences. E.g. "What does the dog represent?" or "Why is the oiler's death significant?"</li>
+          <li><strong>MCQ:</strong> link a school to a work or author, identify a device, explain a concept. Analytical connections between works are likely.</li>
+          <li><strong>Line meaning questions:</strong> she said to read the poems line by line. She may give one line and ask: what does it mean? Who wrote it? What device is this?</li>
+          <li><strong>Comparison questions:</strong> Doc Hill vs Abel Melveny, Richard Cory vs The Mill, Naturalism vs Impressionism in "The Open Boat" — know these cold.</li>
+          <li><strong>Core concepts to master:</strong> Naturalism, Determinism, Impressionism, hubris, indifference of nature, instinct vs intellect, dramatic monologue, volta, narrative ellipsis.</li>
+        </ul>
+      </div>
+
+      <!-- OVERALL BAR -->
+      <div class="overall-progress-wrap">
+        <div class="overall-progress-header">
+          <span class="overall-progress-label">Overall readiness</span>
+          <span class="overall-progress-pct" id="overall-pct">0%</span>
+        </div>
+        <div class="home-bar-track" style="height:10px">
+          <div class="home-bar-fill home-bar-overall" id="bar-overall" style="width:0%"></div>
         </div>
       </div>
 
@@ -1613,7 +1617,7 @@ body {
           <div class="themes-grid">
             <div class="theme-card">
               <span class="theme-emoji">🌿</span>
-              <div><strong>Nature's Indifference <em>(اللامبالاة)</em></strong><p>Nature is not evil and is not targeting the man. It simply operates by its own physical laws and does not notice or care whether any creature lives or dies.</p></div>
+              <div><strong>Nature's Indifference <span class="ar-note">(اللامبالاة)</span></strong><p>Nature is not evil and is not targeting the man. It simply operates by its own physical laws and does not notice or care whether any creature lives or dies.</p></div>
             </div>
             <div class="theme-card">
               <span class="theme-emoji">⚙️</span>
@@ -1621,15 +1625,15 @@ body {
             </div>
             <div class="theme-card">
               <span class="theme-emoji">🎲</span>
-              <div><strong>Determinism <em>(الحتمية)</em></strong><p>The idea that the man's death was fixed from the start — not because he made wrong choices, but because the environmental conditions made survival impossible no matter what he did.</p></div>
+              <div><strong>Determinism <span class="ar-note">(الحتمية)</span></strong><p>The idea that the man's death was fixed from the start — not because he made wrong choices, but because the environmental conditions made survival impossible no matter what he did.</p></div>
             </div>
             <div class="theme-card">
               <span class="theme-emoji">🧠</span>
-              <div><strong>Hubris <em>(الغرور / الكبرياء المفرط)</em></strong><p>Hubris = dangerous overconfidence. The man genuinely believes he is smarter and stronger than the environment. This pride is exactly what kills him — he cannot imagine that nature is bigger than his brain.</p></div>
+              <div><strong>Hubris <span class="ar-note">(الغرور / الكبرياء المفرط)</span></strong><p>Hubris = dangerous overconfidence. The man genuinely believes he is smarter and stronger than the environment. This pride is exactly what kills him — he cannot imagine that nature is bigger than his brain.</p></div>
             </div>
             <div class="theme-card">
               <span class="theme-emoji">🏔️</span>
-              <div><strong>Human Insignificance <em>(ضآلة الإنسان)</em></strong><p>The Yukon wilderness is vast, ancient, and indifferent. One man, no matter how clever, is simply a very small warm creature in a very cold place.</p></div>
+              <div><strong>Human Insignificance <span class="ar-note">(ضآلة الإنسان)</span></strong><p>The Yukon wilderness is vast, ancient, and indifferent. One man, no matter how clever, is simply a very small warm creature in a very cold place.</p></div>
             </div>
           </div>
         </div>
@@ -1638,10 +1642,10 @@ body {
           <h3 class="block-title">🔬 Literary Devices</h3>
           <div class="devices-list">
             <div class="device-row"><span class="device-name">Third-person limited narrator</span><span class="device-desc">We are inside the man's head, seeing his false confidence from the inside — this makes his downfall feel more real and more tragic</span></div>
-            <div class="device-row"><span class="device-name">Foreshadowing <em>(التمهيد)</em></span><span class="device-desc">The old-timer's warning at the start of the story tells us exactly what will happen — we just watch the man walk toward his own death</span></div>
+            <div class="device-row"><span class="device-name">Foreshadowing <span class="ar-note">(التمهيد)</span></span><span class="device-desc">The old-timer's warning at the start of the story tells us exactly what will happen — we just watch the man walk toward his own death</span></div>
             <div class="device-row"><span class="device-name">Naturalistic description</span><span class="device-desc">London describes the cold like a scientist — precise temperatures, exact physical effects on the body. There is no emotion in the description. That clinical tone is the point.</span></div>
             <div class="device-row"><span class="device-name">Symbolism — the dog</span><span class="device-desc">The dog is a living symbol of instinct and natural law. It knows things it cannot explain. The man knows nothing that saves him.</span></div>
-            <div class="device-row"><span class="device-name">Irony <em>(السخرية)</em></span><span class="device-desc">The man is the one with intelligence, language, tools, and fire-making ability. The dog has none of these. Yet the dog lives and the man dies. That reversal is the core irony of the story.</span></div>
+            <div class="device-row"><span class="device-name">Irony <span class="ar-note">(السخرية)</span></span><span class="device-desc">The man is the one with intelligence, language, tools, and fire-making ability. The dog has none of these. Yet the dog lives and the man dies. That reversal is the core irony of the story.</span></div>
           </div>
         </div>
 
@@ -1705,15 +1709,15 @@ body {
           <div class="themes-grid">
             <div class="theme-card ocean-theme">
               <span class="theme-emoji">🌊</span>
-              <div><strong>Nature's Indifference <em>(اللامبالاة)</em></strong><p>The sea is not trying to kill these men. It simply exists. Waves crash because that is what waves do — not because the sea dislikes humans. This indifference (عدم الاكتراث) is more frightening than cruelty would be.</p></div>
+              <div><strong>Nature's Indifference <span class="ar-note">(اللامبالاة)</span></strong><p>The sea is not trying to kill these men. It simply exists. Waves crash because that is what waves do — not because the sea dislikes humans. This indifference (عدم الاكتراث) is more frightening than cruelty would be.</p></div>
             </div>
             <div class="theme-card ocean-theme">
               <span class="theme-emoji">🤝</span>
-              <div><strong>Brotherhood / Solidarity <em>(التضامن)</em></strong><p>The men are strangers thrown together by disaster. But shared danger creates a bond that feels deeper than friendship. They care for each other genuinely — and yet the sea kills one of them anyway.</p></div>
+              <div><strong>Brotherhood / Solidarity <span class="ar-note">(التضامن)</span></strong><p>The men are strangers thrown together by disaster. But shared danger creates a bond that feels deeper than friendship. They care for each other genuinely — and yet the sea kills one of them anyway.</p></div>
             </div>
             <div class="theme-card ocean-theme">
               <span class="theme-emoji">💀</span>
-              <div><strong>Mortality <em>(الفناء)</em></strong><p>The men face the real possibility of death every single minute. This is not dramatic — it is quiet, exhausting, and constant. Crane makes you feel how heavy that awareness is.</p></div>
+              <div><strong>Mortality <span class="ar-note">(الفناء)</span></strong><p>The men face the real possibility of death every single minute. This is not dramatic — it is quiet, exhausting, and constant. Crane makes you feel how heavy that awareness is.</p></div>
             </div>
             <div class="theme-card ocean-theme">
               <span class="theme-emoji">👁️</span>
@@ -1729,11 +1733,11 @@ body {
         <div class="work-block">
           <h3 class="block-title">🔬 Literary Devices</h3>
           <div class="devices-list">
-            <div class="device-row ocean-device"><span class="device-name">Impressionism <em>(الانطباعية)</em></span><span class="device-desc">The narrative is filtered through the correspondent's shifting emotions — we feel the cold, the exhaustion, the fear, the strange calm. Crane does not describe the sea as it objectively is; he describes how it feels.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Impressionism <span class="ar-note">(الانطباعية)</span></span><span class="device-desc">The narrative is filtered through the correspondent's shifting emotions — we feel the cold, the exhaustion, the fear, the strange calm. Crane does not describe the sea as it objectively is; he describes how it feels.</span></div>
             <div class="device-row ocean-device"><span class="device-name">Point of view — 3rd limited</span><span class="device-desc">We stay inside the correspondent's head throughout. His confusion, fear, and anger become our own.</span></div>
-            <div class="device-row ocean-device"><span class="device-name">Irony <em>(السخرية)</em></span><span class="device-desc">The most physically capable man (Billie) dies while the injured captain and the nervous cook survive. The universe rewards no one.</span></div>
-            <div class="device-row ocean-device"><span class="device-name">Repetition <em>(التكرار)</em></span><span class="device-desc">"If I am going to be drowned, why was I allowed to come thus far?" — the correspondent asks this over and over, looking for meaning. He finds none. That is the point.</span></div>
-            <div class="device-row ocean-device"><span class="device-name">Personification <em>(التشخيص)</em></span><span class="device-desc">The waves are described as if they have attitude and intention — even though the whole story argues they do not. This captures how human minds project meaning onto a meaningless universe.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Irony <span class="ar-note">(السخرية)</span></span><span class="device-desc">The most physically capable man (Billie) dies while the injured captain and the nervous cook survive. The universe rewards no one.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Repetition <span class="ar-note">(التكرار)</span></span><span class="device-desc">"If I am going to be drowned, why was I allowed to come thus far?" — the correspondent asks this over and over, looking for meaning. He finds none. That is the point.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Personification <span class="ar-note">(التشخيص)</span></span><span class="device-desc">The waves are described as if they have attitude and intention — even though the whole story argues they do not. This captures how human minds project meaning onto a meaningless universe.</span></div>
             <div class="device-row ocean-device"><span class="device-name">Naturalistic description</span><span class="device-desc">Cold numbers, exact distances, physical exhaustion described clinically. Like "To Build a Fire," Crane uses scientific detachment to show humans as small biological creatures in a large mechanical world.</span></div>
           </div>
         </div>
@@ -1798,11 +1802,11 @@ body {
           <div class="themes-grid">
             <div class="theme-card editorial-theme">
               <span class="theme-emoji">🩺</span>
-              <div><strong>Service and Sacrifice <em>(الخدمة والتضحية)</em></strong><p>Doc Hill gave his time, energy, and income to the community without expecting anything back. Masters presents this as the definition of a life well-lived.</p></div>
+              <div><strong>Service and Sacrifice <span class="ar-note">(الخدمة والتضحية)</span></strong><p>Doc Hill gave his time, energy, and income to the community without expecting anything back. Masters presents this as the definition of a life well-lived.</p></div>
             </div>
             <div class="theme-card editorial-theme">
               <span class="theme-emoji">🪦</span>
-              <div><strong>Death and Reflection <em>(الموت والتأمل)</em></strong><p>The grave-speaking device forces total honesty. The dead have no reason to lie or exaggerate. Doc Hill's calm retrospective (نظرة إلى الوراء) from death feels more truthful than anything a living narrator could offer.</p></div>
+              <div><strong>Death and Reflection <span class="ar-note">(الموت والتأمل)</span></strong><p>The grave-speaking device forces total honesty. The dead have no reason to lie or exaggerate. Doc Hill's calm retrospective (نظرة إلى الوراء) from death feels more truthful than anything a living narrator could offer.</p></div>
             </div>
             <div class="theme-card editorial-theme">
               <span class="theme-emoji">🏘️</span>
@@ -1810,11 +1814,11 @@ body {
             </div>
             <div class="theme-card editorial-theme">
               <span class="theme-emoji">💰</span>
-              <div><strong>Class and Poverty <em>(الطبقية والفقر)</em></strong><p>Doc Hill's willingness to treat the poor for free is a quiet political statement: some things are more important than money. In a society obsessed with wealth, this is a radical (جذري) position.</p></div>
+              <div><strong>Class and Poverty <span class="ar-note">(الطبقية والفقر)</span></strong><p>Doc Hill's willingness to treat the poor for free is a quiet political statement: some things are more important than money. In a society obsessed with wealth, this is a radical (جذري) position.</p></div>
             </div>
             <div class="theme-card editorial-theme">
               <span class="theme-emoji">🕊️</span>
-              <div><strong>Quiet Dignity <em>(الكرامة الهادئة)</em></strong><p>There is no drama here, no heroism, no grand finale. Just a decent life, lived decently. Masters argues that this quiet dignity (كرامة) is enough — and in fact, more admirable than loud achievement.</p></div>
+              <div><strong>Quiet Dignity <span class="ar-note">(الكرامة الهادئة)</span></strong><p>There is no drama here, no heroism, no grand finale. Just a decent life, lived decently. Masters argues that this quiet dignity (كرامة) is enough — and in fact, more admirable than loud achievement.</p></div>
             </div>
           </div>
         </div>
@@ -1822,11 +1826,11 @@ body {
         <div class="work-block">
           <h3 class="block-title">🔬 Literary Devices</h3>
           <div class="devices-list">
-            <div class="device-row"><span class="device-name">Dramatic monologue <em>(المونولوج الدرامي)</em></span><span class="device-desc">A dead person speaks directly to the reader. The "dramatic" part means the speaker reveals their personality through what they say and how they say it — not through the narrator's description.</span></div>
-            <div class="device-row"><span class="device-name">Free verse <em>(الشعر الحر)</em></span><span class="device-desc">No rhyme scheme, no fixed meter (إيقاع ثابت). Modernist poets rejected traditional poetic forms because forced rhyme felt artificial for honest, realistic subjects.</span></div>
-            <div class="device-row"><span class="device-name">Epitaph form <em>(شكل النقش على القبر)</em></span><span class="device-desc">An epitaph (نقش على شاهد القبر) is the text written on a gravestone. Every Spoon River poem mimics this form — short, direct, spoken from beyond death.</span></div>
-            <div class="device-row"><span class="device-name">Understatement <em>(التهوين)</em></span><span class="device-desc">Doc Hill describes enormous sacrifice in a very calm, simple way. He does not say "I gave everything and suffered greatly." He just describes what he did, plainly. The simplicity makes it more moving, not less.</span></div>
-            <div class="device-row"><span class="device-name">Realism <em>(الواقعية)</em></span><span class="device-desc">Ordinary person, ordinary town, ordinary life — no idealization (مثالية مصطنعة), no romanticization. Realism shows life as it actually is.</span></div>
+            <div class="device-row"><span class="device-name">Dramatic monologue <span class="ar-note">(المونولوج الدرامي)</span></span><span class="device-desc">A dead person speaks directly to the reader. The "dramatic" part means the speaker reveals their personality through what they say and how they say it — not through the narrator's description.</span></div>
+            <div class="device-row"><span class="device-name">Free verse <span class="ar-note">(الشعر الحر)</span></span><span class="device-desc">No rhyme scheme, no fixed meter (إيقاع ثابت). Modernist poets rejected traditional poetic forms because forced rhyme felt artificial for honest, realistic subjects.</span></div>
+            <div class="device-row"><span class="device-name">Epitaph form <span class="ar-note">(شكل النقش على القبر)</span></span><span class="device-desc">An epitaph (نقش على شاهد القبر) is the text written on a gravestone. Every Spoon River poem mimics this form — short, direct, spoken from beyond death.</span></div>
+            <div class="device-row"><span class="device-name">Understatement <span class="ar-note">(التهوين)</span></span><span class="device-desc">Doc Hill describes enormous sacrifice in a very calm, simple way. He does not say "I gave everything and suffered greatly." He just describes what he did, plainly. The simplicity makes it more moving, not less.</span></div>
+            <div class="device-row"><span class="device-name">Realism <span class="ar-note">(الواقعية)</span></span><span class="device-desc">Ordinary person, ordinary town, ordinary life — no idealization (مثالية مصطنعة), no romanticization. Realism shows life as it actually is.</span></div>
           </div>
         </div>
 
@@ -1911,23 +1915,23 @@ body {
           <div class="themes-grid">
             <div class="theme-card bitter-theme">
               <span class="theme-emoji">⚙️</span>
-              <div><strong>Materialism <em>(المادية)</em></strong><p>Materialism = caring too much about owning things. Abel believed that buying more tools meant living more fully. He was wrong. Possessions (ممتلكات) without purpose are just clutter.</p></div>
+              <div><strong>Materialism <span class="ar-note">(المادية)</span></strong><p>Materialism = caring too much about owning things. Abel believed that buying more tools meant living more fully. He was wrong. Possessions (ممتلكات) without purpose are just clutter.</p></div>
             </div>
             <div class="theme-card bitter-theme">
               <span class="theme-emoji">😔</span>
-              <div><strong>Regret and Wasted Potential <em>(الندم والإمكانات المهدرة)</em></strong><p>Abel's voice from the grave is not angry — it is sad. He can see clearly now that he had the potential for a meaningful life and simply never acted on it. That clarity (وضوح) only came in death.</p></div>
+              <div><strong>Regret and Wasted Potential <span class="ar-note">(الندم والإمكانات المهدرة)</span></strong><p>Abel's voice from the grave is not angry — it is sad. He can see clearly now that he had the potential for a meaningful life and simply never acted on it. That clarity (وضوح) only came in death.</p></div>
             </div>
             <div class="theme-card bitter-theme">
               <span class="theme-emoji">🔄</span>
-              <div><strong>Procrastination <em>(المماطلة / التسويف)</em></strong><p>Procrastination = always delaying what you need to do. "I'll start tomorrow." "Next year." Abel's whole life is one long postponement (تأجيل). Masters presents this as one of the most tragic human failures.</p></div>
+              <div><strong>Procrastination <span class="ar-note">(المماطلة / التسويف)</span></strong><p>Procrastination = always delaying what you need to do. "I'll start tomorrow." "Next year." Abel's whole life is one long postponement (تأجيل). Masters presents this as one of the most tragic human failures.</p></div>
             </div>
             <div class="theme-card bitter-theme">
               <span class="theme-emoji">🪦</span>
-              <div><strong>Death as Revelation <em>(الموت كاكتشاف)</em></strong><p>Revelation (اكتشاف / كشف) = a moment of sudden understanding. Only in death can Abel see his life honestly. The grave gives him clarity that he never had while living.</p></div>
+              <div><strong>Death as Revelation <span class="ar-note">(الموت كاكتشاف)</span></strong><p>Revelation (اكتشاف / كشف) = a moment of sudden understanding. Only in death can Abel see his life honestly. The grave gives him clarity that he never had while living.</p></div>
             </div>
             <div class="theme-card bitter-theme">
               <span class="theme-emoji">🏭</span>
-              <div><strong>Industrial America <em>(أمريكا الصناعية)</em></strong><p>The Gilded Age (العصر الذهبي) was a period of rapid industrial growth in America where new machines were invented constantly. Abel's obsession with buying machines reflects the wider cultural obsession with technology and progress as ends in themselves.</p></div>
+              <div><strong>Industrial America <span class="ar-note">(أمريكا الصناعية)</span></strong><p>The Gilded Age (العصر الذهبي) was a period of rapid industrial growth in America where new machines were invented constantly. Abel's obsession with buying machines reflects the wider cultural obsession with technology and progress as ends in themselves.</p></div>
             </div>
           </div>
         </div>
@@ -1935,11 +1939,11 @@ body {
         <div class="work-block">
           <h3 class="block-title">🔬 Literary Devices</h3>
           <div class="devices-list">
-            <div class="device-row bitter-device"><span class="device-name">Dramatic monologue <em>(المونولوج الدرامي)</em></span><span class="device-desc">Same form as Doc Hill — dead speaker addresses the reader directly. The key difference: Doc Hill's tone is calm. Abel's tone starts excited and becomes sorrowful.</span></div>
-            <div class="device-row bitter-device"><span class="device-name">Catalogue / Listing <em>(الجرد / القائمة)</em></span><span class="device-desc">Abel literally lists his machines — sewing machines, grinders, cranes, and more. The list keeps going and going. As it grows longer and more absurd, it starts to feel pathetic (مثير للشفقة) rather than impressive. That effect is intentional.</span></div>
-            <div class="device-row bitter-device"><span class="device-name">Irony <em>(السخرية)</em></span><span class="device-desc">The central irony: a man surrounded by tools of creation (أدوات الإنشاء) created absolutely nothing. Every machine around him represents something he never did.</span></div>
-            <div class="device-row bitter-device"><span class="device-name">Symbolism — machines <em>(رمزية الآلات)</em></span><span class="device-desc">Each rusting machine in Abel's yard symbolizes (يرمز إلى) a life goal he never pursued, a project he never started, a version of himself he never became.</span></div>
-            <div class="device-row bitter-device"><span class="device-name">Free verse <em>(الشعر الحر)</em></span><span class="device-desc">No forced rhyme or meter — Modernist form. The irregular, unforced rhythm mirrors a life that had no real structure or direction.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Dramatic monologue <span class="ar-note">(المونولوج الدرامي)</span></span><span class="device-desc">Same form as Doc Hill — dead speaker addresses the reader directly. The key difference: Doc Hill's tone is calm. Abel's tone starts excited and becomes sorrowful.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Catalogue / Listing <span class="ar-note">(الجرد / القائمة)</span></span><span class="device-desc">Abel literally lists his machines — sewing machines, grinders, cranes, and more. The list keeps going and going. As it grows longer and more absurd, it starts to feel pathetic (مثير للشفقة) rather than impressive. That effect is intentional.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Irony <span class="ar-note">(السخرية)</span></span><span class="device-desc">The central irony: a man surrounded by tools of creation (أدوات الإنشاء) created absolutely nothing. Every machine around him represents something he never did.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Symbolism — machines <span class="ar-note">(رمزية الآلات)</span></span><span class="device-desc">Each rusting machine in Abel's yard symbolizes (يرمز إلى) a life goal he never pursued, a project he never started, a version of himself he never became.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Free verse <span class="ar-note">(الشعر الحر)</span></span><span class="device-desc">No forced rhyme or meter — Modernist form. The irregular, unforced rhythm mirrors a life that had no real structure or direction.</span></div>
           </div>
         </div>
 
@@ -2001,23 +2005,23 @@ body {
           <div class="themes-grid">
             <div class="theme-card gilded-theme">
               <span class="theme-emoji">💔</span>
-              <div><strong>Appearances vs Reality <em>(المظهر مقابل الحقيقة)</em></strong><p>Richard Cory's public image (صورته العامة) is perfect: wealth, grace, education. His inner reality (حقيقته الداخلية) is total despair. The gap between what people show the world and what they actually feel is the poem's entire argument.</p></div>
+              <div><strong>Appearances vs Reality <span class="ar-note">(المظهر مقابل الحقيقة)</span></strong><p>Richard Cory's public image (صورته العامة) is perfect: wealth, grace, education. His inner reality (حقيقته الداخلية) is total despair. The gap between what people show the world and what they actually feel is the poem's entire argument.</p></div>
             </div>
             <div class="theme-card gilded-theme">
               <span class="theme-emoji">💰</span>
-              <div><strong>Wealth and Unhappiness <em>(الثروة والتعاسة)</em></strong><p>The poem directly challenges the idea that money equals happiness. Richard Cory has everything money can buy — and it is not enough. He is still utterly alone and in despair.</p></div>
+              <div><strong>Wealth and Unhappiness <span class="ar-note">(الثروة والتعاسة)</span></strong><p>The poem directly challenges the idea that money equals happiness. Richard Cory has everything money can buy — and it is not enough. He is still utterly alone and in despair.</p></div>
             </div>
             <div class="theme-card gilded-theme">
               <span class="theme-emoji">👥</span>
-              <div><strong>Class and Envy <em>(الطبقية والحسد)</em></strong><p>The townspeople envy (يحسدون) Cory while they suffer poverty. The bitter irony is that they are envying the wrong person entirely — the man they wished they were, was the unhappiest person among them.</p></div>
+              <div><strong>Class and Envy <span class="ar-note">(الطبقية والحسد)</span></strong><p>The townspeople envy (يحسدون) Cory while they suffer poverty. The bitter irony is that they are envying the wrong person entirely — the man they wished they were, was the unhappiest person among them.</p></div>
             </div>
             <div class="theme-card gilded-theme">
               <span class="theme-emoji">🧠</span>
-              <div><strong>Isolation <em>(العزلة)</em></strong><p>Cory is physically surrounded by people — the whole town watches him and admires him. But that admiration (إعجاب) creates distance, not connection. Nobody actually knew him. He was completely alone in a crowd.</p></div>
+              <div><strong>Isolation <span class="ar-note">(العزلة)</span></strong><p>Cory is physically surrounded by people — the whole town watches him and admires him. But that admiration (إعجاب) creates distance, not connection. Nobody actually knew him. He was completely alone in a crowd.</p></div>
             </div>
             <div class="theme-card gilded-theme">
               <span class="theme-emoji">😶</span>
-              <div><strong>Narrative Perspective <em>(منظور السرد)</em></strong><p>The "we" narrator (صوت الجماعة) is crucial. We never hear Cory's voice. We only hear what others thought of him — which turns out to be completely wrong. The narrator's limited perspective (منظور محدود) is itself the point.</p></div>
+              <div><strong>Narrative Perspective <span class="ar-note">(منظور السرد)</span></strong><p>The "we" narrator (صوت الجماعة) is crucial. We never hear Cory's voice. We only hear what others thought of him — which turns out to be completely wrong. The narrator's limited perspective (منظور محدود) is itself the point.</p></div>
             </div>
           </div>
         </div>
@@ -2025,11 +2029,11 @@ body {
         <div class="work-block">
           <h3 class="block-title">🔬 Literary Devices</h3>
           <div class="devices-list">
-            <div class="device-row gilded-device"><span class="device-name">Dramatic irony <em>(السخرية الدرامية)</em></span><span class="device-desc">Dramatic irony = when the reader (or the town) builds up a picture that turns out to be completely wrong. We spend the whole poem admiring Cory. The ending destroys everything we thought we knew. The more we admired him, the more devastating the ending becomes.</span></div>
-            <div class="device-row gilded-device"><span class="device-name">Volta <em>(الانعطافة / التحول)</em></span><span class="device-desc">Volta = a sudden turn or shift in a poem's direction. In "Richard Cory," the entire poem builds a golden image — then the volta in the final two lines smashes it completely. It is one of the most famous voltas in American poetry.</span></div>
-            <div class="device-row gilded-device"><span class="device-name">First-person plural narrator <em>(الراوي بضمير الجمع)</em></span><span class="device-desc">"We" — the collective voice of the working-class townspeople. This choice means we never hear Cory's inner thoughts. We only see the surface (السطح), which is exactly the poem's point.</span></div>
-            <div class="device-row gilded-device"><span class="device-name">Understatement <em>(التهوين)</em></span><span class="device-desc">The suicide is delivered in one short, calm line — no exclamation, no drama. That deliberate flatness is what makes it so shocking. If Robinson had written it dramatically, it would feel less real.</span></div>
-            <div class="device-row gilded-device"><span class="device-name">Iambic tetrameter <em>(البحر الإيقاعي)</em></span><span class="device-desc">Iambic tetrameter = a rhythmic pattern (نمط إيقاعي) of four beats per line: da-DUM da-DUM da-DUM da-DUM. It gives the poem an almost sing-song quality — which makes the dark ending even more jarring (صادم). Note: this is more traditional than Masters' free verse.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">Dramatic irony <span class="ar-note">(السخرية الدرامية)</span></span><span class="device-desc">Dramatic irony = when the reader (or the town) builds up a picture that turns out to be completely wrong. We spend the whole poem admiring Cory. The ending destroys everything we thought we knew. The more we admired him, the more devastating the ending becomes.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">Volta <span class="ar-note">(الانعطافة / التحول)</span></span><span class="device-desc">Volta = a sudden turn or shift in a poem's direction. In "Richard Cory," the entire poem builds a golden image — then the volta in the final two lines smashes it completely. It is one of the most famous voltas in American poetry.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">First-person plural narrator <span class="ar-note">(الراوي بضمير الجمع)</span></span><span class="device-desc">"We" — the collective voice of the working-class townspeople. This choice means we never hear Cory's inner thoughts. We only see the surface (السطح), which is exactly the poem's point.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">Understatement <span class="ar-note">(التهوين)</span></span><span class="device-desc">The suicide is delivered in one short, calm line — no exclamation, no drama. That deliberate flatness is what makes it so shocking. If Robinson had written it dramatically, it would feel less real.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">Iambic tetrameter <span class="ar-note">(البحر الإيقاعي)</span></span><span class="device-desc">Iambic tetrameter = a rhythmic pattern (نمط إيقاعي) of four beats per line: da-DUM da-DUM da-DUM da-DUM. It gives the poem an almost sing-song quality — which makes the dark ending even more jarring (صادم). Note: this is more traditional than Masters' free verse.</span></div>
           </div>
         </div>
 
@@ -2103,23 +2107,23 @@ body {
           <div class="themes-grid">
             <div class="theme-card mill-theme">
               <span class="theme-emoji">🏭</span>
-              <div><strong>Industrial Decline <em>(الانهيار الصناعي)</em></strong><p>The Second Industrial Revolution made entire trades disappear. The miller did not lose his job because he failed — he lost it because machines replaced him. His death is a direct result of economic and technological change, not personal weakness.</p></div>
+              <div><strong>Industrial Decline <span class="ar-note">(الانهيار الصناعي)</span></strong><p>The Second Industrial Revolution made entire trades disappear. The miller did not lose his job because he failed — he lost it because machines replaced him. His death is a direct result of economic and technological change, not personal weakness.</p></div>
             </div>
             <div class="theme-card mill-theme">
               <span class="theme-emoji">💔</span>
-              <div><strong>Grief and Despair <em>(الحزن واليأس)</em></strong><p>The wife's implied death mirrors (تعكس) her husband's. Her grief is not just personal — it is the grief of a way of life ending. She cannot imagine a world without the mill, without her husband, without the life they shared.</p></div>
+              <div><strong>Grief and Despair <span class="ar-note">(الحزن واليأس)</span></strong><p>The wife's implied death mirrors (تعكس) her husband's. Her grief is not just personal — it is the grief of a way of life ending. She cannot imagine a world without the mill, without her husband, without the life they shared.</p></div>
             </div>
             <div class="theme-card mill-theme">
               <span class="theme-emoji">⏳</span>
-              <div><strong>Obsolescence <em>(الاندثار / التقادم)</em></strong><p>Obsolescence = becoming outdated and no longer needed. The miller's skill (مهارة) was real and valuable for centuries — then suddenly, machines did it faster. His whole identity was built on something the world no longer wanted. That kind of loss destroys a person.</p></div>
+              <div><strong>Obsolescence <span class="ar-note">(الاندثار / التقادم)</span></strong><p>Obsolescence = becoming outdated and no longer needed. The miller's skill (مهارة) was real and valuable for centuries — then suddenly, machines did it faster. His whole identity was built on something the world no longer wanted. That kind of loss destroys a person.</p></div>
             </div>
             <div class="theme-card mill-theme">
               <span class="theme-emoji">🌊</span>
-              <div><strong>Death as Escape <em>(الموت كهروب)</em></strong><p>Both the miller and his wife choose death rather than adapt to a changed world. Robinson does not judge them. He presents their choice as a kind of logic — when the world you belong to disappears, what is left?</p></div>
+              <div><strong>Death as Escape <span class="ar-note">(الموت كهروب)</span></strong><p>Both the miller and his wife choose death rather than adapt to a changed world. Robinson does not judge them. He presents their choice as a kind of logic — when the world you belong to disappears, what is left?</p></div>
             </div>
             <div class="theme-card mill-theme">
               <span class="theme-emoji">😶</span>
-              <div><strong>Silence and Implication <em>(الصمت والتلميح)</em></strong><p>Implication (تلميح) = suggesting something without saying it directly. The wife's death is never stated. Robinson trusts the reader to understand it from the imagery. This restraint (ضبط النفس الأدبي) is a Modernist technique — what is not said can be more powerful than what is.</p></div>
+              <div><strong>Silence and Implication <span class="ar-note">(الصمت والتلميح)</span></strong><p>Implication (تلميح) = suggesting something without saying it directly. The wife's death is never stated. Robinson trusts the reader to understand it from the imagery. This restraint (ضبط النفس الأدبي) is a Modernist technique — what is not said can be more powerful than what is.</p></div>
             </div>
           </div>
         </div>
@@ -2127,11 +2131,11 @@ body {
         <div class="work-block">
           <h3 class="block-title">🔬 Literary Devices</h3>
           <div class="devices-list">
-            <div class="device-row mill-device"><span class="device-name">Implication / Suggestion <em>(التلميح)</em></span><span class="device-desc">The wife's death is never directly stated. The reader infers it (يستنتجه) from the water imagery — the dark pond, the hypnotic description of the stream. Robinson gives you the pieces and trusts you to assemble them.</span></div>
-            <div class="device-row mill-device"><span class="device-name">Symbolism — the pond <em>(رمزية البركة)</em></span><span class="device-desc">The dark water near the mill symbolizes death and the pull of despair. Just as the mill symbolizes the lost livelihood (الرزق الضائع), the pond symbolizes the path the wife chooses when that livelihood is gone.</span></div>
-            <div class="device-row mill-device"><span class="device-name">Dramatic irony <em>(السخرية الدرامية)</em></span><span class="device-desc">The reader understands the wife is moving toward her death before she (perhaps) fully understands it herself. We watch her drift toward the water knowing what it means — she may not.</span></div>
-            <div class="device-row mill-device"><span class="device-name">Modernist restraint <em>(الضبط الحداثي)</em></span><span class="device-desc">Restraint = holding emotion back. Robinson describes enormous tragedy in a quiet, controlled voice. This is the opposite of melodrama (مبالغة عاطفية). The quieter the telling, the heavier it feels.</span></div>
-            <div class="device-row mill-device"><span class="device-name">Narrative ellipsis <em>(الحذف السردي)</em></span><span class="device-desc">Ellipsis (حذف) = deliberately leaving out key moments so the reader fills in the gaps. We never see the miller die. We never see the wife enter the water. Robinson leaves the most important moments unwritten — which makes them more haunting (مؤثر / يسكن الذاكرة).</span></div>
+            <div class="device-row mill-device"><span class="device-name">Implication / Suggestion <span class="ar-note">(التلميح)</span></span><span class="device-desc">The wife's death is never directly stated. The reader infers it (يستنتجه) from the water imagery — the dark pond, the hypnotic description of the stream. Robinson gives you the pieces and trusts you to assemble them.</span></div>
+            <div class="device-row mill-device"><span class="device-name">Symbolism — the pond <span class="ar-note">(رمزية البركة)</span></span><span class="device-desc">The dark water near the mill symbolizes death and the pull of despair. Just as the mill symbolizes the lost livelihood (الرزق الضائع), the pond symbolizes the path the wife chooses when that livelihood is gone.</span></div>
+            <div class="device-row mill-device"><span class="device-name">Dramatic irony <span class="ar-note">(السخرية الدرامية)</span></span><span class="device-desc">The reader understands the wife is moving toward her death before she (perhaps) fully understands it herself. We watch her drift toward the water knowing what it means — she may not.</span></div>
+            <div class="device-row mill-device"><span class="device-name">Modernist restraint <span class="ar-note">(الضبط الحداثي)</span></span><span class="device-desc">Restraint = holding emotion back. Robinson describes enormous tragedy in a quiet, controlled voice. This is the opposite of melodrama (مبالغة عاطفية). The quieter the telling, the heavier it feels.</span></div>
+            <div class="device-row mill-device"><span class="device-name">Narrative ellipsis <span class="ar-note">(الحذف السردي)</span></span><span class="device-desc">Ellipsis (حذف) = deliberately leaving out key moments so the reader fills in the gaps. We never see the miller die. We never see the wife enter the water. Robinson leaves the most important moments unwritten — which makes them more haunting (مؤثر / يسكن الذاكرة).</span></div>
           </div>
         </div>
 
