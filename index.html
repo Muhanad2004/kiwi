@@ -1,0 +1,3666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>American Survey II — Revision Site</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=DM+Sans:wght@300;400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+<style>
+/* ── CSS VARIABLES ─────────────────────────────────────────── */
+:root {
+  --deep-feather: #2d5a27;
+  --vivid-feather: #7bc043;
+  --highlight-feather: #c8e84a;
+  --kiwi-flesh: #d4e84a;
+  --kiwi-skin: #8b6914;
+  --beak-coral: #e8956d;
+  --champagne: #f2e8cf;
+  --brick: #bc4749;
+  --bg-primary: #faf7f2;
+  --bg-secondary: #f2e8cf;
+  --text-primary: #1a2e18;
+  --text-secondary: #4a6b3a;
+  --accent-primary: #2d5a27;
+  --accent-mid: #7bc043;
+  --accent-light: #c8e84a;
+  --danger: #bc4749;
+  --border: #b8d98a;
+  --sidebar-width: 240px;
+}
+
+/* ── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; }
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  min-height: 100vh;
+  display: flex;
+}
+
+/* ── SIDEBAR ───────────────────────────────────────────────── */
+#sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: var(--sidebar-width);
+  height: 100vh;
+  background: var(--bg-secondary);
+  border-right: 1px solid var(--border);
+  box-shadow: 2px 0 12px rgba(45,90,39,0.08);
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  overflow-y: auto;
+  transition: width 0.2s ease;
+}
+
+/* sidebar top */
+.sidebar-top {
+  padding: 24px 16px 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1px solid var(--border);
+}
+.sidebar-top img.kiwi-img {
+  width: 60px;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+.sidebar-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* sidebar nav */
+.sidebar-nav {
+  flex: 1;
+  padding: 12px 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  border-left: 4px solid transparent;
+  position: relative;
+  text-decoration: none;
+  color: var(--text-primary);
+  user-select: none;
+}
+.nav-item:hover {
+  background: rgba(123,192,67,0.12);
+}
+.nav-item.active {
+  background: rgba(45,90,39,0.08);
+  border-left-color: var(--accent-primary);
+}
+.nav-item.active .nav-label {
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+.nav-emoji {
+  font-size: 18px;
+  flex-shrink: 0;
+  width: 24px;
+  text-align: center;
+}
+.nav-label {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.nav-badge {
+  font-size: 11px;
+  font-weight: 600;
+  background: var(--accent-primary);
+  color: white;
+  padding: 2px 7px;
+  border-radius: 20px;
+  flex-shrink: 0;
+  opacity: 0.85;
+}
+.nav-badge.done { background: var(--vivid-feather); opacity: 1; }
+
+/* sidebar bottom */
+.sidebar-bottom {
+  padding: 16px;
+  border-top: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text-secondary);
+  text-align: center;
+  line-height: 1.6;
+}
+.sidebar-bottom .exam-label {
+  font-weight: 600;
+  color: var(--accent-primary);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+#countdown {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--brick);
+  display: block;
+  margin-top: 2px;
+}
+
+/* ── MAIN CONTENT ──────────────────────────────────────────── */
+#main {
+  margin-left: var(--sidebar-width);
+  flex: 1;
+  min-height: 100vh;
+  padding: 40px 48px;
+  background: var(--bg-primary);
+}
+.section-inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* ── SECTIONS ──────────────────────────────────────────────── */
+.section {
+  display: none;
+  animation: fadeIn 0.2s ease;
+}
+.section.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── SECTION HEADER PATTERN ────────────────────────────────── */
+.section-header {
+  margin-bottom: 32px;
+}
+.section-header h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  line-height: 1.2;
+}
+.section-header .subtitle {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+.section-divider {
+  height: 1px;
+  background: var(--border);
+  margin-top: 16px;
+}
+
+/* ── HOME SCREEN ───────────────────────────────────────────── */
+#section-home .hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 40px;
+  padding: 32px 0 24px;
+}
+.progress-ring-wrap {
+  position: relative;
+  width: 180px;
+  height: 180px;
+  margin-bottom: 20px;
+}
+.progress-ring-wrap svg { display: none; }
+.progress-ring-wrap .kiwi-center {
+  display: block;
+  position: static;
+  transform: none;
+  width: 180px;
+  height: auto;
+  mix-blend-mode: multiply;
+}
+.hero-greeting {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+.hero-sub {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+/* ── HOME PROGRESS BARS ─────────────────────────────────── */
+.overall-progress-wrap {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 20px;
+}
+.overall-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.overall-progress-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.overall-progress-pct {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+
+/* shared bar components */
+.home-bar-track {
+  height: 8px;
+  background: rgba(45,90,39,0.1);
+  border-radius: 4px;
+  overflow: hidden;
+}
+.home-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, var(--accent-primary), var(--vivid-feather));
+  width: 0%;
+  transition: width 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.home-bar-overall {
+  height: 100%;
+  background: linear-gradient(90deg, var(--deep-feather), var(--vivid-feather), var(--highlight-feather));
+  background-size: 200% 100%;
+  animation: shimmer 2.5s ease infinite;
+}
+@keyframes shimmer {
+  0%   { background-position: 200% center; }
+  100% { background-position: -200% center; }
+}
+.home-bar-mcq {
+  background: linear-gradient(90deg, var(--accent-primary), var(--beak-coral));
+}
+.home-bar-quoteid {
+  background: linear-gradient(90deg, var(--accent-primary), var(--highlight-feather));
+}
+
+/* section bars grid */
+.progress-bars-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+.pbar-card {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.pbar-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(45,90,39,0.1);
+}
+.pbar-header {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 8px;
+}
+.pbar-emoji { font-size: 15px; }
+.pbar-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+.pbar-count {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--accent-primary);
+}
+
+/* quick stats */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+.stat-card {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  box-shadow: 0 1px 4px rgba(45,90,39,0.06);
+}
+.stat-card .stat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  line-height: 1;
+}
+.stat-card .stat-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* exam focus callout */
+.exam-callout {
+  background: var(--champagne);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 8px;
+  padding: 20px 24px;
+  margin-bottom: 32px;
+}
+.exam-callout h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: 12px;
+}
+.exam-callout ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.exam-callout li {
+  font-size: 14px;
+  color: var(--text-primary);
+  padding-left: 8px;
+}
+.exam-callout li::before { content: "→ "; color: var(--text-secondary); }
+
+/* quick jump grid */
+.jump-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+.jump-card {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  box-shadow: 0 1px 4px rgba(45,90,39,0.06);
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+.jump-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(45,90,39,0.12);
+}
+.jump-card .jump-emoji { font-size: 28px; }
+.jump-card .jump-info { flex: 1; }
+.jump-card .jump-title {
+  font-weight: 600;
+  font-size: 15px;
+  color: var(--accent-primary);
+}
+.jump-card .jump-badge {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* reset button */
+.reset-btn {
+  width: 100%;
+  padding: 8px 12px;
+  background: transparent;
+  color: var(--brick);
+  border: 1.5px solid var(--brick);
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.reset-btn:hover {
+  background: var(--brick);
+  color: white;
+}
+
+/* ── RESPONSIVE SIDEBAR ────────────────────────────────────── */
+@media (max-width: 767px) {
+  :root { --sidebar-width: 56px; }
+  .nav-label, .nav-badge, .sidebar-title, .sidebar-bottom { display: none; }
+  .sidebar-top { padding: 12px 8px; }
+  .sidebar-top img.kiwi-img { width: 36px; }
+  .nav-item { padding: 10px 8px; justify-content: center; }
+  #main { padding: 24px 20px; }
+}
+
+/* ── UTILITY ───────────────────────────────────────────────── */
+.pill-tag {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  background: rgba(45,90,39,0.1);
+  color: var(--accent-primary);
+  border: 1px solid var(--border);
+}
+.card {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+  box-shadow: 0 1px 4px rgba(45,90,39,0.05);
+}
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(45,90,39,0.1);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* ── PLACEHOLDER SECTIONS ──────────────────────────────────── */
+.placeholder-msg {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-secondary);
+}
+.placeholder-msg .ph-emoji { font-size: 48px; margin-bottom: 16px; }
+.placeholder-msg h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  color: var(--accent-primary);
+  margin-bottom: 8px;
+}
+.placeholder-msg p { font-size: 14px; }
+
+/* ── WORKS SECTION ─────────────────────────────────────────── */
+.works-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+.work-tab {
+  padding: 8px 16px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--champagne);
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.work-tab:hover { background: rgba(123,192,67,0.15); }
+.work-tab.active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+  font-weight: 600;
+}
+.tab-check { font-size: 12px; }
+
+/* work pages */
+.work-page { display: none; animation: fadeIn 0.2s ease; }
+.work-page.active { display: block; }
+
+/* hero blocks */
+.work-hero {
+  border-radius: 12px;
+  padding: 28px 28px 20px;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+.work-title-row { margin-bottom: 10px; }
+.work-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 4px;
+}
+.work-meta { font-size: 13px; color: var(--text-secondary); font-weight: 500; }
+.work-tags { display: flex; flex-wrap: wrap; gap: 6px; margin: 12px 0; }
+.work-quote {
+  font-family: 'Lora', serif;
+  font-size: 15px;
+  font-style: italic;
+  margin-top: 14px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  border-left: 3px solid var(--border);
+  background: rgba(255,255,255,0.5);
+}
+.work-quote cite {
+  display: block;
+  font-style: normal;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+/* FIRE theme */
+.fire-hero { background: linear-gradient(135deg, #f0ede6 0%, #e8dfc8 100%); }
+.fire-hero .work-title { color: var(--accent-primary); }
+
+/* OCEAN theme */
+.ocean-hero { background: linear-gradient(135deg, #e8f0e4 0%, #d4e8d0 100%); }
+.ocean-hero .work-title { color: #2a5540; }
+.ocean-tag { background: rgba(42,85,64,0.1); color: #2a5540; border-color: #8dbfa0; }
+.ocean-quote { border-left-color: #5a9e7a; }
+.ocean-theme { border-left: 3px solid #5a9e7a !important; }
+.ocean-device { border-left: 3px solid #5a9e7a !important; }
+
+/* EDITORIAL theme (Doc Hill) */
+.editorial-hero { background: linear-gradient(135deg, #f5f2eb 0%, #ede8d8 100%); border-left: 5px solid #8b6914; }
+.editorial-hero .work-title { color: #4a3a10; }
+.editorial-tag { background: rgba(139,105,20,0.1); color: #4a3a10; border-color: #c8a84a; }
+.editorial-quote { border-left-color: #c8a84a; font-family: 'Lora', serif; }
+.editorial-theme { border-left: 3px solid #c8a84a !important; }
+
+/* BITTER theme (Abel Melveny) */
+.bitter-hero { background: linear-gradient(135deg, #f0ebe8 0%, #e8ddd8 100%); border-left: 5px solid var(--brick); }
+.bitter-hero .work-title { color: #7a2a2a; }
+.bitter-tag { background: rgba(188,71,73,0.1); color: #7a2a2a; border-color: var(--brick); }
+.bitter-quote { border-left-color: var(--brick); }
+.bitter-theme { border-left: 3px solid var(--brick) !important; }
+.bitter-device { border-left: 3px solid var(--brick) !important; }
+
+/* GILDED theme (Richard Cory) */
+.gilded-hero { background: linear-gradient(135deg, #faf5e8 0%, #f0e8c8 100%); border-top: 4px solid #c8a84a; }
+.gilded-hero .work-title { color: #5a4010; }
+.gilded-tag { background: rgba(200,168,74,0.15); color: #5a4010; border-color: #c8a84a; }
+.gilded-quote { border-left-color: var(--brick); background: rgba(188,71,73,0.06); }
+.gilded-theme { border-left: 3px solid #c8a84a !important; }
+.gilded-device { border-left: 3px solid #c8a84a !important; }
+.gilded-volta { background: rgba(188,71,73,0.08) !important; border-left-color: var(--brick) !important; }
+
+/* MILL theme */
+.mill-hero { background: linear-gradient(135deg, #e8eae4 0%, #d8ddd0 100%); border-bottom: 4px solid #4a5a3a; }
+.mill-hero .work-title { color: #2a3820; }
+.mill-tag { background: rgba(42,56,32,0.1); color: #2a3820; border-color: #6a8050; }
+.mill-quote { border-left-color: #4a5a3a; background: rgba(42,56,32,0.05); }
+.mill-theme { border-left: 3px solid #4a5a3a !important; }
+.mill-device { border-left: 3px solid #4a5a3a !important; }
+
+/* work content blocks */
+.work-block {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px 24px;
+  margin-bottom: 16px;
+}
+.work-block p { font-size: 14px; line-height: 1.7; color: var(--text-primary); }
+.block-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: 14px;
+}
+
+/* themes grid */
+.themes-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.theme-card {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: white;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent-mid);
+  border-radius: 8px;
+  padding: 10px 12px;
+}
+.theme-emoji { font-size: 20px; flex-shrink: 0; }
+.theme-card strong { font-size: 13px; font-weight: 600; color: var(--text-primary); display: block; }
+.theme-card p { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+
+/* devices list */
+.devices-list { display: flex; flex-direction: column; gap: 8px; }
+.device-row {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  background: white;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent-primary);
+  padding: 8px 12px;
+}
+.device-name {
+  font-weight: 600;
+  font-size: 13px;
+  color: var(--accent-primary);
+  min-width: 180px;
+  flex-shrink: 0;
+}
+.device-desc { font-size: 13px; color: var(--text-primary); }
+
+/* school block */
+.school-block { border-left: 4px solid var(--accent-primary); }
+.school-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+.school-list li { font-size: 14px; padding-left: 8px; border-left: 2px solid var(--border); line-height: 1.6; }
+
+/* contrast block */
+.contrast-block { background: #faf7f2; }
+.contrast-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 12px; }
+.contrast-col {
+  border-radius: 8px;
+  padding: 14px;
+  background: white;
+  border: 1px solid var(--border);
+}
+.contrast-positive { border-top: 3px solid var(--vivid-feather); }
+.contrast-negative { border-top: 3px solid var(--brick); }
+.contrast-label { font-weight: 700; font-size: 13px; color: var(--accent-primary); margin-bottom: 8px; }
+.contrast-col ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
+.contrast-col li { font-size: 13px; color: var(--text-primary); padding-left: 6px; border-left: 2px solid var(--border); }
+.contrast-note { font-size: 12px; color: var(--text-secondary); font-style: italic; }
+
+/* key lines */
+.key-lines { display: flex; flex-direction: column; gap: 10px; }
+.key-line {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  align-items: start;
+  background: white;
+  border-radius: 8px;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+}
+.kl-quote { font-family: 'Lora', serif; font-style: italic; font-size: 13px; color: var(--text-primary); }
+.kl-meaning { font-size: 13px; color: var(--text-secondary); border-left: 2px solid var(--border); padding-left: 10px; }
+
+/* exam block */
+.exam-block { border-left: 4px solid var(--brick); background: rgba(188,71,73,0.04); }
+.exam-block .block-title { color: var(--brick); }
+.exam-tips { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+.exam-tips li { font-size: 14px; padding-left: 16px; position: relative; line-height: 1.6; }
+.exam-tips li::before { content: "→"; position: absolute; left: 0; color: var(--brick); font-weight: 700; }
+
+/* done row */
+.work-done-row {
+  text-align: center;
+  padding: 20px 0 8px;
+}
+.done-toggle { cursor: pointer; display: inline-flex; align-items: center; gap: 10px; }
+.done-toggle input { display: none; }
+.done-label {
+  display: inline-block;
+  padding: 10px 28px;
+  border: 2px solid var(--accent-primary);
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  transition: all 0.2s ease;
+}
+.done-check { display: none; font-size: 14px; font-weight: 700; color: var(--vivid-feather); }
+.done-toggle input:checked ~ .done-label {
+  background: var(--accent-primary);
+  color: white;
+}
+.done-toggle input:checked ~ .done-check { display: inline; }
+
+/* ── TERMS SECTION ─────────────────────────────────────────── */
+.terms-filters {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.filter-btn {
+  padding: 7px 18px;
+  border-radius: 20px;
+  border: 1.5px solid var(--border);
+  background: var(--champagne);
+  color: var(--text-secondary);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.filter-btn:hover { background: rgba(123,192,67,0.15); }
+.filter-btn.active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
+  font-weight: 600;
+}
+
+.terms-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+@media (max-width: 900px) { .terms-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 600px) { .terms-grid { grid-template-columns: 1fr; } }
+
+/* flip card */
+.flip-card {
+  height: 160px;
+  perspective: 1000px;
+  cursor: pointer;
+}
+.flip-card.hidden { display: none; }
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease;
+  border-radius: 12px;
+}
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-front, .flip-back {
+  position: absolute;
+  inset: 0;
+  border-radius: 12px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border: 1px solid var(--border);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.flip-front {
+  background: var(--champagne);
+  align-items: center;
+  text-align: center;
+}
+.flip-back {
+  background: white;
+  transform: rotateY(180deg);
+}
+.flip-term {
+  font-family: 'Playfair Display', serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  line-height: 1.3;
+}
+.flip-category {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+.flip-learned {
+  position: absolute;
+  top: 8px; right: 10px;
+  font-size: 16px;
+  color: var(--vivid-feather);
+}
+.flip-def {
+  font-size: 12px;
+  color: var(--text-primary);
+  line-height: 1.6;
+  flex: 1;
+}
+.flip-example {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-style: italic;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  line-height: 1.5;
+}
+.flip-mark {
+  margin-top: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent-mid);
+  cursor: pointer;
+  text-align: right;
+}
+.flip-mark.marked { color: var(--vivid-feather); }
+
+/* ── MCQ SECTION ───────────────────────────────────────────── */
+.mcq-start-card, .mcq-end-card {
+  max-width: 520px;
+  margin: 0 auto;
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 40px 36px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(45,90,39,0.08);
+}
+.mcq-start-emoji { font-size: 48px; margin-bottom: 16px; }
+.mcq-start-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  margin-bottom: 10px;
+}
+.mcq-start-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.mcq-best-row {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+.mcq-best-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--accent-primary);
+}
+.mcq-start-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.1s ease;
+}
+.mcq-start-btn:hover { background: var(--deep-feather); transform: translateY(-1px); }
+.mcq-ghost-btn {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+.mcq-ghost-btn:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+
+/* quiz card */
+.mcq-card {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 28px 24px;
+  box-shadow: 0 2px 12px rgba(45,90,39,0.08);
+}
+.mcq-meta-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.mcq-progress-bar-wrap {
+  flex: 1;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+.mcq-progress-bar {
+  height: 100%;
+  background: var(--accent-primary);
+  border-radius: 3px;
+  transition: width 0.3s ease;
+  width: 0%;
+}
+.mcq-qnum {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.mcq-question {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  line-height: 1.5;
+  margin-bottom: 22px;
+}
+.mcq-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mcq-opt {
+  padding: 13px 18px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  background: white;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-primary);
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.12s ease;
+}
+.mcq-opt:hover:not(:disabled) {
+  border-color: var(--accent-mid);
+  background: rgba(123,192,67,0.08);
+  transform: translateX(3px);
+}
+.mcq-opt:disabled { cursor: default; transform: none; }
+.mcq-opt.correct {
+  background: rgba(123,192,67,0.18);
+  border-color: var(--vivid-feather);
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.mcq-opt.wrong {
+  background: rgba(188,71,73,0.12);
+  border-color: var(--brick);
+  color: var(--brick);
+}
+.mcq-opt.reveal {
+  background: rgba(45,90,39,0.1);
+  border-color: var(--accent-primary);
+  color: var(--accent-primary);
+  font-weight: 700;
+}
+.mcq-feedback {
+  margin-top: 16px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+.mcq-feedback.correct-fb { background: rgba(123,192,67,0.15); color: var(--accent-primary); border-left: 3px solid var(--vivid-feather); }
+.mcq-feedback.wrong-fb { background: rgba(188,71,73,0.1); color: #7a2020; border-left: 3px solid var(--brick); }
+.mcq-next-row { margin-top: 20px; text-align: right; }
+.mcq-next-btn {
+  padding: 10px 28px;
+  background: var(--accent-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+.mcq-next-btn:hover { background: var(--deep-feather); }
+
+/* end screen */
+.mcq-end-score-label { font-size: 13px; color: var(--text-secondary); margin-bottom: 6px; text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; }
+.mcq-end-score {
+  font-family: 'Playfair Display', serif;
+  font-size: 56px;
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.mcq-end-score.green { color: var(--accent-primary); }
+.mcq-end-score.sage { color: var(--vivid-feather); }
+.mcq-end-score.red { color: var(--brick); }
+.mcq-end-sub { font-size: 15px; color: var(--text-secondary); margin-bottom: 8px; }
+.mcq-end-best { font-size: 13px; color: var(--text-secondary); font-style: italic; }
+
+/* ── ESSAY SECTION ─────────────────────────────────────────── */
+.essay-page { display: none; animation: fadeIn 0.2s ease; }
+.essay-page.active { display: block; }
+
+.essay-intro-card {
+  background: rgba(45,90,39,0.06);
+  border-left: 4px solid var(--accent-primary);
+  border-radius: 8px;
+  padding: 14px 18px;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.essay-formula-banner {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-bottom: 16px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+.essay-formula-banner span {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  color: var(--accent-primary);
+  font-weight: 400;
+}
+
+/* step blocks */
+.step-block {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 8px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: box-shadow 0.15s ease;
+}
+.step-block:hover { box-shadow: 0 2px 10px rgba(45,90,39,0.1); }
+.step-block-star { border-left: 4px solid var(--accent-primary); }
+
+.step-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  user-select: none;
+}
+.step-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  width: 28px;
+  flex-shrink: 0;
+  text-align: center;
+}
+.step-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-primary);
+  flex: 1;
+}
+.step-toggle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  transition: transform 0.2s ease;
+}
+.step-toggle.open { transform: rotate(180deg); }
+
+.step-body {
+  padding: 0 18px 16px 58px;
+  border-top: 1px solid var(--border);
+}
+.step-what {
+  font-size: 13px;
+  color: var(--text-primary);
+  line-height: 1.7;
+  padding-top: 12px;
+  margin-bottom: 10px;
+}
+.step-formula {
+  background: white;
+  border-left: 3px solid var(--accent-mid);
+  border-radius: 6px;
+  padding: 9px 13px;
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 13px;
+  color: var(--accent-primary);
+  margin-bottom: 10px;
+}
+.step-tip {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  background: rgba(200,232,74,0.15);
+  border-radius: 6px;
+  padding: 8px 12px;
+}
+.step-marks-banner {
+  background: rgba(45,90,39,0.1);
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 10px;
+}
+
+/* applied paragraph */
+.applied-topic-banner {
+  background: var(--accent-primary);
+  color: white;
+  border-radius: 8px;
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.applied-para {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.applied-step {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: white;
+}
+.applied-step:last-child { border-bottom: none; }
+.applied-step-star { background: rgba(45,90,39,0.05); border-left: 4px solid var(--accent-primary); }
+.applied-step-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.marks-badge {
+  background: var(--accent-primary);
+  color: white;
+  font-size: 10px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.applied-text {
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--text-primary);
+}
+.lora-text {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--accent-primary);
+  background: rgba(200,232,74,0.12);
+  border-left: 3px solid var(--accent-mid);
+  padding: 10px 14px;
+  border-radius: 6px;
+}
+
+.applied-notes-card {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 16px;
+}
+.applied-notes-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--accent-primary);
+  margin-bottom: 12px;
+}
+.applied-notes-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.applied-notes-list li {
+  font-size: 13px;
+  color: var(--text-primary);
+  padding-left: 16px;
+  position: relative;
+  line-height: 1.6;
+}
+.applied-notes-list li::before { content: "→"; position: absolute; left: 0; color: var(--accent-primary); font-weight: 700; }
+
+/* cheat sheet */
+.cheat-card {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+.cheat-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+  background: white;
+  transition: background 0.12s ease;
+}
+.cheat-row:last-child { border-bottom: none; }
+.cheat-row:hover { background: rgba(200,232,74,0.08); }
+.cheat-row-star { background: rgba(45,90,39,0.06); border-left: 4px solid var(--accent-primary); }
+.cheat-row-star:hover { background: rgba(45,90,39,0.1); }
+.cheat-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  width: 36px;
+  flex-shrink: 0;
+  text-align: center;
+  padding-top: 2px;
+}
+.cheat-num-star { color: var(--accent-primary); }
+.cheat-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--accent-primary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.cheat-star-badge {
+  background: var(--accent-primary);
+  color: white;
+  font-size: 10px;
+  padding: 1px 7px;
+  border-radius: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.cheat-desc { font-size: 13px; color: var(--text-secondary); line-height: 1.6; }
+
+.cheat-claims-card {
+  background: var(--champagne);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  margin-bottom: 16px;
+}
+.claim-list { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
+.claim-item {
+  font-family: 'Lora', serif;
+  font-size: 13px;
+  font-style: italic;
+  line-height: 1.8;
+  color: var(--text-primary);
+  background: white;
+  border-left: 3px solid var(--accent-mid);
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+/* ── QUOTE ID ──────────────────────────────────────────────── */
+.qid-quote {
+  font-family: 'Lora', serif;
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--text-primary);
+  background: white;
+  border-left: 4px solid var(--accent-mid);
+  border-radius: 0 10px 10px 0;
+  padding: 18px 22px;
+  margin: 0 0 20px 0;
+}
+.qid-difficulty {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 10px;
+  padding: 3px 10px;
+  border-radius: 10px;
+  display: inline-block;
+}
+.qid-difficulty.easy { background: rgba(123,192,67,0.2); color: var(--accent-primary); }
+.qid-difficulty.medium { background: rgba(200,168,74,0.2); color: #5a4010; }
+.qid-difficulty.hard { background: rgba(188,71,73,0.15); color: var(--brick); }
+
+/* ── STAGGER ANIMATION ─────────────────────────────────────── */
+.nav-item {
+  opacity: 0;
+  animation: slideIn 0.3s ease forwards;
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+</style>
+</head>
+<body>
+
+<!-- ── SIDEBAR ─────────────────────────────────────────────── -->
+<nav id="sidebar">
+  <div class="sidebar-top">
+    <img src="kiwi.png" alt="Kiwi" class="kiwi-img">
+    <div class="sidebar-title">American Survey II<br>Revision Site</div>
+  </div>
+
+  <div class="sidebar-nav">
+    <div class="nav-item active" onclick="showSection('home')" style="animation-delay:0.05s">
+      <span class="nav-emoji">🏠</span>
+      <span class="nav-label">Home</span>
+    </div>
+    <div class="nav-item" onclick="showSection('works')" style="animation-delay:0.10s">
+      <span class="nav-emoji">📖</span>
+      <span class="nav-label">Works</span>
+      <span class="nav-badge" id="badge-works">0/6</span>
+    </div>
+    <div class="nav-item" onclick="showSection('schools')" style="animation-delay:0.15s">
+      <span class="nav-emoji">🏫</span>
+      <span class="nav-label">Schools</span>
+      <span class="nav-badge" id="badge-schools">0/5</span>
+    </div>
+    <div class="nav-item" onclick="showSection('terms')" style="animation-delay:0.20s">
+      <span class="nav-emoji">🃏</span>
+      <span class="nav-label">Terms</span>
+      <span class="nav-badge" id="badge-terms">0/28</span>
+    </div>
+    <div class="nav-item" onclick="showSection('mcq')" style="animation-delay:0.25s">
+      <span class="nav-emoji">❓</span>
+      <span class="nav-label">MCQ</span>
+      <span class="nav-badge" id="badge-mcq">0%</span>
+    </div>
+    <div class="nav-item" onclick="showSection('essay')" style="animation-delay:0.30s">
+      <span class="nav-emoji">✍️</span>
+      <span class="nav-label">Essay Models</span>
+      <span class="nav-badge" id="badge-essay">0/3</span>
+    </div>
+    <div class="nav-item" onclick="showSection('quoteid')" style="animation-delay:0.35s">
+      <span class="nav-emoji">💬</span>
+      <span class="nav-label">Quote ID</span>
+      <span class="nav-badge" id="badge-quoteid">0/14</span>
+    </div>
+  </div>
+
+  <div class="sidebar-bottom">
+    <div class="exam-label">Final Exam</div>
+    <div style="font-size:12px; margin-top:2px;">May 31 · 11:30–13:30</div>
+    <span id="countdown">–</span>
+    <div style="font-size:11px; margin-top:2px;">days to go</div>
+    <div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px;">
+      <button class="reset-btn" onclick="resetProgress()">🗑 Reset Progress</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ── MAIN CONTENT ─────────────────────────────────────────── -->
+<main id="main">
+
+  <!-- HOME ─────────────────────────────────────────────────── -->
+  <div class="section active" id="section-home">
+    <div class="section-inner">
+
+      <div class="hero">
+        <div class="progress-ring-wrap">
+          <svg width="160" height="160" viewBox="0 0 160 160">
+            <!-- track -->
+            <circle cx="80" cy="80" r="70" fill="none" stroke="#e8dfc8" stroke-width="8"/>
+            <!-- progress arc -->
+            <circle id="progress-arc" cx="80" cy="80" r="70" fill="none"
+              stroke="var(--accent-primary)" stroke-width="8"
+              stroke-linecap="round"
+              stroke-dasharray="439.82"
+              stroke-dashoffset="439.82"/>
+          </svg>
+          <img src="kiwi.png" alt="Kiwi" class="kiwi-center">
+        </div>
+        <div class="hero-greeting">Ready to ace it, Habiba.</div>
+        <div class="hero-sub">Final exam · May 31 · 11:30–13:30</div>
+      </div>
+
+      <!-- OVERALL BAR -->
+      <div class="overall-progress-wrap">
+        <div class="overall-progress-header">
+          <span class="overall-progress-label">Overall readiness</span>
+          <span class="overall-progress-pct" id="overall-pct">0%</span>
+        </div>
+        <div class="home-bar-track">
+          <div class="home-bar-fill home-bar-overall" id="bar-overall" style="width:0%"></div>
+        </div>
+      </div>
+
+      <!-- SECTION BARS -->
+      <div class="progress-bars-grid">
+        <div class="pbar-card" onclick="showSection('works')">
+          <div class="pbar-header">
+            <span class="pbar-emoji">📖</span>
+            <span class="pbar-label">Works</span>
+            <span class="pbar-count" id="pbar-count-works">0 / 6</span>
+          </div>
+          <div class="home-bar-track">
+            <div class="home-bar-fill" id="bar-works" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="pbar-card" onclick="showSection('schools')">
+          <div class="pbar-header">
+            <span class="pbar-emoji">🏫</span>
+            <span class="pbar-label">Schools</span>
+            <span class="pbar-count" id="pbar-count-schools">0 / 5</span>
+          </div>
+          <div class="home-bar-track">
+            <div class="home-bar-fill" id="bar-schools" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="pbar-card" onclick="showSection('terms')">
+          <div class="pbar-header">
+            <span class="pbar-emoji">🃏</span>
+            <span class="pbar-label">Terms</span>
+            <span class="pbar-count" id="pbar-count-terms">0 / 28</span>
+          </div>
+          <div class="home-bar-track">
+            <div class="home-bar-fill" id="bar-terms" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="pbar-card" onclick="showSection('essay')">
+          <div class="pbar-header">
+            <span class="pbar-emoji">✍️</span>
+            <span class="pbar-label">Essay Models</span>
+            <span class="pbar-count" id="pbar-count-essay">0 / 3</span>
+          </div>
+          <div class="home-bar-track">
+            <div class="home-bar-fill" id="bar-essay" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="pbar-card" onclick="showSection('mcq')">
+          <div class="pbar-header">
+            <span class="pbar-emoji">❓</span>
+            <span class="pbar-label">MCQ best</span>
+            <span class="pbar-count" id="pbar-count-mcq">not started</span>
+          </div>
+          <div class="home-bar-track">
+            <div class="home-bar-fill home-bar-mcq" id="bar-mcq" style="width:0%"></div>
+          </div>
+        </div>
+
+        <div class="pbar-card" onclick="showSection('quoteid')">
+          <div class="pbar-header">
+            <span class="pbar-emoji">💬</span>
+            <span class="pbar-label">Quote ID</span>
+            <span class="pbar-count" id="pbar-count-quoteid">not started</span>
+          </div>
+          <div class="home-bar-track">
+            <div class="home-bar-fill home-bar-quoteid" id="bar-quoteid" style="width:0%"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="exam-callout">
+        <h3>📌 What the exam will test</h3>
+        <ul>
+          <li>Essay on "To Build a Fire" — prepare themes and characteristics</li>
+          <li>Quote identification — know your works cold</li>
+          <li>MCQ — literary schools, authors, analytical links</li>
+          <li>Short answers — terms, devices, specific details</li>
+          <li>Naturalism and Determinism — core of everything</li>
+        </ul>
+      </div>
+
+      <div class="jump-grid">
+        <div class="jump-card" onclick="showSection('works')">
+          <span class="jump-emoji">📖</span>
+          <div class="jump-info">
+            <div class="jump-title">Works</div>
+            <div class="jump-badge" id="jbadge-works">0 of 6 completed</div>
+          </div>
+        </div>
+        <div class="jump-card" onclick="showSection('schools')">
+          <span class="jump-emoji">🏫</span>
+          <div class="jump-info">
+            <div class="jump-title">Schools</div>
+            <div class="jump-badge" id="jbadge-schools">0 of 5 completed</div>
+          </div>
+        </div>
+        <div class="jump-card" onclick="showSection('terms')">
+          <span class="jump-emoji">🃏</span>
+          <div class="jump-info">
+            <div class="jump-title">Terms</div>
+            <div class="jump-badge" id="jbadge-terms">0 of 28 learned</div>
+          </div>
+        </div>
+        <div class="jump-card" onclick="showSection('mcq')">
+          <span class="jump-emoji">❓</span>
+          <div class="jump-info">
+            <div class="jump-title">MCQ</div>
+            <div class="jump-badge" id="jbadge-mcq">Not started</div>
+          </div>
+        </div>
+        <div class="jump-card" onclick="showSection('essay')">
+          <span class="jump-emoji">✍️</span>
+          <div class="jump-info">
+            <div class="jump-title">Essay Models</div>
+            <div class="jump-badge" id="jbadge-essay">0 of 3 viewed</div>
+          </div>
+        </div>
+        <div class="jump-card" onclick="showSection('quoteid')">
+          <span class="jump-emoji">💬</span>
+          <div class="jump-info">
+            <div class="jump-title">Quote ID</div>
+            <div class="jump-badge" id="jbadge-quoteid">Not started</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- WORKS ────────────────────────────────────────────────── -->
+  <div class="section" id="section-works">
+    <div class="section-inner">
+      <div class="section-header">
+        <h1>📖 Works</h1>
+        <div class="subtitle">Six literary works — themes, devices, and exam tips for each</div>
+        <div class="section-divider"></div>
+      </div>
+
+      <!-- works sub-nav -->
+      <div class="works-subnav" id="works-subnav">
+        <button class="work-tab active" onclick="showWork('to-build-a-fire')" id="tab-to-build-a-fire">
+          🔥 To Build a Fire <span class="tab-check" id="tcheck-to-build-a-fire"></span>
+        </button>
+        <button class="work-tab" onclick="showWork('the-open-boat')" id="tab-the-open-boat">
+          🌊 The Open Boat <span class="tab-check" id="tcheck-the-open-boat"></span>
+        </button>
+        <button class="work-tab" onclick="showWork('doc-hill')" id="tab-doc-hill">
+          🪦 Doc Hill <span class="tab-check" id="tcheck-doc-hill"></span>
+        </button>
+        <button class="work-tab" onclick="showWork('abel-melveny')" id="tab-abel-melveny">
+          🔧 Abel Melveny <span class="tab-check" id="tcheck-abel-melveny"></span>
+        </button>
+        <button class="work-tab" onclick="showWork('richard-cory')" id="tab-richard-cory">
+          👑 Richard Cory <span class="tab-check" id="tcheck-richard-cory"></span>
+        </button>
+        <button class="work-tab" onclick="showWork('the-mill')" id="tab-the-mill">
+          ⚙️ The Mill <span class="tab-check" id="tcheck-the-mill"></span>
+        </button>
+      </div>
+
+      <!-- ── WORK 1: TO BUILD A FIRE ── -->
+      <div class="work-page active" id="work-to-build-a-fire" data-theme="fire">
+
+        <div class="work-hero fire-hero">
+          <div class="work-title-row">
+            <h2 class="work-title">🔥 To Build a Fire</h2>
+            <div class="work-meta">Jack London · 1908 · Short Story</div>
+          </div>
+          <div class="work-tags">
+            <span class="pill-tag">Naturalism</span>
+            <span class="pill-tag">Determinism</span>
+            <span class="pill-tag">Fatalism</span>
+          </div>
+          <blockquote class="work-quote">
+            "Fifty degrees below zero was to him just precisely fifty degrees below zero."
+            <cite>The narrator's observation on the protagonist's fatal flaw</cite>
+          </blockquote>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">📋 Summary</h3>
+          <p>❄️ A nameless man decides to walk alone through the Yukon wilderness in extreme cold — somewhere around seventy-five degrees below zero. An experienced old-timer had warned him never to travel alone in such temperatures, but the man ignores this advice. He is confident in his own reasoning. He has a dog with him, and the dog clearly senses something is terribly wrong — it keeps wanting to stop, to dig into the snow, to wait. The man feels nothing like that. He just keeps walking.</p>
+          <p style="margin-top:10px">🌡️ At one point the man breaks through ice and gets his feet wet. He needs to build a fire quickly to dry out before the cold kills him. He manages to start one — but it is built under a spruce tree loaded with snow. The heat of the fire melts the snow above, which falls and puts out the flame. His hands are now too numb and frozen to strike another match properly. He tries, desperately, over and over. He cannot do it. His body is shutting down faster than his mind can accept.</p>
+          <p style="margin-top:10px">🐺 In his last moments, the man even tries to kill the dog with his bare hands to use its body warmth. But his hands are dead — he cannot grip. He eventually lies down in the snow and dies. The dog waits a while, then walks away toward the nearest camp where there are other people and fire. The dog survives because it trusted its instincts. The man dies because he trusted his intellect (reasoning ability) over nature's power. Nature did not care either way. It was never personal.</p>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🎨 Themes</h3>
+          <div class="themes-grid">
+            <div class="theme-card">
+              <span class="theme-emoji">🌿</span>
+              <div><strong>Nature's Indifference <em>(اللامبالاة)</em></strong><p>Nature is not evil and is not targeting the man. It simply operates by its own physical laws and does not notice or care whether any creature lives or dies.</p></div>
+            </div>
+            <div class="theme-card">
+              <span class="theme-emoji">⚙️</span>
+              <div><strong>Instinct vs Intellect</strong><p>Instinct (غريزة) = the dog's natural body knowledge. Intellect (عقل) = the man's logical thinking. In this story, instinct wins. The dog never reasons — it just feels danger and responds. The man reasons carefully and still dies.</p></div>
+            </div>
+            <div class="theme-card">
+              <span class="theme-emoji">🎲</span>
+              <div><strong>Determinism <em>(الحتمية)</em></strong><p>The idea that the man's death was fixed from the start — not because he made wrong choices, but because the environmental conditions made survival impossible no matter what he did.</p></div>
+            </div>
+            <div class="theme-card">
+              <span class="theme-emoji">🧠</span>
+              <div><strong>Hubris <em>(الغرور / الكبرياء المفرط)</em></strong><p>Hubris = dangerous overconfidence. The man genuinely believes he is smarter and stronger than the environment. This pride is exactly what kills him — he cannot imagine that nature is bigger than his brain.</p></div>
+            </div>
+            <div class="theme-card">
+              <span class="theme-emoji">🏔️</span>
+              <div><strong>Human Insignificance <em>(ضآلة الإنسان)</em></strong><p>The Yukon wilderness is vast, ancient, and indifferent. One man, no matter how clever, is simply a very small warm creature in a very cold place.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🔬 Literary Devices</h3>
+          <div class="devices-list">
+            <div class="device-row"><span class="device-name">Third-person limited narrator</span><span class="device-desc">We are inside the man's head, seeing his false confidence from the inside — this makes his downfall feel more real and more tragic</span></div>
+            <div class="device-row"><span class="device-name">Foreshadowing <em>(التمهيد)</em></span><span class="device-desc">The old-timer's warning at the start of the story tells us exactly what will happen — we just watch the man walk toward his own death</span></div>
+            <div class="device-row"><span class="device-name">Naturalistic description</span><span class="device-desc">London describes the cold like a scientist — precise temperatures, exact physical effects on the body. There is no emotion in the description. That clinical tone is the point.</span></div>
+            <div class="device-row"><span class="device-name">Symbolism — the dog</span><span class="device-desc">The dog is a living symbol of instinct and natural law. It knows things it cannot explain. The man knows nothing that saves him.</span></div>
+            <div class="device-row"><span class="device-name">Irony <em>(السخرية)</em></span><span class="device-desc">The man is the one with intelligence, language, tools, and fire-making ability. The dog has none of these. Yet the dog lives and the man dies. That reversal is the core irony of the story.</span></div>
+          </div>
+        </div>
+
+        <div class="work-block school-block">
+          <h3 class="block-title">🏫 Literary School Connection</h3>
+          <ul class="school-list">
+            <li><strong>Naturalism (الطبيعانية):</strong> humans are biological creatures shaped by their environment — they have no meaningful free will. The cold is not a villain. It is a natural force, and the man is simply not strong enough to survive it.</li>
+            <li><strong>Determinism (الحتمية):</strong> the man's death was inevitable (لا مفر منه) the moment he stepped out in those conditions alone. No decision he made after that point could have changed the outcome.</li>
+            <li><strong>Fatalism (القدرية):</strong> the story implies that fighting against your fate is pointless. The man tries everything. Nothing works. The end was already written by the temperature and the geography.</li>
+          </ul>
+        </div>
+
+        <div class="work-block exam-block">
+          <h3 class="block-title">🎯 Exam Tips</h3>
+          <ul class="exam-tips">
+            <li>The essay will very likely be on this work — prepare Naturalism AND Determinism together</li>
+            <li>Know the dog vs man contrast cold (pun intended)</li>
+            <li>Know the old-timer's warning and what it represents (foreshadowing)</li>
+            <li>Be ready to identify an excerpt from this story</li>
+            <li>Key quote zone: the man's thoughts about his own body failing</li>
+            <li>Possible MCQ: "Which work best illustrates Determinism?" → To Build a Fire</li>
+          </ul>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="done-to-build-a-fire">
+            <input type="checkbox" onchange="toggleWorkDone('to-build-a-fire', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── WORK 2: THE OPEN BOAT ── -->
+      <div class="work-page" id="work-the-open-boat" data-theme="ocean">
+
+        <div class="work-hero ocean-hero">
+          <div class="work-title-row">
+            <h2 class="work-title">🌊 The Open Boat</h2>
+            <div class="work-meta">Stephen Crane · 1897 · Short Story</div>
+          </div>
+          <div class="work-tags">
+            <span class="pill-tag ocean-tag">Naturalism</span>
+            <span class="pill-tag ocean-tag">Impressionism</span>
+          </div>
+          <blockquote class="work-quote ocean-quote">
+            "None of them knew the colour of the sky."
+            <cite>Opening line — immediately placing us inside limited human perception</cite>
+          </blockquote>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">📋 Summary</h3>
+          <p>🚢 Stephen Crane actually survived a real shipwreck in 1897 — this story is based on his experience. Four men survive the sinking of their ship and find themselves crammed into a tiny open lifeboat in the middle of the ocean. The four are: the captain (injured, cannot row), a cook (large and nervous), the oiler Billie (the strongest and most experienced), and the correspondent (a journalist — essentially Crane himself). They can see land. They can see a lighthouse. But the surf (موج عاتٍ) between them and the shore is too violent to row through.</p>
+          <p style="margin-top:10px">🌊 The men spend the entire story rowing, bailing water out of the boat, taking turns resting, and staring at a shore they cannot reach. At one point they see a man on the beach waving what looks like encouragement — but he is actually just waving hello, with no idea they are in danger. This moment captures the story's central feeling: humans think the universe is watching them. It is not. The sea does not know they exist.</p>
+          <p style="margin-top:10px">😔 When they finally decide to swim for shore through the surf, Billie the oiler — the strongest, most capable, most hardworking of all four men — drowns. The others survive. Crane's point is devastating and deliberate: nature does not reward virtue, effort, or strength. It just operates. Billie's death is not a punishment. It is simply what happened. That randomness is exactly the Naturalist (طبيعاني) argument.</p>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🎨 Themes</h3>
+          <div class="themes-grid">
+            <div class="theme-card ocean-theme">
+              <span class="theme-emoji">🌊</span>
+              <div><strong>Nature's Indifference <em>(اللامبالاة)</em></strong><p>The sea is not trying to kill these men. It simply exists. Waves crash because that is what waves do — not because the sea dislikes humans. This indifference (عدم الاكتراث) is more frightening than cruelty would be.</p></div>
+            </div>
+            <div class="theme-card ocean-theme">
+              <span class="theme-emoji">🤝</span>
+              <div><strong>Brotherhood / Solidarity <em>(التضامن)</em></strong><p>The men are strangers thrown together by disaster. But shared danger creates a bond that feels deeper than friendship. They care for each other genuinely — and yet the sea kills one of them anyway.</p></div>
+            </div>
+            <div class="theme-card ocean-theme">
+              <span class="theme-emoji">💀</span>
+              <div><strong>Mortality <em>(الفناء)</em></strong><p>The men face the real possibility of death every single minute. This is not dramatic — it is quiet, exhausting, and constant. Crane makes you feel how heavy that awareness is.</p></div>
+            </div>
+            <div class="theme-card ocean-theme">
+              <span class="theme-emoji">👁️</span>
+              <div><strong>Perception vs Reality</strong><p>Impressionism (انطباعية): the story gives us the correspondent's emotional and sensory experience of the sea — not an objective camera view. The sea feels enormous and threatening because that is how a frightened, exhausted man perceives it.</p></div>
+            </div>
+            <div class="theme-card ocean-theme">
+              <span class="theme-emoji">🎲</span>
+              <div><strong>Fate and Helplessness</strong><p>Billie's death is the proof that fate (القدر) in this universe is random. The best man dies. There is no justice in it. Nature does not grade on effort.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🔬 Literary Devices</h3>
+          <div class="devices-list">
+            <div class="device-row ocean-device"><span class="device-name">Impressionism <em>(الانطباعية)</em></span><span class="device-desc">The narrative is filtered through the correspondent's shifting emotions — we feel the cold, the exhaustion, the fear, the strange calm. Crane does not describe the sea as it objectively is; he describes how it feels.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Point of view — 3rd limited</span><span class="device-desc">We stay inside the correspondent's head throughout. His confusion, fear, and anger become our own.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Irony <em>(السخرية)</em></span><span class="device-desc">The most physically capable man (Billie) dies while the injured captain and the nervous cook survive. The universe rewards no one.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Repetition <em>(التكرار)</em></span><span class="device-desc">"If I am going to be drowned, why was I allowed to come thus far?" — the correspondent asks this over and over, looking for meaning. He finds none. That is the point.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Personification <em>(التشخيص)</em></span><span class="device-desc">The waves are described as if they have attitude and intention — even though the whole story argues they do not. This captures how human minds project meaning onto a meaningless universe.</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Naturalistic description</span><span class="device-desc">Cold numbers, exact distances, physical exhaustion described clinically. Like "To Build a Fire," Crane uses scientific detachment to show humans as small biological creatures in a large mechanical world.</span></div>
+          </div>
+        </div>
+
+        <div class="work-block school-block">
+          <h3 class="block-title">🏫 Literary School Connection</h3>
+          <ul class="school-list">
+            <li><strong>Naturalism (الطبيعانية):</strong> Billie's death is the clearest Naturalist statement in the story — the best man dies, proving that nature does not reward virtue or effort. Humans are powerless against natural forces.</li>
+            <li><strong>Impressionism (الانطباعية):</strong> the story is narrated through the correspondent's emotional and sensory state. Two people could experience the same storm completely differently depending on their inner state. There is no single, fixed, objective truth.</li>
+            <li><strong>Key distinction — exam critical:</strong> Naturalism tells us WHAT the sea does to humans. Impressionism tells us HOW humans experience it. Crane uses BOTH at the same time — this is the key insight for any essay or MCQ about this story.</li>
+          </ul>
+        </div>
+
+        <div class="work-block exam-block">
+          <h3 class="block-title">🎯 Exam Tips</h3>
+          <ul class="exam-tips">
+            <li>Model paragraph in your notes uses this story — know the structure</li>
+            <li>Link Naturalism AND Impressionism in one answer (just like the model paragraph)</li>
+            <li>Opening line "None of them knew the colour of the sky" — know why it matters (Impressionism)</li>
+            <li>Know why Billie the oiler's death is significant — it proves nature is indifferent</li>
+            <li>Possible MCQ: "Which device does Crane use to show limited perception?" → Impressionism</li>
+            <li>Quote ID risk: the "throw bricks at the temple" passage</li>
+          </ul>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="done-the-open-boat">
+            <input type="checkbox" onchange="toggleWorkDone('the-open-boat', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── WORK 3: DOC HILL ── -->
+      <div class="work-page" id="work-doc-hill" data-theme="editorial">
+
+        <div class="work-hero editorial-hero">
+          <div class="work-title-row">
+            <h2 class="work-title">🪦 Doc Hill</h2>
+            <div class="work-meta">Edgar Lee Masters · 1915 · Poem (Spoon River Anthology)</div>
+          </div>
+          <div class="work-tags">
+            <span class="pill-tag editorial-tag">Modernism</span>
+            <span class="pill-tag editorial-tag">Realism</span>
+          </div>
+          <blockquote class="work-quote editorial-quote">
+            "I went up and down the streets here..."
+            <cite>The speaker reflects on a life of service from beyond the grave</cite>
+          </blockquote>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">📋 Summary</h3>
+          <p>👴 The Spoon River Anthology by Edgar Lee Masters is a collection of poems where every single speaker is dead. Each poem is one person's voice from the grave — like a gravestone that could talk. Doc Hill is one of those voices. He was a doctor in the fictional small town of Spoon River, and from beyond death, he tells us about what his life was like.</p>
+          <p style="margin-top:10px">💊 What Doc Hill describes is a life of service (خدمة). He went up and down the streets of this small town, treating sick people — and he did it whether they could pay him or not. The poor came to him and he helped them anyway. He was not rich. He was not famous. He did not receive awards or great recognition (اعتراف) while alive. He simply did his work, quietly, because it was the right thing to do.</p>
+          <p style="margin-top:10px">🪦 Now that he is dead and looking back, there is no bitterness (مرارة) in his voice. He does not complain about the sacrifices he made or the money he never earned. He seems genuinely at peace — because his life had meaning, and that meaning came from what he gave to other people, not from what he accumulated for himself. This is exactly what separates him from Abel Melveny, the next poem in the course. Doc Hill gave. Abel kept. Doc Hill is at peace. Abel is full of regret.</p>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🎨 Themes</h3>
+          <div class="themes-grid">
+            <div class="theme-card editorial-theme">
+              <span class="theme-emoji">🩺</span>
+              <div><strong>Service and Sacrifice <em>(الخدمة والتضحية)</em></strong><p>Doc Hill gave his time, energy, and income to the community without expecting anything back. Masters presents this as the definition of a life well-lived.</p></div>
+            </div>
+            <div class="theme-card editorial-theme">
+              <span class="theme-emoji">🪦</span>
+              <div><strong>Death and Reflection <em>(الموت والتأمل)</em></strong><p>The grave-speaking device forces total honesty. The dead have no reason to lie or exaggerate. Doc Hill's calm retrospective (نظرة إلى الوراء) from death feels more truthful than anything a living narrator could offer.</p></div>
+            </div>
+            <div class="theme-card editorial-theme">
+              <span class="theme-emoji">🏘️</span>
+              <div><strong>Small Town Life</strong><p>Spoon River is a fictional town, but it represents any ordinary American community. These are not famous people — they are just neighbors, and that is the point. Ordinary lives matter.</p></div>
+            </div>
+            <div class="theme-card editorial-theme">
+              <span class="theme-emoji">💰</span>
+              <div><strong>Class and Poverty <em>(الطبقية والفقر)</em></strong><p>Doc Hill's willingness to treat the poor for free is a quiet political statement: some things are more important than money. In a society obsessed with wealth, this is a radical (جذري) position.</p></div>
+            </div>
+            <div class="theme-card editorial-theme">
+              <span class="theme-emoji">🕊️</span>
+              <div><strong>Quiet Dignity <em>(الكرامة الهادئة)</em></strong><p>There is no drama here, no heroism, no grand finale. Just a decent life, lived decently. Masters argues that this quiet dignity (كرامة) is enough — and in fact, more admirable than loud achievement.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🔬 Literary Devices</h3>
+          <div class="devices-list">
+            <div class="device-row"><span class="device-name">Dramatic monologue <em>(المونولوج الدرامي)</em></span><span class="device-desc">A dead person speaks directly to the reader. The "dramatic" part means the speaker reveals their personality through what they say and how they say it — not through the narrator's description.</span></div>
+            <div class="device-row"><span class="device-name">Free verse <em>(الشعر الحر)</em></span><span class="device-desc">No rhyme scheme, no fixed meter (إيقاع ثابت). Modernist poets rejected traditional poetic forms because forced rhyme felt artificial for honest, realistic subjects.</span></div>
+            <div class="device-row"><span class="device-name">Epitaph form <em>(شكل النقش على القبر)</em></span><span class="device-desc">An epitaph (نقش على شاهد القبر) is the text written on a gravestone. Every Spoon River poem mimics this form — short, direct, spoken from beyond death.</span></div>
+            <div class="device-row"><span class="device-name">Understatement <em>(التهوين)</em></span><span class="device-desc">Doc Hill describes enormous sacrifice in a very calm, simple way. He does not say "I gave everything and suffered greatly." He just describes what he did, plainly. The simplicity makes it more moving, not less.</span></div>
+            <div class="device-row"><span class="device-name">Realism <em>(الواقعية)</em></span><span class="device-desc">Ordinary person, ordinary town, ordinary life — no idealization (مثالية مصطنعة), no romanticization. Realism shows life as it actually is.</span></div>
+          </div>
+        </div>
+
+        <div class="work-block school-block">
+          <h3 class="block-title">🏫 Literary School Connection</h3>
+          <ul class="school-list">
+            <li><strong>Modernism (الحداثة):</strong> free verse form, anti-heroic (ضد البطولة المصطنعة) subject — Doc Hill is not a warrior or a famous man. He is just a country doctor. Modernism finds meaning in ordinary, unheroic lives. There is no resolution, no triumphant ending, just a life honestly reported.</li>
+            <li><strong>Realism (الواقعية):</strong> ordinary person in an ordinary situation. No divine reward, no dramatic twist. Just the facts of a life — and through those facts, Masters shows us something true about what matters.</li>
+          </ul>
+        </div>
+
+        <div class="work-block contrast-block">
+          <h3 class="block-title">⚖️ Contrast with Abel Melveny</h3>
+          <div class="contrast-grid">
+            <div class="contrast-col contrast-positive">
+              <div class="contrast-label">Doc Hill</div>
+              <ul>
+                <li>Gave everything to others</li>
+                <li>Active, selfless</li>
+                <li>Died with dignity</li>
+              </ul>
+            </div>
+            <div class="contrast-col contrast-negative">
+              <div class="contrast-label">Abel Melveny</div>
+              <ul>
+                <li>Kept everything for himself</li>
+                <li>Passive, self-absorbed</li>
+                <li>Died with regret</li>
+              </ul>
+            </div>
+          </div>
+          <p class="contrast-note">She may ask you to compare these two directly.</p>
+        </div>
+
+        <div class="work-block exam-block">
+          <h3 class="block-title">🎯 Exam Tips</h3>
+          <ul class="exam-tips">
+            <li>Know this poem line by line — she may give an excerpt and ask who is speaking or what it means</li>
+            <li>Know the Spoon River Anthology concept: dead speakers, dramatic monologue form</li>
+            <li>Know the difference between Doc Hill and Abel Melveny (same collection, different character types)</li>
+            <li>Possible MCQ: "Which literary school does Spoon River Anthology belong to?" → Modernism / Realism</li>
+            <li>Possible short answer: explain the significance of the "speaking from the grave" device</li>
+          </ul>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="done-doc-hill">
+            <input type="checkbox" onchange="toggleWorkDone('doc-hill', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── WORK 4: ABEL MELVENY ── -->
+      <div class="work-page" id="work-abel-melveny" data-theme="bitter">
+
+        <div class="work-hero bitter-hero">
+          <div class="work-title-row">
+            <h2 class="work-title">🔧 Abel Melveny</h2>
+            <div class="work-meta">Edgar Lee Masters · 1915 · Poem (Spoon River Anthology)</div>
+          </div>
+          <div class="work-tags">
+            <span class="pill-tag bitter-tag">Modernism</span>
+            <span class="pill-tag bitter-tag">Realism</span>
+          </div>
+          <blockquote class="work-quote bitter-quote">
+            "I bought every kind of machine that's known..."
+            <cite>Abel speaks of accumulation and the emptiness it left</cite>
+          </blockquote>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">📋 Summary</h3>
+          <p>🔧 Like Doc Hill, Abel Melveny speaks from the grave in the Spoon River Anthology. But where Doc Hill's poem is warm and peaceful, Abel's poem is full of regret (ندم). Abel spent his entire life buying machines and tools — sewing machines, grinders, cranes, and more — every new invention that came out, he wanted it. He would see something, get excited, buy it, bring it home, and... never use it.</p>
+          <p style="margin-top:10px">😔 He was always planning. "One day I'll build something with this." "When I have more time, I'll use that." But the time never came. The plans never became action (فعل). The machines rusted (صدأت) in his yard. His whole life was preparation without execution — like someone who buys a gym membership every January and never goes.</p>
+          <p style="margin-top:10px">⚙️ Masters uses Abel to critique materialism (المادية) — the belief that owning things equals living a full life. Abel had all the tools of creation but created nothing. He had all the potential (إمكانية) in the world but spent it on accumulation (تراكم). In death, he finally sees this clearly, but it is too late. The contrast with Doc Hill is deliberate: Doc Hill had very little but gave everything. Abel had everything and gave nothing — not even to himself.</p>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🎨 Themes</h3>
+          <div class="themes-grid">
+            <div class="theme-card bitter-theme">
+              <span class="theme-emoji">⚙️</span>
+              <div><strong>Materialism <em>(المادية)</em></strong><p>Materialism = caring too much about owning things. Abel believed that buying more tools meant living more fully. He was wrong. Possessions (ممتلكات) without purpose are just clutter.</p></div>
+            </div>
+            <div class="theme-card bitter-theme">
+              <span class="theme-emoji">😔</span>
+              <div><strong>Regret and Wasted Potential <em>(الندم والإمكانات المهدرة)</em></strong><p>Abel's voice from the grave is not angry — it is sad. He can see clearly now that he had the potential for a meaningful life and simply never acted on it. That clarity (وضوح) only came in death.</p></div>
+            </div>
+            <div class="theme-card bitter-theme">
+              <span class="theme-emoji">🔄</span>
+              <div><strong>Procrastination <em>(المماطلة / التسويف)</em></strong><p>Procrastination = always delaying what you need to do. "I'll start tomorrow." "Next year." Abel's whole life is one long postponement (تأجيل). Masters presents this as one of the most tragic human failures.</p></div>
+            </div>
+            <div class="theme-card bitter-theme">
+              <span class="theme-emoji">🪦</span>
+              <div><strong>Death as Revelation <em>(الموت كاكتشاف)</em></strong><p>Revelation (اكتشاف / كشف) = a moment of sudden understanding. Only in death can Abel see his life honestly. The grave gives him clarity that he never had while living.</p></div>
+            </div>
+            <div class="theme-card bitter-theme">
+              <span class="theme-emoji">🏭</span>
+              <div><strong>Industrial America <em>(أمريكا الصناعية)</em></strong><p>The Gilded Age (العصر الذهبي) was a period of rapid industrial growth in America where new machines were invented constantly. Abel's obsession with buying machines reflects the wider cultural obsession with technology and progress as ends in themselves.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🔬 Literary Devices</h3>
+          <div class="devices-list">
+            <div class="device-row bitter-device"><span class="device-name">Dramatic monologue <em>(المونولوج الدرامي)</em></span><span class="device-desc">Same form as Doc Hill — dead speaker addresses the reader directly. The key difference: Doc Hill's tone is calm. Abel's tone starts excited and becomes sorrowful.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Catalogue / Listing <em>(الجرد / القائمة)</em></span><span class="device-desc">Abel literally lists his machines — sewing machines, grinders, cranes, and more. The list keeps going and going. As it grows longer and more absurd, it starts to feel pathetic (مثير للشفقة) rather than impressive. That effect is intentional.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Irony <em>(السخرية)</em></span><span class="device-desc">The central irony: a man surrounded by tools of creation (أدوات الإنشاء) created absolutely nothing. Every machine around him represents something he never did.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Symbolism — machines <em>(رمزية الآلات)</em></span><span class="device-desc">Each rusting machine in Abel's yard symbolizes (يرمز إلى) a life goal he never pursued, a project he never started, a version of himself he never became.</span></div>
+            <div class="device-row bitter-device"><span class="device-name">Free verse <em>(الشعر الحر)</em></span><span class="device-desc">No forced rhyme or meter — Modernist form. The irregular, unforced rhythm mirrors a life that had no real structure or direction.</span></div>
+          </div>
+        </div>
+
+        <div class="work-block school-block">
+          <h3 class="block-title">🏫 Literary School Connection</h3>
+          <ul class="school-list">
+            <li><strong>Modernism:</strong> critique of industrial-era materialism, free verse, no redemptive arc</li>
+            <li><strong>Realism:</strong> ordinary man, ordinary failure — no heroism or idealization</li>
+          </ul>
+        </div>
+
+        <div class="work-block exam-block">
+          <h3 class="block-title">🎯 Exam Tips</h3>
+          <ul class="exam-tips">
+            <li>The Doc Hill vs Abel Melveny contrast is a likely short answer or MCQ link</li>
+            <li>Know the Spoon River Anthology context for both poems</li>
+            <li>Be ready to identify an excerpt as either Doc Hill or Abel Melveny</li>
+            <li>Abel = regret, materialism, procrastination</li>
+            <li>Doc Hill = service, sacrifice, quiet dignity</li>
+          </ul>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="done-abel-melveny">
+            <input type="checkbox" onchange="toggleWorkDone('abel-melveny', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── WORK 5: RICHARD CORY ── -->
+      <div class="work-page" id="work-richard-cory" data-theme="gilded">
+
+        <div class="work-hero gilded-hero">
+          <div class="work-title-row">
+            <h2 class="work-title">👑 Richard Cory</h2>
+            <div class="work-meta">Edwin Arlington Robinson · 1897 · Poem</div>
+          </div>
+          <div class="work-tags">
+            <span class="pill-tag gilded-tag">Modernism</span>
+            <span class="pill-tag gilded-tag">Realism</span>
+          </div>
+          <blockquote class="work-quote gilded-quote">
+            "And Richard Cory, one calm summer night, went home and put a bullet through his head."
+            <cite>The final lines — completely subverting everything before them</cite>
+          </blockquote>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">📋 Summary</h3>
+          <p>👑 The poem is narrated (يُروى) by the working-class townspeople — ordinary people who use the word "we" throughout, speaking as a collective (مجموعة). They describe Richard Cory, a man in their town who seems to have everything. He is rich, educated, elegant (أنيق), and graceful (رشيق). When he walks down the street, people notice him and admire him. Even when he just says "Good morning," they feel a thrill. He is the kind of person other people wish they could be.</p>
+          <p style="margin-top:10px">😶 Meanwhile, the townspeople themselves are struggling. They go without meat (لا يأكلون اللحم). They "curse the bread" — meaning the cheap, basic food they are forced to eat. They work hard and have very little. Every time they see Richard Cory, their envy (حسد) deepens. He has everything they want. He is everything they wish they were.</p>
+          <p style="margin-top:10px">💥 Then, in the last two lines — with no warning, no buildup, no explanation — Robinson tells us: Richard Cory went home one calm summer night and put a bullet through his head. That is it. No reason is given. No hint of what was happening inside him. The poem ends. The contrast is total and devastating: the man everyone envied most was the most miserable (تعيس) of all. The townspeople were envying (يحسدون) someone who had nothing worth envying. They never knew him at all.</p>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🎨 Themes</h3>
+          <div class="themes-grid">
+            <div class="theme-card gilded-theme">
+              <span class="theme-emoji">💔</span>
+              <div><strong>Appearances vs Reality <em>(المظهر مقابل الحقيقة)</em></strong><p>Richard Cory's public image (صورته العامة) is perfect: wealth, grace, education. His inner reality (حقيقته الداخلية) is total despair. The gap between what people show the world and what they actually feel is the poem's entire argument.</p></div>
+            </div>
+            <div class="theme-card gilded-theme">
+              <span class="theme-emoji">💰</span>
+              <div><strong>Wealth and Unhappiness <em>(الثروة والتعاسة)</em></strong><p>The poem directly challenges the idea that money equals happiness. Richard Cory has everything money can buy — and it is not enough. He is still utterly alone and in despair.</p></div>
+            </div>
+            <div class="theme-card gilded-theme">
+              <span class="theme-emoji">👥</span>
+              <div><strong>Class and Envy <em>(الطبقية والحسد)</em></strong><p>The townspeople envy (يحسدون) Cory while they suffer poverty. The bitter irony is that they are envying the wrong person entirely — the man they wished they were, was the unhappiest person among them.</p></div>
+            </div>
+            <div class="theme-card gilded-theme">
+              <span class="theme-emoji">🧠</span>
+              <div><strong>Isolation <em>(العزلة)</em></strong><p>Cory is physically surrounded by people — the whole town watches him and admires him. But that admiration (إعجاب) creates distance, not connection. Nobody actually knew him. He was completely alone in a crowd.</p></div>
+            </div>
+            <div class="theme-card gilded-theme">
+              <span class="theme-emoji">😶</span>
+              <div><strong>Narrative Perspective <em>(منظور السرد)</em></strong><p>The "we" narrator (صوت الجماعة) is crucial. We never hear Cory's voice. We only hear what others thought of him — which turns out to be completely wrong. The narrator's limited perspective (منظور محدود) is itself the point.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🔬 Literary Devices</h3>
+          <div class="devices-list">
+            <div class="device-row gilded-device"><span class="device-name">Dramatic irony <em>(السخرية الدرامية)</em></span><span class="device-desc">Dramatic irony = when the reader (or the town) builds up a picture that turns out to be completely wrong. We spend the whole poem admiring Cory. The ending destroys everything we thought we knew. The more we admired him, the more devastating the ending becomes.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">Volta <em>(الانعطافة / التحول)</em></span><span class="device-desc">Volta = a sudden turn or shift in a poem's direction. In "Richard Cory," the entire poem builds a golden image — then the volta in the final two lines smashes it completely. It is one of the most famous voltas in American poetry.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">First-person plural narrator <em>(الراوي بضمير الجمع)</em></span><span class="device-desc">"We" — the collective voice of the working-class townspeople. This choice means we never hear Cory's inner thoughts. We only see the surface (السطح), which is exactly the poem's point.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">Understatement <em>(التهوين)</em></span><span class="device-desc">The suicide is delivered in one short, calm line — no exclamation, no drama. That deliberate flatness is what makes it so shocking. If Robinson had written it dramatically, it would feel less real.</span></div>
+            <div class="device-row gilded-device"><span class="device-name">Iambic tetrameter <em>(البحر الإيقاعي)</em></span><span class="device-desc">Iambic tetrameter = a rhythmic pattern (نمط إيقاعي) of four beats per line: da-DUM da-DUM da-DUM da-DUM. It gives the poem an almost sing-song quality — which makes the dark ending even more jarring (صادم). Note: this is more traditional than Masters' free verse.</span></div>
+          </div>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">📝 Key Lines</h3>
+          <div class="key-lines">
+            <div class="key-line"><span class="kl-quote">"And he was always quietly arrayed"</span><span class="kl-meaning">He dressed well but without showiness — elegance without arrogance</span></div>
+            <div class="key-line"><span class="kl-quote">"And he was always human when he talked"</span><span class="kl-meaning">He was not condescending — he spoke to everyone as an equal</span></div>
+            <div class="key-line"><span class="kl-quote">"And he was rich — yes, richer than a king"</span><span class="kl-meaning">Hyperbole — his wealth was beyond ordinary comprehension</span></div>
+            <div class="key-line"><span class="kl-quote">"And went without the meat, and cursed the bread"</span><span class="kl-meaning">The townspeople were poor and struggling — survival-level poverty</span></div>
+            <div class="key-line gilded-volta"><span class="kl-quote">"...went home and put a bullet through his head."</span><span class="kl-meaning">The volta — devastatingly flat and casual phrasing for suicide</span></div>
+          </div>
+        </div>
+
+        <div class="work-block school-block">
+          <h3 class="block-title">🏫 Literary School Connection</h3>
+          <ul class="school-list">
+            <li><strong>Modernism:</strong> irony, disillusionment, rejection of the idea that wealth or status gives life meaning</li>
+            <li><strong>Realism:</strong> ordinary community, class observation, psychological complexity beneath surface appearances</li>
+          </ul>
+        </div>
+
+        <div class="work-block exam-block">
+          <h3 class="block-title">🎯 Exam Tips</h3>
+          <ul class="exam-tips">
+            <li>High risk for excerpt identification — the opening and closing lines are very distinct</li>
+            <li>Know who narrates (the townspeople as a collective "we")</li>
+            <li>The contrast between class envy and Richard Cory's actual suffering is key</li>
+            <li>Possible MCQ: "What literary device does the ending of Richard Cory demonstrate?" → Volta / Dramatic irony</li>
+            <li>Possible essay prompt: how does Robinson use narrative perspective to create irony?</li>
+          </ul>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="done-richard-cory">
+            <input type="checkbox" onchange="toggleWorkDone('richard-cory', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- ── WORK 6: THE MILL ── -->
+      <div class="work-page" id="work-the-mill" data-theme="mill">
+
+        <div class="work-hero mill-hero">
+          <div class="work-title-row">
+            <h2 class="work-title">⚙️ The Mill</h2>
+            <div class="work-meta">Edwin Arlington Robinson · 1920 · Poem</div>
+          </div>
+          <div class="work-tags">
+            <span class="pill-tag mill-tag">Modernism</span>
+            <span class="pill-tag mill-tag">Realism</span>
+            <span class="pill-tag mill-tag">Industrial Context</span>
+          </div>
+          <blockquote class="work-quote mill-quote">
+            "The miller's wife had waited long, the tea was cold, the fire was dead."
+            <cite>A poem of quiet domestic tragedy and industrial despair</cite>
+          </blockquote>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">📋 Summary</h3>
+          <p>⚙️ The poem opens with a domestic (منزلي) image: the miller's wife is waiting for her husband to come home. The tea is cold. The fire is dead. These small details — cold tea, dead fire — already signal something is wrong. We feel the dread (رهبة) before we understand it. The miller does not come home because he has hanged himself inside the mill. He took his own life.</p>
+          <p style="margin-top:10px">🏭 The reason, though Robinson never states it directly, is the Second Industrial Revolution (الثورة الصناعية الثانية). This was the period in the late 1800s when new industrial machines replaced many traditional trades and skilled crafts. The miller's trade — grinding grain by hand mill — had become obsolete (بائد / مهجور). His livelihood (مصدر رزقه) was gone. His identity as a craftsman (حرفي) was gone. He had no place in the new world.</p>
+          <p style="margin-top:10px">🌊 The poem ends without ever stating what happens to the wife. But Robinson gives us water imagery — the dark pond near the mill, described in slow, hypnotic (تنويمي) language. The reader understands: she is going to the pond. She will drown herself. She is following her husband into death, not out of weakness, but because the world they built their lives around no longer exists. Robinson never says this. He implies (يلمح) it through imagery, and that silence is more powerful than any direct statement could be.</p>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🎨 Themes</h3>
+          <div class="themes-grid">
+            <div class="theme-card mill-theme">
+              <span class="theme-emoji">🏭</span>
+              <div><strong>Industrial Decline <em>(الانهيار الصناعي)</em></strong><p>The Second Industrial Revolution made entire trades disappear. The miller did not lose his job because he failed — he lost it because machines replaced him. His death is a direct result of economic and technological change, not personal weakness.</p></div>
+            </div>
+            <div class="theme-card mill-theme">
+              <span class="theme-emoji">💔</span>
+              <div><strong>Grief and Despair <em>(الحزن واليأس)</em></strong><p>The wife's implied death mirrors (تعكس) her husband's. Her grief is not just personal — it is the grief of a way of life ending. She cannot imagine a world without the mill, without her husband, without the life they shared.</p></div>
+            </div>
+            <div class="theme-card mill-theme">
+              <span class="theme-emoji">⏳</span>
+              <div><strong>Obsolescence <em>(الاندثار / التقادم)</em></strong><p>Obsolescence = becoming outdated and no longer needed. The miller's skill (مهارة) was real and valuable for centuries — then suddenly, machines did it faster. His whole identity was built on something the world no longer wanted. That kind of loss destroys a person.</p></div>
+            </div>
+            <div class="theme-card mill-theme">
+              <span class="theme-emoji">🌊</span>
+              <div><strong>Death as Escape <em>(الموت كهروب)</em></strong><p>Both the miller and his wife choose death rather than adapt to a changed world. Robinson does not judge them. He presents their choice as a kind of logic — when the world you belong to disappears, what is left?</p></div>
+            </div>
+            <div class="theme-card mill-theme">
+              <span class="theme-emoji">😶</span>
+              <div><strong>Silence and Implication <em>(الصمت والتلميح)</em></strong><p>Implication (تلميح) = suggesting something without saying it directly. The wife's death is never stated. Robinson trusts the reader to understand it from the imagery. This restraint (ضبط النفس الأدبي) is a Modernist technique — what is not said can be more powerful than what is.</p></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">🔬 Literary Devices</h3>
+          <div class="devices-list">
+            <div class="device-row mill-device"><span class="device-name">Implication / Suggestion <em>(التلميح)</em></span><span class="device-desc">The wife's death is never directly stated. The reader infers it (يستنتجه) from the water imagery — the dark pond, the hypnotic description of the stream. Robinson gives you the pieces and trusts you to assemble them.</span></div>
+            <div class="device-row mill-device"><span class="device-name">Symbolism — the pond <em>(رمزية البركة)</em></span><span class="device-desc">The dark water near the mill symbolizes death and the pull of despair. Just as the mill symbolizes the lost livelihood (الرزق الضائع), the pond symbolizes the path the wife chooses when that livelihood is gone.</span></div>
+            <div class="device-row mill-device"><span class="device-name">Dramatic irony <em>(السخرية الدرامية)</em></span><span class="device-desc">The reader understands the wife is moving toward her death before she (perhaps) fully understands it herself. We watch her drift toward the water knowing what it means — she may not.</span></div>
+            <div class="device-row mill-device"><span class="device-name">Modernist restraint <em>(الضبط الحداثي)</em></span><span class="device-desc">Restraint = holding emotion back. Robinson describes enormous tragedy in a quiet, controlled voice. This is the opposite of melodrama (مبالغة عاطفية). The quieter the telling, the heavier it feels.</span></div>
+            <div class="device-row mill-device"><span class="device-name">Narrative ellipsis <em>(الحذف السردي)</em></span><span class="device-desc">Ellipsis (حذف) = deliberately leaving out key moments so the reader fills in the gaps. We never see the miller die. We never see the wife enter the water. Robinson leaves the most important moments unwritten — which makes them more haunting (مؤثر / يسكن الذاكرة).</span></div>
+          </div>
+        </div>
+
+        <div class="work-block">
+          <h3 class="block-title">📝 Key Lines</h3>
+          <div class="key-lines">
+            <div class="key-line"><span class="kl-quote">"The miller's wife had waited long"</span><span class="kl-meaning">Immediately sets up waiting, absence, dread</span></div>
+            <div class="key-line"><span class="kl-quote">"The tea was cold, the fire was dead"</span><span class="kl-meaning">Domestic details that signal something is very wrong</span></div>
+            <div class="key-line"><span class="kl-quote">"Black water, smooth above the weir"</span><span class="kl-meaning">The pond near the mill — foreshadowing her own death by drowning</span></div>
+            <div class="key-line"><span class="kl-quote">"Like a stream running through a dream"</span><span class="kl-meaning">The water imagery — she is drawn to it, almost hypnotically</span></div>
+          </div>
+        </div>
+
+        <div class="work-block school-block">
+          <h3 class="block-title">🏫 Literary School Connection</h3>
+          <ul class="school-list">
+            <li><strong>Modernism:</strong> restraint, ambiguity, industrial despair, implied rather than stated tragedy</li>
+            <li><strong>Realism:</strong> domestic life, class, economic forces — the Second Industrial Revolution as backdrop</li>
+          </ul>
+        </div>
+
+        <div class="work-block contrast-block">
+          <h3 class="block-title">⚖️ Contrast with Richard Cory</h3>
+          <div class="contrast-grid">
+            <div class="contrast-col">
+              <div class="contrast-label">Richard Cory</div>
+              <ul>
+                <li>Sudden shocking ending</li>
+                <li>External observer narration</li>
+                <li>About image and class envy</li>
+              </ul>
+            </div>
+            <div class="contrast-col">
+              <div class="contrast-label">The Mill</div>
+              <ul>
+                <li>Slow, building dread</li>
+                <li>More interior and domestic</li>
+                <li>About economic loss and grief</li>
+              </ul>
+            </div>
+          </div>
+          <p class="contrast-note">Both: suicide, despair beneath surface, Modernist understatement, same poet (Robinson).</p>
+        </div>
+
+        <div class="work-block exam-block">
+          <h3 class="block-title">🎯 Exam Tips</h3>
+          <ul class="exam-tips">
+            <li>Read the poems carefully and know what each line means — she may ask about a specific line</li>
+            <li>Know the mill as a symbol of industrial obsolescence</li>
+            <li>Know that the wife's death is implied, not stated — and why that matters literarily (narrative ellipsis)</li>
+            <li>Be ready to identify the poem from an excerpt</li>
+            <li>Possible short answer: explain the significance of the mill in the context of the Second Industrial Revolution</li>
+            <li>Compare/contrast Richard Cory and The Mill is a realistic exam question</li>
+          </ul>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="done-the-mill">
+            <input type="checkbox" onchange="toggleWorkDone('the-mill', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCHOOLS ──────────────────────────────────────────────── -->
+  <div class="section" id="section-schools">
+    <div class="section-inner">
+      <div class="section-header">
+        <h1>🏫 Schools</h1>
+        <div class="subtitle">Five literary movements — definitions, characteristics, and exam triggers</div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="works-subnav">
+        <button class="work-tab active" onclick="showSchool('naturalism')" id="stab-naturalism">🌿 Naturalism <span class="tab-check" id="scheck-naturalism"></span></button>
+        <button class="work-tab" onclick="showSchool('impressionism')" id="stab-impressionism">🎨 Impressionism <span class="tab-check" id="scheck-impressionism"></span></button>
+        <button class="work-tab" onclick="showSchool('realism')" id="stab-realism">🪟 Realism <span class="tab-check" id="scheck-realism"></span></button>
+        <button class="work-tab" onclick="showSchool('modernism')" id="stab-modernism">⚡ Modernism <span class="tab-check" id="scheck-modernism"></span></button>
+        <button class="work-tab" onclick="showSchool('regionalism')" id="stab-regionalism">🌾 Regionalism <span class="tab-check" id="scheck-regionalism"></span></button>
+      </div>
+
+      <!-- NATURALISM -->
+      <div class="work-page active" id="school-naturalism">
+        <div class="work-hero" style="background:linear-gradient(135deg,#e8f0e4,#d4e8d0);border-left:5px solid var(--accent-primary)">
+          <h2 class="work-title" style="color:var(--accent-primary)">🌿 Naturalism</h2>
+          <div class="work-meta">1880s–1910s</div>
+          <p style="margin-top:10px;font-size:14px;font-style:italic;color:var(--text-secondary)">Literature that treats humans like animals — products of biology, environment, and forces they cannot control.</p>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">Core Beliefs</h3>
+          <ul class="school-list">
+            <li>Humans do not have free will — shaped entirely by heredity and environment</li>
+            <li>Nature is indifferent — it does not care whether humans survive or suffer</li>
+            <li>Science and observation should drive storytelling, not romance or idealism</li>
+            <li>Life is often brutal, and literature should not flinch from showing that</li>
+          </ul>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">How to Spot It</h3>
+          <div class="devices-list">
+            <div class="device-row"><span class="device-name">Characters</span><span class="device-desc">Controlled by forces larger than themselves</span></div>
+            <div class="device-row"><span class="device-name">Descriptions</span><span class="device-desc">Detailed, clinical, almost scientific descriptions of environment</span></div>
+            <div class="device-row"><span class="device-name">Justice</span><span class="device-desc">No divine justice — bad things happen regardless of morality</span></div>
+            <div class="device-row"><span class="device-name">Scale</span><span class="device-desc">The natural world is powerful; humans are small</span></div>
+            <div class="device-row"><span class="device-name">Themes</span><span class="device-desc">Survival, instinct, poverty, determinism</span></div>
+          </div>
+        </div>
+        <div class="work-block school-block">
+          <h3 class="block-title">Works in This Course</h3>
+          <ul class="school-list">
+            <li><strong>"To Build a Fire"</strong> (Jack London) — primary Naturalist text</li>
+            <li><strong>"The Open Boat"</strong> (Stephen Crane) — Naturalism combined with Impressionism</li>
+          </ul>
+        </div>
+        <div class="work-block" style="background:rgba(45,90,39,0.05);border-left:4px solid var(--accent-mid)">
+          <h3 class="block-title">Exam Trigger Phrases</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+            <span class="pill-tag">"indifferent to human suffering"</span>
+            <span class="pill-tag">"forces beyond human control"</span>
+            <span class="pill-tag">"survival of the fittest"</span>
+            <span class="pill-tag">"environment shapes the character"</span>
+            <span class="pill-tag">"biological determinism"</span>
+          </div>
+        </div>
+        <div class="work-done-row">
+          <label class="done-toggle" id="sdone-naturalism">
+            <input type="checkbox" onchange="toggleSchoolDone('naturalism', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- IMPRESSIONISM -->
+      <div class="work-page" id="school-impressionism">
+        <div class="work-hero ocean-hero">
+          <h2 class="work-title" style="color:#2a5540">🎨 Impressionism</h2>
+          <div class="work-meta">1890s–1910s</div>
+          <p style="margin-top:10px;font-size:14px;font-style:italic;color:var(--text-secondary)">Literature that captures experience through subjective perception — how things feel and look to the characters, not how they objectively are.</p>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">Core Beliefs</h3>
+          <ul class="school-list">
+            <li>Reality is filtered through individual perception — two people see the same event differently</li>
+            <li>Emotion, mood, and sensory experience matter more than plot mechanics</li>
+            <li>The inner life of a character is as important as what happens externally</li>
+            <li>Truth is not fixed — it shifts depending on who is perceiving it</li>
+          </ul>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">How to Spot It</h3>
+          <div class="devices-list">
+            <div class="device-row ocean-device"><span class="device-name">Descriptions</span><span class="device-desc">Vivid sensory details — what is seen, heard, felt in the moment</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Emotion</span><span class="device-desc">Shifting emotional states — the character's mood affects how we experience the scene</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Structure</span><span class="device-desc">Fragmented or non-linear perception</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Focus</span><span class="device-desc">The immediate, the fleeting, the sensory</span></div>
+            <div class="device-row ocean-device"><span class="device-name">Placement</span><span class="device-desc">Reader is placed inside the character's experience</span></div>
+          </div>
+        </div>
+        <div class="work-block school-block">
+          <h3 class="block-title">Works in This Course</h3>
+          <ul class="school-list">
+            <li><strong>"The Open Boat"</strong> (Stephen Crane) — especially the correspondent's perspective</li>
+            <li><strong>Key distinction:</strong> Naturalism = the sea does not care. Impressionism = we experience the sea through the correspondent's fear. Crane uses BOTH.</li>
+          </ul>
+        </div>
+        <div class="work-block" style="background:rgba(42,85,64,0.05);border-left:4px solid #5a9e7a">
+          <h3 class="block-title">Exam Trigger Phrases</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+            <span class="pill-tag ocean-tag">"subjective perception"</span>
+            <span class="pill-tag ocean-tag">"shifting emotions"</span>
+            <span class="pill-tag ocean-tag">"sensory detail"</span>
+            <span class="pill-tag ocean-tag">"how the character perceives"</span>
+            <span class="pill-tag ocean-tag">"psychological realism"</span>
+          </div>
+        </div>
+        <div class="work-done-row">
+          <label class="done-toggle" id="sdone-impressionism">
+            <input type="checkbox" onchange="toggleSchoolDone('impressionism', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- REALISM -->
+      <div class="work-page" id="school-realism">
+        <div class="work-hero editorial-hero">
+          <h2 class="work-title" style="color:#4a3a10">🪟 Realism</h2>
+          <div class="work-meta">1865–1900s</div>
+          <p style="margin-top:10px;font-size:14px;font-style:italic;color:var(--text-secondary)">Literature that depicts ordinary life as it actually is, without romanticizing or idealizing it.</p>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">Core Beliefs</h3>
+          <ul class="school-list">
+            <li>Literature should reflect real life — real people, real problems, real places</li>
+            <li>Avoid the idealized heroes and dramatic plots of Romanticism</li>
+            <li>Focus on middle and lower class experience</li>
+            <li>Accurate observation of human behavior and social conditions</li>
+          </ul>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">How to Spot It</h3>
+          <div class="devices-list">
+            <div class="device-row"><span class="device-name">Characters</span><span class="device-desc">Ordinary characters in ordinary situations</span></div>
+            <div class="device-row"><span class="device-name">Dialogue</span><span class="device-desc">Accurate dialogue — people talk like real people</span></div>
+            <div class="device-row"><span class="device-name">Commentary</span><span class="device-desc">Social commentary on class, race, gender, economy</span></div>
+            <div class="device-row"><span class="device-name">Endings</span><span class="device-desc">No miraculous endings or divine intervention</span></div>
+            <div class="device-row"><span class="device-name">Psychology</span><span class="device-desc">Characters are complex and contradicted</span></div>
+          </div>
+        </div>
+        <div class="work-block school-block">
+          <h3 class="block-title">Works in This Course</h3>
+          <ul class="school-list">
+            <li><strong>"Richard Cory"</strong> and <strong>"The Mill"</strong> (Robinson)</li>
+            <li><strong>"Doc Hill"</strong> and <strong>"Abel Melveny"</strong> (Masters)</li>
+            <li>Mark Twain's "A True Story" (Week 5 — context only)</li>
+          </ul>
+        </div>
+        <div class="work-block" style="background:rgba(139,105,20,0.05);border-left:4px solid #c8a84a">
+          <h3 class="block-title">Exam Trigger Phrases</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+            <span class="pill-tag editorial-tag">"ordinary life"</span>
+            <span class="pill-tag editorial-tag">"social conditions"</span>
+            <span class="pill-tag editorial-tag">"class commentary"</span>
+            <span class="pill-tag editorial-tag">"psychological complexity"</span>
+            <span class="pill-tag editorial-tag">"anti-romantic"</span>
+          </div>
+        </div>
+        <div class="work-done-row">
+          <label class="done-toggle" id="sdone-realism">
+            <input type="checkbox" onchange="toggleSchoolDone('realism', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- MODERNISM -->
+      <div class="work-page" id="school-modernism">
+        <div class="work-hero" style="background:linear-gradient(135deg,#e8eaf0,#d8dce8);border-top:4px solid #4a4a8a">
+          <h2 class="work-title" style="color:#2a2a6a">⚡ Modernism</h2>
+          <div class="work-meta">1900s–1940s</div>
+          <p style="margin-top:10px;font-size:14px;font-style:italic;color:var(--text-secondary)">Literature that breaks traditional forms and questions whether meaning, order, or progress are even real.</p>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">Core Beliefs</h3>
+          <ul class="school-list">
+            <li>Traditional structures (rhyme, plot, heroism) are inadequate for modern experience</li>
+            <li>WWI and industrialization destroyed faith in progress and order</li>
+            <li>The individual is isolated — modern life fragments identity</li>
+            <li>Experimentation with form is itself meaningful</li>
+            <li>Consciousness and interiority matter more than external events</li>
+          </ul>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">How to Spot It</h3>
+          <div class="devices-list">
+            <div class="device-row" style="border-left-color:#4a4a8a"><span class="device-name">Form</span><span class="device-desc">Free verse or unconventional poetic form</span></div>
+            <div class="device-row" style="border-left-color:#4a4a8a"><span class="device-name">Structure</span><span class="device-desc">Fragmented narrative or non-linear structure</span></div>
+            <div class="device-row" style="border-left-color:#4a4a8a"><span class="device-name">Themes</span><span class="device-desc">Alienation, isolation, disillusionment</span></div>
+            <div class="device-row" style="border-left-color:#4a4a8a"><span class="device-name">Plot</span><span class="device-desc">Rejection of traditional heroism or happy endings</span></div>
+            <div class="device-row" style="border-left-color:#4a4a8a"><span class="device-name">Resolution</span><span class="device-desc">Ambiguity — nothing is resolved neatly</span></div>
+          </div>
+        </div>
+        <div class="work-block school-block">
+          <h3 class="block-title">Works in This Course</h3>
+          <ul class="school-list">
+            <li><strong>"Doc Hill"</strong> — Modernist free verse, dramatic monologue</li>
+            <li><strong>"Abel Melveny"</strong> — Modernist critique of materialism</li>
+            <li><strong>"Richard Cory"</strong> — Modernist irony and disillusionment</li>
+            <li><strong>"The Mill"</strong> — Modernist restraint, industrial despair</li>
+          </ul>
+        </div>
+        <div class="work-block" style="background:rgba(74,74,138,0.05);border-left:4px solid #4a4a8a">
+          <h3 class="block-title">Exam Trigger Phrases</h3>
+          <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px">
+            <span class="pill-tag" style="background:rgba(74,74,138,0.1);color:#2a2a6a;border-color:#9090c0">"disillusionment"</span>
+            <span class="pill-tag" style="background:rgba(74,74,138,0.1);color:#2a2a6a;border-color:#9090c0">"alienation"</span>
+            <span class="pill-tag" style="background:rgba(74,74,138,0.1);color:#2a2a6a;border-color:#9090c0">"fragmented identity"</span>
+            <span class="pill-tag" style="background:rgba(74,74,138,0.1);color:#2a2a6a;border-color:#9090c0">"rejection of traditional form"</span>
+            <span class="pill-tag" style="background:rgba(74,74,138,0.1);color:#2a2a6a;border-color:#9090c0">"free verse"</span>
+            <span class="pill-tag" style="background:rgba(74,74,138,0.1);color:#2a2a6a;border-color:#9090c0">"dramatic monologue"</span>
+          </div>
+        </div>
+        <div class="work-done-row">
+          <label class="done-toggle" id="sdone-modernism">
+            <input type="checkbox" onchange="toggleSchoolDone('modernism', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- REGIONALISM -->
+      <div class="work-page" id="school-regionalism">
+        <div class="work-hero" style="background:linear-gradient(135deg,#f0ede0,#e8e0c8);border-left:5px solid #8b7840">
+          <h2 class="work-title" style="color:#4a3a10">🌾 Regionalism</h2>
+          <div class="work-meta">1865–1895</div>
+          <p style="margin-top:10px;font-size:14px;font-style:italic;color:var(--text-secondary)">Literature that focuses on the specific culture, dialect, and landscape of a particular geographic region of America.</p>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">Core Beliefs</h3>
+          <ul class="school-list">
+            <li>Local color and specific place matter — not just a generic "America"</li>
+            <li>Dialect, local customs, and regional characters deserve serious literary attention</li>
+            <li>Often a response to industrialization — preserve what is disappearing</li>
+          </ul>
+        </div>
+        <div class="work-block">
+          <h3 class="block-title">How to Spot It</h3>
+          <div class="devices-list">
+            <div class="device-row" style="border-left-color:#8b7840"><span class="device-name">Setting</span><span class="device-desc">Strong sense of a specific state, region, or community</span></div>
+            <div class="device-row" style="border-left-color:#8b7840"><span class="device-name">Dialogue</span><span class="device-desc">Local dialect in speech</span></div>
+            <div class="device-row" style="border-left-color:#8b7840"><span class="device-name">Characters</span><span class="device-desc">Tied to their land or community</span></div>
+            <div class="device-row" style="border-left-color:#8b7840"><span class="device-name">Tone</span><span class="device-desc">Often nostalgic or preservationist</span></div>
+          </div>
+        </div>
+        <div class="work-block school-block">
+          <h3 class="block-title">Works in This Course</h3>
+          <ul class="school-list">
+            <li>Mark Twain's "A True Story" (Week 5 — context only, not an exam focus work)</li>
+            <li><strong>Exam context:</strong> know for MCQ matching only — "which school focuses on local color and dialect?" → Regionalism. Know Twain is associated with it.</li>
+          </ul>
+        </div>
+        <div class="work-done-row">
+          <label class="done-toggle" id="sdone-regionalism">
+            <input type="checkbox" onchange="toggleSchoolDone('regionalism', this.checked)">
+            <span class="done-label">Mark as done</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- TERMS ────────────────────────────────────────────────── -->
+  <div class="section" id="section-terms">
+    <div class="section-inner">
+      <div class="section-header">
+        <h1>🃏 Terms</h1>
+        <div class="subtitle">Tap any card to flip it — definitions with course examples on the back</div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="terms-filters">
+        <button class="filter-btn active" onclick="filterTerms('all', this)">All</button>
+        <button class="filter-btn" onclick="filterTerms('device', this)">Literary Devices</button>
+        <button class="filter-btn" onclick="filterTerms('concept', this)">Concepts</button>
+        <button class="filter-btn" onclick="filterTerms('school', this)">Schools</button>
+      </div>
+
+      <div class="terms-grid" id="terms-grid">
+        <!-- cards injected by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- MCQ ──────────────────────────────────────────────────── -->
+  <div class="section" id="section-mcq">
+    <div class="section-inner">
+      <div class="section-header">
+        <h1>❓ MCQ</h1>
+        <div class="subtitle">40 questions, shuffled each session — confetti for correct answers</div>
+        <div class="section-divider"></div>
+      </div>
+
+      <!-- START SCREEN -->
+      <div id="mcq-start">
+        <div class="mcq-start-card">
+          <div class="mcq-start-emoji">❓</div>
+          <h2 class="mcq-start-title">Practice MCQ</h2>
+          <p class="mcq-start-desc">40 questions covering all works, literary schools, devices, and deeper analytical thinking. Questions and options shuffle every session.</p>
+          <div class="mcq-best-row" id="mcq-best-row" style="display:none">
+            <span>Personal best:</span>
+            <span class="mcq-best-score" id="mcq-best-display">–</span>
+          </div>
+          <button class="mcq-start-btn" onclick="startMCQ()">Start Quiz</button>
+        </div>
+      </div>
+
+      <!-- QUIZ SCREEN -->
+      <div id="mcq-quiz" style="display:none">
+        <div class="mcq-card">
+          <div class="mcq-meta-row">
+            <div class="mcq-progress-bar-wrap"><div class="mcq-progress-bar" id="mcq-progress-bar"></div></div>
+            <div class="mcq-qnum" id="mcq-qnum">Q1 / 25</div>
+          </div>
+          <div class="mcq-question" id="mcq-question"></div>
+          <div class="mcq-options" id="mcq-options"></div>
+          <div class="mcq-feedback" id="mcq-feedback" style="display:none"></div>
+          <div class="mcq-next-row" id="mcq-next-row" style="display:none">
+            <button class="mcq-next-btn" onclick="nextMCQ()">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- END SCREEN -->
+      <div id="mcq-end" style="display:none">
+        <div class="mcq-end-card">
+          <div class="mcq-end-score-label">Your score</div>
+          <div class="mcq-end-score" id="mcq-end-score"></div>
+          <div class="mcq-end-sub" id="mcq-end-sub"></div>
+          <div class="mcq-end-best" id="mcq-end-best"></div>
+          <button class="mcq-start-btn" onclick="startMCQ()" style="margin-top:24px">Try Again</button>
+          <button class="mcq-ghost-btn" onclick="showSection('home')" style="margin-top:10px">Back to Home</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ESSAY ────────────────────────────────────────────────── -->
+  <div class="section" id="section-essay">
+    <div class="section-inner">
+      <div class="section-header">
+        <h1>✍️ Essay Models</h1>
+        <div class="subtitle">7-step model paragraph — structure, applied example, and cheat sheet</div>
+        <div class="section-divider"></div>
+      </div>
+
+      <div class="works-subnav" id="essay-subnav">
+        <button class="work-tab active" onclick="showEssay('model')" id="etab-model">① The Model <span class="tab-check" id="echeck-model"></span></button>
+        <button class="work-tab" onclick="showEssay('applied')" id="etab-applied">② Applied: To Build a Fire <span class="tab-check" id="echeck-applied"></span></button>
+        <button class="work-tab" onclick="showEssay('cheatsheet')" id="etab-cheatsheet">③ Cheat Sheet <span class="tab-check" id="echeck-cheatsheet"></span></button>
+      </div>
+
+      <!-- PAGE 1: THE MODEL -->
+      <div class="essay-page active" id="essay-model">
+        <div class="essay-intro-card">
+          <p>Each paragraph follows a 7-step structure. Tap any step to expand it. Master this structure and you can write about any work in the exam.</p>
+        </div>
+        <div class="essay-formula-banner">Formula: <span>In "[Work]," [Author] uses [technique/school] to show that [central idea].</span></div>
+
+        <div class="step-block" onclick="toggleStep('step1')">
+          <div class="step-header">
+            <span class="step-num">①</span>
+            <span class="step-label">Topic Sentence</span>
+            <span class="step-toggle" id="step1-arrow">▼</span>
+          </div>
+          <div class="step-body" id="step1" style="display:none">
+            <div class="step-what">What it does: States your claim, names the work, names the literary school(s), and states the central idea you will argue.</div>
+            <div class="step-formula">Formula: In "[Work]," [Author] uses [technique/school] to show that [central idea].</div>
+            <div class="step-tip">Write this first. Everything else in the paragraph exists to prove it.</div>
+          </div>
+        </div>
+
+        <div class="step-block" onclick="toggleStep('step2')">
+          <div class="step-header">
+            <span class="step-num">②</span>
+            <span class="step-label">Explanation of Topic Sentence</span>
+            <span class="step-toggle" id="step2-arrow">▼</span>
+          </div>
+          <div class="step-body" id="step2" style="display:none">
+            <div class="step-what">What it does: Unpacks your claim in more detail. Explains what the literary school means and how it connects to the central idea. No quote yet.</div>
+            <div class="step-tip">Think of this as "what does my claim actually mean?" — define your terms and expand the argument before any evidence appears.</div>
+          </div>
+        </div>
+
+        <div class="step-block" onclick="toggleStep('step3')">
+          <div class="step-header">
+            <span class="step-num">③</span>
+            <span class="step-label">Paving the Way for an Example</span>
+            <span class="step-toggle" id="step3-arrow">▼</span>
+          </div>
+          <div class="step-body" id="step3" style="display:none">
+            <div class="step-what">What it does: A transition sentence that introduces where in the text the example comes from. Names the moment or character without quoting yet.</div>
+            <div class="step-formula">Formula: [Author] develops this idea when [character/narrator] [does/thinks/says something].</div>
+            <div class="step-tip">This sentence points to the quote. It signals to the reader that evidence is coming.</div>
+          </div>
+        </div>
+
+        <div class="step-block" onclick="toggleStep('step4')">
+          <div class="step-header">
+            <span class="step-num">④</span>
+            <span class="step-label">Giving an Example</span>
+            <span class="step-toggle" id="step4-arrow">▼</span>
+          </div>
+          <div class="step-body" id="step4" style="display:none">
+            <div class="step-what">What it does: The actual quote from the text. Use quotation marks. Attribute it correctly.</div>
+            <div class="step-tip">In an exam, if you cannot remember the exact words, paraphrase closely and note it is from the text. Accuracy of meaning matters more than verbatim perfection.</div>
+          </div>
+        </div>
+
+        <div class="step-block step-block-star" onclick="toggleStep('step5')">
+          <div class="step-header">
+            <span class="step-num">⑤</span>
+            <span class="step-label">Explaining and Analyzing the Example</span>
+            <span class="step-toggle" id="step5-arrow">▼</span>
+          </div>
+          <div class="step-body" id="step5" style="display:none">
+            <div class="step-what">What it does: The biggest block. Explains what the quote means, why it matters, how it connects to the literary school, and what it reveals about theme.</div>
+            <div class="step-marks-banner">Most marks live here. Do not just paraphrase the quote — analyze it.</div>
+            <div class="step-tip">Ask: What does this quote show? How does it prove my claim? What does it tell us about the school of thought? What does it reveal about the character or the world of the text?</div>
+          </div>
+        </div>
+
+        <div class="step-block" onclick="toggleStep('step6')">
+          <div class="step-header">
+            <span class="step-num">⑥</span>
+            <span class="step-label">Showing How the Example Supports the Topic Sentence</span>
+            <span class="step-toggle" id="step6-arrow">▼</span>
+          </div>
+          <div class="step-body" id="step6" style="display:none">
+            <div class="step-what">What it does: A "therefore" sentence that connects the analyzed example back to your original claim.</div>
+            <div class="step-formula">Start with: "Therefore..." / "This passage shows..." / "Because of this..."</div>
+            <div class="step-tip">This is the link-back. It should echo the language of your topic sentence. The reader should feel the argument completing a loop.</div>
+          </div>
+        </div>
+
+        <div class="step-block" onclick="toggleStep('step7')">
+          <div class="step-header">
+            <span class="step-num">⑦</span>
+            <span class="step-label">Concluding Statement</span>
+            <span class="step-toggle" id="step7-arrow">▼</span>
+          </div>
+          <div class="step-body" id="step7" style="display:none">
+            <div class="step-what">What it does: Closes the paragraph with a broader statement about what the work achieves. Pulls back from the specific example to the larger literary or thematic picture.</div>
+            <div class="step-tip">You can bring in other elements of the work here — the conclusion is the right place to widen the argument beyond your one example.</div>
+          </div>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="edone-model">
+            <input type="checkbox" onchange="markEssayViewed('model', this.checked)">
+            <span class="done-label">Mark as viewed</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- PAGE 2: APPLIED -->
+      <div class="essay-page" id="essay-applied">
+        <div class="essay-intro-card">
+          <p>Full model paragraph for the most likely exam essay topic. Every step labeled. Adapt this for the exam — you do not need to memorize it word for word, but know the structure cold.</p>
+        </div>
+
+        <div class="applied-topic-banner">Topic: Naturalism and Determinism in "To Build a Fire"</div>
+
+        <div class="applied-para">
+
+          <div class="applied-step">
+            <div class="applied-step-label">① Topic Sentence</div>
+            <p class="applied-text">In "To Build a Fire," Jack London uses Naturalism and Determinism to show that human beings are powerless against the forces of nature, and that no amount of intelligence or effort can overcome what the environment has already decided.</p>
+          </div>
+
+          <div class="applied-step">
+            <div class="applied-step-label">② Explanation of Topic Sentence</div>
+            <p class="applied-text">Through Naturalism, London portrays the man not as a hero but as a biological creature operating within an indifferent natural system. Determinism adds to this by suggesting that the man's death was inevitable from the moment he chose to travel alone in extreme cold. No decision he made could have changed the outcome because the forces against him were simply too large.</p>
+          </div>
+
+          <div class="applied-step">
+            <div class="applied-step-label">③ Paving the Way for an Example</div>
+            <p class="applied-text">London makes this most clear in the way the man's body fails him despite his desperate attempts to save himself.</p>
+          </div>
+
+          <div class="applied-step">
+            <div class="applied-step-label">④ Giving an Example</div>
+            <p class="applied-text lora-text">"The blood was alive in him, but the tips of all his fingers were dead" — his body is already shutting down beyond his control or understanding.</p>
+          </div>
+
+          <div class="applied-step applied-step-star">
+            <div class="applied-step-label">⑤ Explaining and Analyzing the Example <span class="marks-badge">most marks here</span></div>
+            <p class="applied-text">This moment illustrates the core Naturalist idea that the human body is subject to physical laws the mind cannot override. The man is intelligent — he knows he needs fire, he knows what to do — but because the cold is a force of nature and not a human opponent, his knowledge is useless. His hands cannot grip. His plan cannot execute. Determinism operates here because the conditions of the environment sealed his fate before the story even began. London's precise, clinical description of the body's failure, rather than an emotional or dramatic description, reflects the Naturalist method: nature is observed like a scientist would observe it, without sentiment.</p>
+          </div>
+
+          <div class="applied-step">
+            <div class="applied-step-label">⑥ Linking Back to the Topic Sentence</div>
+            <p class="applied-text">Therefore, this passage demonstrates how London uses Naturalism's insistence on environmental power and Determinism's logic of inevitable outcomes to show that the man never had a real chance — because the decision had already been made by forces he could not control.</p>
+          </div>
+
+          <div class="applied-step">
+            <div class="applied-step-label">⑦ Concluding Statement</div>
+            <p class="applied-text">Through the man's failure and the dog's survival, London ultimately argues that nature operates by its own laws, that instinct is more reliable than intellect in that system, and that the universe has no interest in whether any individual creature lives or dies.</p>
+          </div>
+
+        </div>
+
+        <div class="applied-notes-card">
+          <h3 class="applied-notes-title">📌 Annotation Notes</h3>
+          <ul class="applied-notes-list">
+            <li>Topic sentence names both Naturalism AND Determinism — this matches what the instructor values</li>
+            <li>Step ⑤ is the longest block by design — that is where most marks live</li>
+            <li>The dog appears in ⑦ even though the example in ④ is about the man — conclusion is the right place to widen the argument</li>
+            <li>The quote in ④ is approximate for exam purposes — accuracy of meaning matters more than verbatim perfection</li>
+          </ul>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="edone-applied">
+            <input type="checkbox" onchange="markEssayViewed('applied', this.checked)">
+            <span class="done-label">Mark as viewed</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+      <!-- PAGE 3: CHEAT SHEET -->
+      <div class="essay-page" id="essay-cheatsheet">
+        <div class="essay-intro-card">
+          <p>Quick-scan reference for the 7 steps. Read this before entering the exam hall.</p>
+        </div>
+
+        <div class="cheat-card">
+          <div class="cheat-row">
+            <span class="cheat-num">①</span>
+            <div class="cheat-content">
+              <div class="cheat-label">TOPIC SENTENCE</div>
+              <div class="cheat-desc">Claim + Work + School + Central idea</div>
+            </div>
+          </div>
+          <div class="cheat-row">
+            <span class="cheat-num">②</span>
+            <div class="cheat-content">
+              <div class="cheat-label">EXPLAIN YOUR CLAIM</div>
+              <div class="cheat-desc">What does the school mean here? How does it connect?</div>
+            </div>
+          </div>
+          <div class="cheat-row">
+            <span class="cheat-num">③</span>
+            <div class="cheat-content">
+              <div class="cheat-label">INTRODUCE THE EXAMPLE</div>
+              <div class="cheat-desc">Set up where in the text the example comes from</div>
+            </div>
+          </div>
+          <div class="cheat-row">
+            <span class="cheat-num">④</span>
+            <div class="cheat-content">
+              <div class="cheat-label">GIVE THE QUOTE</div>
+              <div class="cheat-desc">Exact or close-paraphrase, in quotation marks</div>
+            </div>
+          </div>
+          <div class="cheat-row cheat-row-star">
+            <span class="cheat-num cheat-num-star">⑤</span>
+            <div class="cheat-content">
+              <div class="cheat-label">ANALYZE THE QUOTE <span class="cheat-star-badge">most marks here</span></div>
+              <div class="cheat-desc">What does it mean? Why does it matter? How does it prove the school? What does it reveal about theme?</div>
+            </div>
+          </div>
+          <div class="cheat-row">
+            <span class="cheat-num">⑥</span>
+            <div class="cheat-content">
+              <div class="cheat-label">LINK BACK TO CLAIM</div>
+              <div class="cheat-desc">"Therefore..." / "This shows..." / "Because of this..."</div>
+            </div>
+          </div>
+          <div class="cheat-row">
+            <span class="cheat-num">⑦</span>
+            <div class="cheat-content">
+              <div class="cheat-label">CONCLUDE BROADLY</div>
+              <div class="cheat-desc">What does the work achieve overall? Pull back from the specific</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cheat-claims-card">
+          <h3 class="applied-notes-title">💡 Ready-Made Thesis Options for "To Build a Fire"</h3>
+          <div class="claim-list">
+            <div class="claim-item">In "To Build a Fire," Jack London uses Naturalism and Determinism to show that nature is completely indifferent to human survival, and that the forces of environment will always overpower human intelligence.</div>
+            <div class="claim-item">Through the contrast between the man and the dog, London argues in "To Build a Fire" that instinct — not intellect — is the only reliable guide in a Naturalist world where environment determines fate.</div>
+            <div class="claim-item">Jack London's "To Build a Fire" demonstrates the Naturalist belief that human beings are powerless against the forces of the natural world, because the cold operates as a force of Determinism that the man's choices cannot overcome.</div>
+            <div class="claim-item">In "To Build a Fire," London shows that hubris — specifically the man's overconfidence in his own intelligence — is what makes his Naturalistic fate complete, because he refuses to take the warnings of nature or the old-timer seriously.</div>
+          </div>
+        </div>
+
+        <div class="work-done-row">
+          <label class="done-toggle" id="edone-cheatsheet">
+            <input type="checkbox" onchange="markEssayViewed('cheatsheet', this.checked)">
+            <span class="done-label">Mark as viewed</span>
+            <span class="done-check">✓ Done</span>
+          </label>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- QUOTE ID ─────────────────────────────────────────────── -->
+  <div class="section" id="section-quoteid">
+    <div class="section-inner">
+      <div class="section-header">
+        <h1>💬 Quote ID</h1>
+        <div class="subtitle">14 quotes — identify which work each one is from</div>
+        <div class="section-divider"></div>
+      </div>
+
+      <!-- start -->
+      <div id="qid-start">
+        <div class="mcq-start-card">
+          <div class="mcq-start-emoji">💬</div>
+          <h2 class="mcq-start-title">Quote Identification</h2>
+          <p class="mcq-start-desc">14 quotes from across all six works. For each one, pick which work it comes from. Shuffled every session. This is a high-risk exam skill — practice it cold.</p>
+          <div class="mcq-best-row" id="qid-best-row" style="display:none">
+            <span>Best score:</span>
+            <span class="mcq-best-score" id="qid-best-display">–</span>
+          </div>
+          <button class="mcq-start-btn" onclick="startQID()">Start</button>
+        </div>
+      </div>
+
+      <!-- game -->
+      <div id="qid-game" style="display:none">
+        <div class="mcq-card">
+          <div class="mcq-meta-row">
+            <div class="mcq-progress-bar-wrap"><div class="mcq-progress-bar" id="qid-progress-bar"></div></div>
+            <div class="mcq-qnum" id="qid-qnum">1 / 14</div>
+          </div>
+          <div class="qid-difficulty" id="qid-difficulty"></div>
+          <blockquote class="qid-quote" id="qid-quote"></blockquote>
+          <div class="mcq-options" id="qid-options"></div>
+          <div class="mcq-feedback" id="qid-feedback" style="display:none"></div>
+          <div class="mcq-next-row" id="qid-next-row" style="display:none">
+            <button class="mcq-next-btn" onclick="nextQID()">Next →</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- end -->
+      <div id="qid-end" style="display:none">
+        <div class="mcq-end-card">
+          <div class="mcq-end-score-label">Your score</div>
+          <div class="mcq-end-score" id="qid-end-score"></div>
+          <div class="mcq-end-sub" id="qid-end-sub"></div>
+          <div class="mcq-end-best" id="qid-end-best"></div>
+          <button class="mcq-start-btn" onclick="startQID()" style="margin-top:24px">Try Again</button>
+          <button class="mcq-ghost-btn" onclick="showSection('home')" style="margin-top:10px">Back to Home</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</main>
+
+<script>
+/* ── PROGRESS SCHEMA ─────────────────────────────────────── */
+const PROGRESS_KEY = 'amsII_progress';
+const LAST_SECTION_KEY = 'amsII_lastSection';
+
+const DEFAULT_PROGRESS = {
+  works: {
+    'to-build-a-fire': false,
+    'the-open-boat': false,
+    'doc-hill': false,
+    'abel-melveny': false,
+    'richard-cory': false,
+    'the-mill': false
+  },
+  schools: {
+    naturalism: false,
+    impressionism: false,
+    realism: false,
+    modernism: false,
+    regionalism: false
+  },
+  terms: {},
+  mcq: { highScore: 0, attempts: 0 },
+  essay: { viewed: [] },
+  quoteId: { correct: 0, total: 0 }
+};
+
+function loadProgress() {
+  try {
+    const raw = localStorage.getItem(PROGRESS_KEY);
+    if (!raw) return JSON.parse(JSON.stringify(DEFAULT_PROGRESS));
+    const saved = JSON.parse(raw);
+    // merge to ensure new keys exist
+    return Object.assign(JSON.parse(JSON.stringify(DEFAULT_PROGRESS)), saved);
+  } catch(e) {
+    return JSON.parse(JSON.stringify(DEFAULT_PROGRESS));
+  }
+}
+
+function saveProgress(p) {
+  localStorage.setItem(PROGRESS_KEY, JSON.stringify(p));
+}
+
+let progress = loadProgress();
+
+/* ── MARK DONE ───────────────────────────────────────────── */
+function markDone(section, key) {
+  if (section === 'mcq' || section === 'quoteId') {
+    // handled separately
+    return;
+  }
+  if (!progress[section]) progress[section] = {};
+  progress[section][key] = true;
+  saveProgress(progress);
+  updateUI();
+}
+
+function markTermDone(key) {
+  progress.terms[key] = true;
+  saveProgress(progress);
+  updateUI();
+}
+
+/* ── COUNTS ──────────────────────────────────────────────── */
+function countDone(obj) {
+  return Object.values(obj).filter(Boolean).length;
+}
+
+function totalTerms() { return 28; }
+
+/* ── UPDATE UI ───────────────────────────────────────────── */
+function updateUI() {
+  const wDone = countDone(progress.works);
+  const sDone = countDone(progress.schools);
+  const tDone = countDone(progress.terms);
+  const tTotal = totalTerms();
+  const mcqBest = progress.mcq.highScore;
+  const mcqAttempts = progress.mcq.attempts;
+
+  // sidebar badges
+  setBadge('badge-works', `${wDone}/6`, wDone === 6);
+  setBadge('badge-schools', `${sDone}/5`, sDone === 5);
+  setBadge('badge-terms', `${tDone}/${tTotal}`, tDone === tTotal);
+  setBadge('badge-mcq', mcqAttempts > 0 ? `${mcqBest}%` : '0%', mcqBest === 100);
+  setBadge('badge-essay', `${progress.essay.viewed.length}/3`, progress.essay.viewed.length === 3);
+  setBadge('badge-quoteid', `${progress.quoteId.correct}/${progress.quoteId.total || 14}`, false);
+
+  // home stats
+  setText('stat-works', `${wDone}/6`);
+  setText('stat-terms', `${tDone}/${tTotal}`);
+  setText('stat-mcq', mcqAttempts > 0 ? `${mcqBest}%` : '–');
+
+  // jump badges
+  setText('jbadge-works', `${wDone} of 6 completed`);
+  setText('jbadge-schools', `${sDone} of 5 completed`);
+  setText('jbadge-terms', `${tDone} of ${tTotal} learned`);
+  setText('jbadge-mcq', mcqAttempts > 0 ? `Best: ${mcqBest}%` : 'Not started');
+  setText('jbadge-essay', `${progress.essay.viewed.length} of 3 viewed`);
+  setText('jbadge-quoteid', progress.quoteId.total > 0
+    ? `${progress.quoteId.correct}/${progress.quoteId.total} correct`
+    : 'Not started');
+
+  // progress ring (no-op)
+  updateProgressRing();
+
+  // home progress bars
+  updateHomeBars(wDone, sDone, tDone, tTotal, mcqBest, mcqAttempts);
+}
+
+function setBar(id, pct) {
+  const el = document.getElementById(id);
+  if (el) el.style.width = Math.min(100, pct) + '%';
+}
+
+function updateHomeBars(wDone, sDone, tDone, tTotal, mcqBest, mcqAttempts) {
+  const eDone = progress.essay.viewed.length;
+  const qTotal = progress.quoteId.total || 0;
+  const qDone  = progress.quoteId.correct || 0;
+
+  // overall
+  const totalItems = 6 + 5 + tTotal + 3;
+  const doneItems  = wDone + sDone + tDone + eDone;
+  const overallPct = Math.round((doneItems / totalItems) * 100);
+  setBar('bar-overall', overallPct);
+  setText('overall-pct', overallPct + '%');
+
+  // section bars + counts
+  setBar('bar-works',   (wDone / 6) * 100);
+  setText('pbar-count-works', `${wDone} / 6`);
+
+  setBar('bar-schools', (sDone / 5) * 100);
+  setText('pbar-count-schools', `${sDone} / 5`);
+
+  setBar('bar-terms',   (tDone / tTotal) * 100);
+  setText('pbar-count-terms', `${tDone} / ${tTotal}`);
+
+  setBar('bar-essay',   (eDone / 3) * 100);
+  setText('pbar-count-essay', `${eDone} / 3`);
+
+  setBar('bar-mcq', mcqAttempts > 0 ? mcqBest : 0);
+  setText('pbar-count-mcq', mcqAttempts > 0 ? `${mcqBest}%` : 'not started');
+
+  const qidPct = qTotal > 0 ? Math.round((qDone / qTotal) * 100) : 0;
+  setBar('bar-quoteid', qidPct);
+  setText('pbar-count-quoteid', qTotal > 0 ? `${qDone}/${qTotal}` : 'not started');
+}
+
+function setBadge(id, text, done) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = text;
+  el.className = 'nav-badge' + (done ? ' done' : '');
+}
+
+function setText(id, text) {
+  const el = document.getElementById(id);
+  if (el) el.textContent = text;
+}
+
+/* ── PROGRESS RING ───────────────────────────────────────── */
+function updateProgressRing(animate) {
+  // ring removed — no-op kept for future use
+}
+
+/* ── TERM BANK DATA ──────────────────────────────────────── */
+const TERMS = [
+  // LITERARY DEVICES
+  { id:'dramatic-monologue', term:'Dramatic monologue', cat:'device', def:'One character speaks directly to a silent listener or the reader, revealing their personality through what they say.', example:'Doc Hill and Abel Melveny (Spoon River Anthology)' },
+  { id:'dramatic-irony', term:'Dramatic irony', cat:'device', def:'The reader knows something the characters do not, creating tension or pathos.', example:'Richard Cory — we sense the tragic ending before the townspeople do' },
+  { id:'volta', term:'Volta', cat:'device', def:'A turn or shift in a poem\'s direction, tone, or argument — often in the final lines.', example:'Richard Cory — the entire poem pivots in the last two lines' },
+  { id:'foreshadowing', term:'Foreshadowing', cat:'device', def:'Hints or clues that suggest what will happen later in the narrative.', example:'The old-timer\'s warning in "To Build a Fire"' },
+  { id:'personification', term:'Personification', cat:'device', def:'Giving human qualities, emotions, or intentions to non-human things.', example:'The sea in "The Open Boat" described almost as if it has intention' },
+  { id:'symbolism', term:'Symbolism', cat:'device', def:'An object, character, or element that represents a larger abstract idea.', example:'The dog in "To Build a Fire" (instinct/natural law); the mill (obsolescence)' },
+  { id:'free-verse', term:'Free verse', cat:'device', def:'Poetry with no fixed rhyme scheme or metrical pattern — form is open and irregular.', example:'Masters\' Spoon River poems — no forced rhyme' },
+  { id:'understatement', term:'Understatement', cat:'device', def:'Describing something as less significant or dramatic than it actually is, for ironic or emotional effect.', example:'Richard Cory\'s suicide is described in one flat, casual line' },
+  { id:'irony', term:'Irony', cat:'device', def:'A contrast between what is expected and what actually occurs — or between what is said and what is meant.', example:'The most capable man (Billie the oiler) dies in "The Open Boat"' },
+  { id:'narrative-ellipsis', term:'Narrative ellipsis', cat:'device', def:'Deliberately leaving out key moments or information — the reader fills in the gaps.', example:'The wife\'s death in "The Mill" is never stated directly' },
+  { id:'first-person-plural', term:'First-person plural narrator', cat:'device', def:'A story narrated by "we" — a collective voice speaking for a group rather than an individual.', example:'"Richard Cory" — the working-class townspeople narrate as a group' },
+  { id:'catalogue', term:'Catalogue / Listing', cat:'device', def:'A long, accumulative list used for rhetorical or emotional effect.', example:'Abel Melveny lists his machines — the list becomes absurd and sad' },
+  { id:'epitaph-form', term:'Epitaph form', cat:'device', def:'A poem written as if it were a gravestone inscription — the speaker addresses the living from beyond death.', example:'All Spoon River Anthology poems use this form' },
+  { id:'iambic-tetrameter', term:'Iambic tetrameter', cat:'device', def:'A rhythmic pattern of alternating unstressed and stressed syllables, four per line.', example:'"Richard Cory" uses this — more traditional than Masters\' free verse' },
+  // CONCEPTS
+  { id:'determinism', term:'Determinism', cat:'concept', def:'The idea that all events, including human actions and choices, are determined by prior causes outside individual control.', example:'"To Build a Fire" — the man\'s death was inevitable given the environmental conditions' },
+  { id:'fatalism', term:'Fatalism', cat:'concept', def:'The belief that all events are fixed in advance and that resistance or effort is pointless.', example:'"To Build a Fire" — no matter what the man tries, he cannot survive' },
+  { id:'hubris', term:'Hubris', cat:'concept', def:'Excessive pride or overconfidence, especially when it leads to downfall.', example:'The man in "To Build a Fire" refuses to believe the cold can kill him' },
+  { id:'indifference-of-nature', term:'Indifference of Nature', cat:'concept', def:'The idea that the natural world has no concern, sympathy, or malice toward human life or suffering.', example:'Central theme in both "To Build a Fire" and "The Open Boat"' },
+  { id:'materialism', term:'Materialism', cat:'concept', def:'Placing excessive value on physical possessions and material wealth over experience or relationships.', example:'Abel Melveny — he collected machines but never used them' },
+  { id:'obsolescence', term:'Obsolescence', cat:'concept', def:'The state of being outdated, replaced, or no longer useful — especially due to technological change.', example:'The miller in "The Mill" — his trade is replaced by industrial machines' },
+  { id:'procrastination', term:'Procrastination', cat:'concept', def:'Continually delaying action despite knowing what needs to be done.', example:'Abel Melveny\'s core flaw — always planning, never doing' },
+  { id:'instinct-vs-intellect', term:'Instinct vs Intellect', cat:'concept', def:'The conflict between animal intuition and human rational reasoning — in Naturalism, instinct wins.', example:'Dog vs man in "To Build a Fire" — instinct saves the dog, intellect kills the man' },
+  { id:'subjective-perception', term:'Subjective perception', cat:'concept', def:'The idea that reality is filtered through an individual\'s senses, emotions, and perspective — not objective.', example:'Impressionism in "The Open Boat" — we see the sea through the correspondent\'s fear' },
+  // SCHOOLS
+  { id:'s-naturalism', term:'Naturalism', cat:'school', def:'Humans are biological creatures shaped by heredity and environment — they have no meaningful free will, and nature is indifferent to their fate.', example:'Jack London, Stephen Crane. Key works: "To Build a Fire," "The Open Boat"' },
+  { id:'s-impressionism', term:'Impressionism', cat:'school', def:'Reality is filtered through sensory and emotional perception — the subjective inner experience matters more than objective facts.', example:'Stephen Crane only. Key work: "The Open Boat"' },
+  { id:'s-realism', term:'Realism', cat:'school', def:'Depicts ordinary people in ordinary situations without idealization — accurate observation of social and psychological life.', example:'Robinson, Masters, Twain. Works: Richard Cory, The Mill, Doc Hill, Abel Melveny' },
+  { id:'s-modernism', term:'Modernism', cat:'school', def:'Breaks traditional literary forms and explores alienation, disillusionment, and the fragmentation of modern identity.', example:'Robinson, Masters. Works: all four poems in this course' },
+  { id:'s-regionalism', term:'Regionalism', cat:'school', def:'Focuses on the specific culture, dialect, and landscape of a particular geographic region of America.', example:'Mark Twain. "A True Story" (context only)' },
+];
+
+/* ── TERMS RENDERING ─────────────────────────────────────── */
+function renderTerms() {
+  const grid = document.getElementById('terms-grid');
+  if (!grid) return;
+  grid.innerHTML = TERMS.map(t => {
+    const learned = progress.terms[t.id] ? true : false;
+    return `
+    <div class="flip-card${learned ? ' flipped' : ''}" id="fc-${t.id}" data-cat="${t.cat}" onclick="flipCard('${t.id}')">
+      <div class="flip-card-inner">
+        <div class="flip-front">
+          ${learned ? '<span class="flip-learned">&#10003;</span>' : ''}
+          <div class="flip-term">${t.term}</div>
+          <div class="flip-category">${catLabel(t.cat)}</div>
+        </div>
+        <div class="flip-back">
+          <div class="flip-def">${t.def}</div>
+          <div class="flip-example">e.g. ${t.example}</div>
+          <div class="flip-mark${learned ? ' marked' : ''}" onclick="event.stopPropagation();markTermLearned('${t.id}')">${learned ? '&#10003; Learned' : 'Mark learned'}</div>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function catLabel(cat) {
+  return { device:'Literary Device', concept:'Concept', school:'Literary School' }[cat] || cat;
+}
+
+function flipCard(id) {
+  const card = document.getElementById('fc-' + id);
+  if (card) card.classList.toggle('flipped');
+}
+
+function markTermLearned(id) {
+  progress.terms[id] = true;
+  saveProgress(progress);
+  updateUI();
+  const card = document.getElementById('fc-' + id);
+  if (!card) return;
+  const mark = card.querySelector('.flip-mark');
+  const front = card.querySelector('.flip-front');
+  if (mark) { mark.innerHTML = '&#10003; Learned'; mark.classList.add('marked'); }
+  if (!card.querySelector('.flip-learned')) {
+    const span = document.createElement('span');
+    span.className = 'flip-learned'; span.innerHTML = '&#10003;';
+    front.insertBefore(span, front.firstChild);
+  }
+}
+
+function filterTerms(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.flip-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.classList.remove('hidden');
+    } else {
+      card.classList.add('hidden');
+    }
+  });
+}
+
+/* ── MCQ DATA ────────────────────────────────────────────── */
+const MCQ_BANK = [
+  { q:'Which literary school does "To Build a Fire" most clearly belong to?', options:['Impressionism','Regionalism','Naturalism','Modernism'], correct:2 },
+  { q:'Stephen Crane\'s "The Open Boat" combines which two literary schools?', options:['Realism and Regionalism','Naturalism and Impressionism','Modernism and Naturalism','Realism and Modernism'], correct:1 },
+  { q:'The Spoon River Anthology by Edgar Lee Masters belongs to which school(s)?', options:['Naturalism and Impressionism','Regionalism and Realism','Modernism and Realism','Impressionism and Modernism'], correct:2 },
+  { q:'Edwin Arlington Robinson is best associated with which literary movement?', options:['Naturalism','Regionalism','Impressionism','Modernism and Realism'], correct:3 },
+  { q:'Which author is primarily associated with Naturalism and survival narratives set in the American wilderness?', options:['Stephen Crane','Edwin Arlington Robinson','Jack London','Edgar Lee Masters'], correct:2 },
+  { q:'Which literary school focuses on how individual perception and emotion shape the experience of reality?', options:['Naturalism','Regionalism','Impressionism','Determinism'], correct:2 },
+  { q:'A character dies because the environment and forces of nature made survival impossible, regardless of what choices they made. This best illustrates which concept?', options:['Hubris','Materialism','Impressionism','Determinism'], correct:3 },
+  { q:'In "To Build a Fire," the dog survives while the man dies. This contrast most directly illustrates which theme?', options:['Materialism vs Poverty','Hubris vs Humility','Instinct vs Intellect','Fate vs Free Will'], correct:2 },
+  { q:'"None of them knew the colour of the sky." This opening line of "The Open Boat" is primarily an example of which technique?', options:['Foreshadowing','Symbolism','Impressionism — limited, subjective perception','Dramatic irony'], correct:2 },
+  { q:'A poem ends with a complete reversal of everything established in its previous lines. What is this structural device called?', options:['Free verse','Dramatic monologue','Foreshadowing','Volta'], correct:3 },
+  { q:'All speakers in the Spoon River Anthology are dead and speak from the grave. What literary form does this use?', options:['Stream of consciousness','Free indirect discourse','Dramatic monologue','First-person plural narration'], correct:2 },
+  { q:'In "Richard Cory," who narrates the poem?', options:['Richard Cory himself','An omniscient third-person narrator','A close friend of Richard Cory','The collective working-class townspeople ("we")'], correct:3 },
+  { q:'"The Mill" ends without directly stating that the miller\'s wife died. What technique is this?', options:['Dramatic irony','Understatement','Symbolism','Narrative ellipsis (implication)'], correct:3 },
+  { q:'What does the mill symbolize in Robinson\'s poem "The Mill"?', options:['The beauty of rural American life','The power of nature over humans','Industrial obsolescence and lost livelihood','The American dream'], correct:2 },
+  { q:'What does the dog represent in "To Build a Fire"?', options:['Loyalty and friendship','The cruelty of nature','Instinct and natural law','The human desire for companionship'], correct:2 },
+  { q:'Which work features four men in a lifeboat who can see shore but cannot reach it?', options:['To Build a Fire','Richard Cory','The Mill','The Open Boat'], correct:3 },
+  { q:'In which work does the most physically capable character die while weaker characters survive?', options:['To Build a Fire','Richard Cory','The Open Boat','The Mill'], correct:2 },
+  { q:'Abel Melveny is best described as a character who:', options:['Gave everything to his community and died with dignity','Was destroyed by industrial competition','Drowned himself in despair after losing his trade','Collected machines and tools but never used them, dying with regret'], correct:3 },
+  { q:'Which character in this course\'s works serves as the clearest contrast to Abel Melveny?', options:['Richard Cory','The miller\'s wife','Doc Hill','Billie the oiler'], correct:2 },
+  { q:'The old-timer in "To Build a Fire" warns the protagonist not to travel alone in extreme cold. His warning goes unheeded. This is an example of:', options:['Dramatic monologue','Volta','Foreshadowing','Narrative ellipsis'], correct:2 },
+  { q:'Both "Richard Cory" and "The Mill" share which Modernist technique?', options:['Dramatic monologue with dead speaker','First-person plural narration','Free verse with no rhyme scheme','Understatement and restrained emotional description of tragedy'], correct:3 },
+  { q:'The Naturalist belief that nature is indifferent to human suffering is demonstrated by which specific event in "The Open Boat"?', options:['The men forming a bond during their ordeal','The lighthouse keeper failing to see the men','Billie the oiler\'s death despite being the most hardworking and capable','The correspondent\'s anger at the sea'], correct:2 },
+  { q:'Which of the following best explains why "To Build a Fire" is considered Determinist?', options:['The man makes many bad decisions that lead to his death','The dog deliberately abandons the man to save itself','The story is told from the perspective of nature itself','The man\'s death was inevitable given the environmental conditions — no choice could have saved him'], correct:3 },
+  { q:'Impressionism in literature is most similar to which concept in visual art?', options:['Painting every detail of a scene with photographic accuracy','Using geometric shapes to represent reality','Capturing the fleeting impression, mood, and light of a moment rather than objective reality','Depicting the harsh, brutal facts of working-class life'], correct:2 },
+  { q:'The Second Industrial Revolution is most directly relevant to which work in this course?', options:['To Build a Fire','Doc Hill','Richard Cory','The Mill'], correct:3 },
+
+  // UNDERSTANDING-FOCUSED — HARDER
+  { q:'A student argues: "The man in To Build a Fire dies because he made bad decisions." A Naturalist critic would most likely respond:', options:['"He should have listened to the old-timer"','"His death was inevitable regardless of his choices — the environment determined the outcome"','"He lacked the survival skills needed for the wilderness"','"He should have built the fire in a more sheltered spot"'], correct:1 },
+  { q:'In "The Open Boat," Crane writes: "If I am going to be drowned — why was I allowed to come thus far?" What does the correspondent\'s inability to answer this question reveal?', options:['That he is confused after the shipwreck','That the universe offers no meaning or justice — a core Naturalist idea','That he blames the captain for their situation','That he has given up hope of surviving'], correct:1 },
+  { q:'Robinson uses "we" as the narrator in "Richard Cory." What is the most important literary effect of this choice?', options:['It makes the poem feel more personal and intimate','It means we only ever see Cory\'s surface — we never access his inner life, which is the entire point','It shows that the whole town liked Richard Cory','It creates a sense of community solidarity among the working class'], correct:1 },
+  { q:'Doc Hill treated the poor for free throughout his life. In the context of Realism, this detail is significant because:', options:['It makes Doc Hill appear saintly and heroic','It shows class inequality and economic hardship in ordinary American life without romanticizing them','It proves that doctors in this era were poorly paid','It illustrates the theme of divine reward for good deeds'], correct:1 },
+  { q:'Abel Melveny lists machine after machine — sewing machines, grinders, cranes. As the list grows longer, what emotional effect does this catalogue create?', options:['Excitement and admiration for his ambition','A growing sense of absurdity and sadness — each machine is another life goal never pursued','Respect for Abel\'s knowledge of technology','Confusion about what Abel actually wanted to build'], correct:1 },
+  { q:'"The tea was cold, the fire was dead." These domestic details at the start of "The Mill" function primarily as:', options:['Realistic description of a typical evening at home','Symbols of warmth and comfort that contrast with what follows','Foreshadowing — the cold and dead details signal that the miller is dead and warmth has left their life','A Naturalistic description of poverty'], correct:2 },
+  { q:'The correspondent in "The Open Boat" feels a strange calm and even humor at certain moments despite being in mortal danger. This shifting emotional state is most characteristic of:', options:['Naturalism — humans adapt to environmental threats','Impressionism — inner emotional states shift constantly and do not follow logical patterns','Realism — people behave practically under pressure','Determinism — the correspondent accepts his fate'], correct:1 },
+  { q:'Why is it significant that the man in "To Build a Fire" has no name?', options:['London forgot to name him','It is a common technique in short stories to create mystery','It universalizes him — he represents any human being who overestimates their intelligence against nature','It makes the story easier to read'], correct:2 },
+  { q:'Both "Richard Cory" and "The Mill" deal with suicide. What is the key narrative difference in how Robinson presents these deaths?', options:['Richard Cory\'s death is expected; the miller\'s is a shock','Richard Cory\'s death is a sudden shock ending; the miller\'s death is discovered slowly through domestic details and the wife\'s grief','The Mill is more dramatic and emotional; Richard Cory is more restrained','Richard Cory dies by drowning; the miller shoots himself'], correct:1 },
+  { q:'A Modernist poet rejects traditional rhyme schemes and writes in free verse. What does this formal choice communicate about their values?', options:['That they are lazy or unskilled','That they believe traditional forms are inadequate or dishonest for representing modern, fragmented experience','That they prefer prose to poetry','That they are following a French poetic tradition'], correct:1 },
+  { q:'Crane\'s story is based on his real shipwreck experience. However, the story is presented as fiction, not journalism. What does this suggest about Crane\'s goal?', options:['He wanted to protect himself legally','He wanted to use Impressionist technique to capture the subjective emotional truth of the experience, not just the factual record','He did not think the real events were interesting enough','He changed the events significantly and needed to call it fiction'], correct:1 },
+  { q:'The miller in "The Mill" does not appear to be a lazy or incompetent man. His trade has simply been replaced by machines. Robinson\'s choice to present him this way suggests:', options:['That the industrial revolution was positive overall','That individual failure is always the result of personal weakness','That economic forces can destroy a person regardless of their worth or effort — connecting to Naturalist ideas','That the miller should have learned a new trade'], correct:2 },
+  { q:'In "Doc Hill," Masters chooses to have the poem\'s narrator speak from the grave, already dead. Compared to a living narrator, what does this device most effectively achieve?', options:['It creates dramatic tension about whether the doctor survived','It removes any motivation to lie, boast, or self-deceive — the dead have nothing to prove, so the account feels more honest','It is a religious statement about life after death','It makes the poem easier to write because the narrator is not limited by time'], correct:1 },
+  { q:'A key contrast between Doc Hill and Abel Melveny is that Doc Hill acted while Abel Melveny accumulated. What broader human truth is Masters arguing through this contrast?', options:['That doctors live better lives than craftsmen','That a meaningful life comes from what you give and do, not from what you own or collect','That small towns produce both generous and selfish people','That regret is an inevitable part of human life'], correct:1 },
+  { q:'The dog in "To Build a Fire" never makes a single bad decision, while the man — who is much more intelligent — makes several. What is London\'s argument about intelligence and survival?', options:['Intelligence is the most important survival tool','Intelligence without instinct or humility is actually dangerous — the man\'s confidence in his reasoning is what kills him','Dogs are better suited to cold climates than humans','The man was unlucky, not unintelligent'], correct:1 },
+];
+
+/* ── MCQ ENGINE ──────────────────────────────────────────── */
+let mcqState = { questions:[], current:0, score:0, streak:0, answered:false };
+
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function startMCQ() {
+  // shuffle questions; shuffle each question's options (track correct index)
+  const shuffled = shuffle(MCQ_BANK).map(q => {
+    const indexed = q.options.map((o, i) => ({ text: o, isCorrect: i === q.correct }));
+    const shuffledOpts = shuffle(indexed);
+    return { q: q.q, options: shuffledOpts.map(o => o.text), correct: shuffledOpts.findIndex(o => o.isCorrect) };
+  });
+  mcqState = { questions: shuffled, current: 0, score: 0, streak: 0, answered: false };
+  document.getElementById('mcq-start').style.display = 'none';
+  document.getElementById('mcq-end').style.display = 'none';
+  document.getElementById('mcq-quiz').style.display = 'block';
+  renderMCQQuestion();
+}
+
+function renderMCQQuestion() {
+  const { questions, current } = mcqState;
+  const q = questions[current];
+  const total = questions.length;
+
+  document.getElementById('mcq-qnum').textContent = `Q${current + 1} / ${total}`;
+  document.getElementById('mcq-progress-bar').style.width = `${(current / total) * 100}%`;
+  document.getElementById('mcq-question').textContent = q.q;
+  document.getElementById('mcq-feedback').style.display = 'none';
+  document.getElementById('mcq-next-row').style.display = 'none';
+  mcqState.answered = false;
+
+  const optContainer = document.getElementById('mcq-options');
+  optContainer.innerHTML = q.options.map((opt, i) =>
+    `<button class="mcq-opt" onclick="answerMCQ(${i})">${opt}</button>`
+  ).join('');
+}
+
+function answerMCQ(chosen) {
+  if (mcqState.answered) return;
+  mcqState.answered = true;
+
+  const q = mcqState.questions[mcqState.current];
+  const correct = q.correct;
+  const isCorrect = chosen === correct;
+  const opts = document.querySelectorAll('.mcq-opt');
+
+  opts.forEach(btn => btn.disabled = true);
+  opts[chosen].classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) opts[correct].classList.add('reveal');
+
+  const fb = document.getElementById('mcq-feedback');
+  fb.style.display = 'block';
+
+  if (isCorrect) {
+    mcqState.score++;
+    mcqState.streak++;
+    fb.className = 'mcq-feedback correct-fb';
+    fb.textContent = mcqState.streak >= 3
+      ? `🔥 ${mcqState.streak} in a row! Correct.`
+      : '✓ Correct!';
+    // confetti
+    if (mcqState.streak >= 3) {
+      confetti({ particleCount: 120, spread: 100, origin: { y: 0.55 }, colors: ['#c8e84a','#2d5a27','#7bc043','#f2e8cf','#bc4749'] });
+    } else {
+      confetti({ particleCount: 60, spread: 70, origin: { y: 0.6 }, colors: ['#c8e84a','#2d5a27','#7bc043','#f2e8cf','#bc4749'] });
+    }
+  } else {
+    mcqState.streak = 0;
+    fb.className = 'mcq-feedback wrong-fb';
+    fb.innerHTML = `✗ Incorrect. Correct answer: <strong>${q.options[correct]}</strong>`;
+  }
+
+  document.getElementById('mcq-next-row').style.display = 'block';
+}
+
+function nextMCQ() {
+  mcqState.current++;
+  if (mcqState.current >= mcqState.questions.length) {
+    endMCQ();
+  } else {
+    renderMCQQuestion();
+  }
+}
+
+function endMCQ() {
+  const total = mcqState.questions.length;
+  const score = mcqState.score;
+  const pct = Math.round((score / total) * 100);
+
+  // update personal best
+  if (pct > progress.mcq.highScore) progress.mcq.highScore = pct;
+  progress.mcq.attempts++;
+  saveProgress(progress);
+  updateUI();
+
+  document.getElementById('mcq-quiz').style.display = 'none';
+  document.getElementById('mcq-end').style.display = 'block';
+
+  const scoreEl = document.getElementById('mcq-end-score');
+  scoreEl.textContent = `${score} / ${total}`;
+  scoreEl.className = 'mcq-end-score ' + (pct >= 90 ? 'green' : pct >= 70 ? 'sage' : 'red');
+
+  document.getElementById('mcq-end-sub').textContent = `${pct}% — ${pct >= 90 ? 'Excellent!' : pct >= 70 ? 'Good work.' : 'Keep revising.'}`;
+  document.getElementById('mcq-end-best').textContent = `Personal best: ${progress.mcq.highScore}%`;
+
+  if (pct === 100) {
+    // fireworks
+    const end = Date.now() + 2500;
+    const colors = ['#c8e84a','#2d5a27','#7bc043','#bc4749','#e8956d'];
+    (function frame() {
+      confetti({ particleCount: 6, angle: 60, spread: 55, origin: { x: 0 }, colors });
+      confetti({ particleCount: 6, angle: 120, spread: 55, origin: { x: 1 }, colors });
+      if (Date.now() < end) requestAnimationFrame(frame);
+    }());
+  }
+}
+
+function initMCQStartScreen() {
+  const best = progress.mcq.highScore;
+  const attempts = progress.mcq.attempts;
+  const bestRow = document.getElementById('mcq-best-row');
+  const bestDisplay = document.getElementById('mcq-best-display');
+  if (attempts > 0 && bestRow && bestDisplay) {
+    bestRow.style.display = 'flex';
+    bestDisplay.textContent = best + '%';
+  }
+}
+
+/* ── SCHOOLS TAB SWITCHING ───────────────────────────────── */
+function showSchool(id) {
+  document.querySelectorAll('#section-schools .work-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('[id^="stab-"]').forEach(t => t.classList.remove('active'));
+  const page = document.getElementById('school-' + id);
+  const tab = document.getElementById('stab-' + id);
+  if (page) page.classList.add('active');
+  if (tab) tab.classList.add('active');
+}
+
+function toggleSchoolDone(key, checked) {
+  progress.schools[key] = checked;
+  saveProgress(progress);
+  const chk = document.getElementById('scheck-' + key);
+  if (chk) chk.textContent = checked ? ' ✓' : '';
+  updateUI();
+}
+
+function restoreSchoolDoneState() {
+  Object.keys(progress.schools).forEach(key => {
+    if (progress.schools[key]) {
+      const cb = document.querySelector('#sdone-' + key + ' input');
+      const chk = document.getElementById('scheck-' + key);
+      if (cb) cb.checked = true;
+      if (chk) chk.textContent = ' ✓';
+    }
+  });
+}
+
+/* ── WORKS TAB SWITCHING ─────────────────────────────────── */
+function showWork(id) {
+  document.querySelectorAll('.work-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.work-tab').forEach(t => t.classList.remove('active'));
+  const page = document.getElementById('work-' + id);
+  const tab = document.getElementById('tab-' + id);
+  if (page) page.classList.add('active');
+  if (tab) tab.classList.add('active');
+}
+
+function toggleWorkDone(key, checked) {
+  progress.works[key] = checked;
+  saveProgress(progress);
+  // update tab checkmark
+  const chk = document.getElementById('tcheck-' + key);
+  if (chk) chk.textContent = checked ? ' ✓' : '';
+  updateUI();
+}
+
+function restoreWorkDoneState() {
+  Object.keys(progress.works).forEach(key => {
+    if (progress.works[key]) {
+      const cb = document.querySelector(`#done-${key} input`);
+      const chk = document.getElementById('tcheck-' + key);
+      if (cb) cb.checked = true;
+      if (chk) chk.textContent = ' ✓';
+    }
+  });
+}
+
+/* ── ESSAY ENGINE ────────────────────────────────────────── */
+function showEssay(id) {
+  document.querySelectorAll('.essay-page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('[id^="etab-"]').forEach(t => t.classList.remove('active'));
+  const page = document.getElementById('essay-' + id);
+  const tab  = document.getElementById('etab-' + id);
+  if (page) page.classList.add('active');
+  if (tab)  tab.classList.add('active');
+}
+
+function toggleStep(id) {
+  const body  = document.getElementById(id);
+  const arrow = document.getElementById(id + '-arrow');
+  if (!body) return;
+  const open = body.style.display !== 'none';
+  body.style.display  = open ? 'none' : 'block';
+  if (arrow) arrow.classList.toggle('open', !open);
+}
+
+const ESSAY_KEYS = { model:'model', applied:'applied', cheatsheet:'cheatsheet' };
+
+function markEssayViewed(key, checked) {
+  const viewed = progress.essay.viewed;
+  if (checked && !viewed.includes(key)) viewed.push(key);
+  if (!checked) {
+    const idx = viewed.indexOf(key);
+    if (idx > -1) viewed.splice(idx, 1);
+  }
+  saveProgress(progress);
+  const chk = document.getElementById('echeck-' + key);
+  if (chk) chk.textContent = checked ? ' ✓' : '';
+  updateUI();
+}
+
+function restoreEssayState() {
+  progress.essay.viewed.forEach(key => {
+    const cb  = document.querySelector('#edone-' + key + ' input');
+    const chk = document.getElementById('echeck-' + key);
+    if (cb)  cb.checked = true;
+    if (chk) chk.textContent = ' ✓';
+  });
+}
+
+/* ── NAVIGATION ──────────────────────────────────────────── */
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+
+  const target = document.getElementById('section-' + id);
+  if (target) target.classList.add('active');
+
+  // match nav item by onclick attribute
+  document.querySelectorAll('.nav-item').forEach(n => {
+    if (n.getAttribute('onclick') === `showSection('${id}')`) {
+      n.classList.add('active');
+    }
+  });
+
+  // scroll main to top
+  document.getElementById('main').scrollTo({ top: 0, behavior: 'smooth' });
+
+  // section-specific init
+  if (id === 'home') {
+    // reset bars to 0 first so animation replays
+    ['bar-overall','bar-works','bar-schools','bar-terms','bar-essay','bar-mcq','bar-quoteid']
+      .forEach(bid => { const el = document.getElementById(bid); if (el) el.style.width = '0%'; });
+    setTimeout(() => updateUI(), 80);
+  }
+  if (id === 'mcq') {
+    document.getElementById('mcq-start').style.display = 'block';
+    document.getElementById('mcq-quiz').style.display = 'none';
+    document.getElementById('mcq-end').style.display = 'none';
+    initMCQStartScreen();
+  }
+  if (id === 'quoteid') {
+    document.getElementById('qid-start').style.display = 'block';
+    document.getElementById('qid-game').style.display = 'none';
+    document.getElementById('qid-end').style.display = 'none';
+    initQIDStartScreen();
+  }
+
+  localStorage.setItem(LAST_SECTION_KEY, id);
+}
+
+/* ── QUOTE ID DATA ───────────────────────────────────────── */
+const QUOTES = [
+  { quote:'"None of them knew the colour of the sky."', correct:'The Open Boat', options:['The Open Boat','To Build a Fire','Richard Cory','The Mill'], difficulty:'easy', why:'Famous opening line — Impressionism, limited perception' },
+  { quote:'"And Richard Cory, one calm summer night, went home and put a bullet through his head."', correct:'Richard Cory', options:['Richard Cory','The Mill','Doc Hill','Abel Melveny'], difficulty:'easy', why:'The volta — the most shocking ending in the course' },
+  { quote:'"I bought every kind of machine that\'s known — Sewing machines, grinders, cranes."', correct:'Abel Melveny', options:['Abel Melveny','Doc Hill','The Mill','Richard Cory'], difficulty:'easy', why:'The list of machines — Abel\'s defining characteristic' },
+  { quote:'"Fifty degrees below zero was to him just precisely fifty degrees below zero. That there should be anything more to it than that was a thought that never entered his head."', correct:'To Build a Fire', options:['To Build a Fire','The Open Boat','Richard Cory','Doc Hill'], difficulty:'easy', why:'The man\'s fatal inability to imagine real danger' },
+  { quote:'"When it occurs to a man that nature does not regard him as important, and that she feels she would not maim the universe by disposing of him, he at first wishes to throw bricks at the temple."', correct:'The Open Boat', options:['The Open Boat','To Build a Fire','The Mill','Richard Cory'], difficulty:'medium', why:'Classic Naturalism/Impressionism blend — nature\'s indifference and the correspondent\'s anger' },
+  { quote:'"He was a gentleman from sole to crown, clean favored, and imperially slim."', correct:'Richard Cory', options:['Richard Cory','Doc Hill','Abel Melveny','The Mill'], difficulty:'medium', why:'The build-up of Richard Cory\'s perfect image' },
+  { quote:'"The miller\'s wife had waited long, the tea was cold, the fire was dead."', correct:'The Mill', options:['The Mill','Richard Cory','Doc Hill','Abel Melveny'], difficulty:'medium', why:'Opens with quiet domestic dread' },
+  { quote:'"I went up and down the streets here living on little, saving all I could."', correct:'Doc Hill', options:['Doc Hill','Abel Melveny','Richard Cory','The Mill'], difficulty:'medium', why:'Doc Hill\'s quiet service, no self-pity' },
+  { quote:'"The cold of space smote the unprotected tip of the planet, and he, being on that unprotected tip, received the full force of the blow."', correct:'To Build a Fire', options:['To Build a Fire','The Open Boat','The Mill','Richard Cory'], difficulty:'medium', why:'Cosmic-scale description of cold — the man is insignificant' },
+  { quote:'"The oiler swam strongly and rapidly. He was ahead in the race. But the oiler was drowned."', correct:'The Open Boat', options:['The Open Boat','To Build a Fire','The Mill','Richard Cory'], difficulty:'medium', why:'The brutal irony of Billie\'s death' },
+  { quote:'"The dog did not know anything about thermometers, but the brute had its instinct."', correct:'To Build a Fire', options:['To Build a Fire','The Open Boat','Doc Hill','Abel Melveny'], difficulty:'hard', why:'Dog vs man contrast — core Naturalist theme' },
+  { quote:'"So on we worked, and waited for the light, and went without the meat, and cursed the bread."', correct:'Richard Cory', options:['Richard Cory','The Mill','Doc Hill','Abel Melveny'], difficulty:'hard', why:'The townspeople\'s poverty and class contrast with Cory' },
+  { quote:'"Black water, smooth above the weir / And haggard faces along the shore."', correct:'The Mill', options:['The Mill','The Open Boat','Richard Cory','To Build a Fire'], difficulty:'hard', why:'The pond foreshadowing the wife\'s death' },
+  { quote:'"He was a sight to see. A sight for sore eyes and a blistered heart."', correct:'Doc Hill', options:['Doc Hill','Abel Melveny','Richard Cory','The Mill'], difficulty:'hard', why:'The community\'s affection for Doc Hill' },
+];
+
+/* ── QUOTE ID ENGINE ─────────────────────────────────────── */
+let qidState = { quotes:[], current:0, score:0, answered:false };
+
+function startQID() {
+  qidState = { quotes: shuffle(QUOTES), current: 0, score: 0, answered: false };
+  document.getElementById('qid-start').style.display = 'none';
+  document.getElementById('qid-end').style.display = 'none';
+  document.getElementById('qid-game').style.display = 'block';
+  renderQID();
+}
+
+function renderQID() {
+  const { quotes, current } = qidState;
+  const q = quotes[current];
+  const total = quotes.length;
+
+  document.getElementById('qid-qnum').textContent = `${current + 1} / ${total}`;
+  document.getElementById('qid-progress-bar').style.width = `${(current / total) * 100}%`;
+  document.getElementById('qid-quote').textContent = q.quote;
+  document.getElementById('qid-feedback').style.display = 'none';
+  document.getElementById('qid-next-row').style.display = 'none';
+  qidState.answered = false;
+
+  const diff = document.getElementById('qid-difficulty');
+  diff.textContent = q.difficulty === 'easy' ? 'Easier' : q.difficulty === 'medium' ? 'Medium' : 'Harder';
+  diff.className = 'qid-difficulty ' + q.difficulty;
+
+  const shuffledOpts = shuffle(q.options);
+  document.getElementById('qid-options').innerHTML = shuffledOpts.map(opt =>
+    `<button class="mcq-opt" onclick="answerQID('${opt.replace(/'/g,"\\'")}', this)">${opt}</button>`
+  ).join('');
+}
+
+function answerQID(chosen, btn) {
+  if (qidState.answered) return;
+  qidState.answered = true;
+  const q = qidState.quotes[qidState.current];
+  const isCorrect = chosen === q.correct;
+
+  document.querySelectorAll('#qid-options .mcq-opt').forEach(b => {
+    b.disabled = true;
+    if (b.textContent === q.correct) b.classList.add(isCorrect ? 'correct' : 'reveal');
+  });
+  if (!isCorrect) btn.classList.add('wrong');
+
+  const fb = document.getElementById('qid-feedback');
+  fb.style.display = 'block';
+
+  if (isCorrect) {
+    qidState.score++;
+    fb.className = 'mcq-feedback correct-fb';
+    fb.innerHTML = `✓ Correct! <span style="font-style:italic;font-size:12px;opacity:0.8">${q.why}</span>`;
+    confetti({ particleCount: 55, spread: 65, origin: { y: 0.6 }, colors: ['#c8e84a','#2d5a27','#7bc043','#f2e8cf','#bc4749'] });
+  } else {
+    fb.className = 'mcq-feedback wrong-fb';
+    fb.innerHTML = `✗ That's from <strong>${q.correct}</strong>. ${q.why}`;
+  }
+  document.getElementById('qid-next-row').style.display = 'block';
+}
+
+function nextQID() {
+  qidState.current++;
+  if (qidState.current >= qidState.quotes.length) {
+    endQID();
+  } else {
+    renderQID();
+  }
+}
+
+function endQID() {
+  const total = qidState.quotes.length;
+  const score = qidState.score;
+  const pct = Math.round((score / total) * 100);
+
+  progress.quoteId.correct = score;
+  progress.quoteId.total = total;
+  if (pct > (progress.mcq.highScore || 0)) {} // separate tracking
+  saveProgress(progress);
+  updateUI();
+
+  document.getElementById('qid-game').style.display = 'none';
+  document.getElementById('qid-end').style.display = 'block';
+
+  const el = document.getElementById('qid-end-score');
+  el.textContent = `${score} / ${total}`;
+  el.className = 'mcq-end-score ' + (pct >= 90 ? 'green' : pct >= 70 ? 'sage' : 'red');
+  document.getElementById('qid-end-sub').textContent = `${pct}% — ${pct >= 90 ? 'Excellent!' : pct >= 70 ? 'Good.' : 'Keep drilling.'}`;
+  document.getElementById('qid-end-best').textContent = `Last session: ${score}/${total} correct`;
+}
+
+function initQIDStartScreen() {
+  const { correct, total } = progress.quoteId;
+  const bestRow = document.getElementById('qid-best-row');
+  const bestDisplay = document.getElementById('qid-best-display');
+  if (total > 0 && bestRow && bestDisplay) {
+    bestRow.style.display = 'flex';
+    bestDisplay.textContent = `${correct}/${total}`;
+  }
+}
+
+/* ── RESET PROGRESS ──────────────────────────────────────── */
+function resetProgress() {
+  if (!confirm('Reset all progress? This cannot be undone.')) return;
+  localStorage.removeItem(PROGRESS_KEY);
+  localStorage.removeItem(LAST_SECTION_KEY);
+  location.reload();
+}
+
+/* ── COUNTDOWN ───────────────────────────────────────────── */
+function updateCountdown() {
+  const examDate = new Date('2026-05-31T11:30:00');
+  const now = new Date();
+  const diffMs = examDate - now;
+  const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+  const el = document.getElementById('countdown');
+  if (!el) return;
+  if (diffDays < 0) {
+    el.textContent = 'Done!';
+    el.style.color = 'var(--vivid-feather)';
+  } else if (diffDays === 0) {
+    el.textContent = 'TODAY';
+    el.style.color = 'var(--brick)';
+  } else {
+    el.textContent = diffDays;
+  }
+}
+
+/* ── INIT ────────────────────────────────────────────────── */
+document.addEventListener('DOMContentLoaded', () => {
+  updateCountdown();
+  renderTerms();
+  // bars animate in after a frame so CSS transition fires
+  setTimeout(() => updateUI(), 80);
+  restoreWorkDoneState();
+  restoreSchoolDoneState();
+  restoreEssayState();
+  initMCQStartScreen();
+  initQIDStartScreen();
+
+  // restore last section
+  const last = localStorage.getItem(LAST_SECTION_KEY);
+  if (last && document.getElementById('section-' + last)) {
+    showSection(last);
+  } else {
+    showSection('home');
+  }
+});
+</script>
+</body>
+</html>
