@@ -2987,20 +2987,20 @@ function updateUI() {
   setBadge('badge-works', `${wDone}/6`, wDone === 6);
   setBadge('badge-schools', `${sDone}/5`, sDone === 5);
   setBadge('badge-terms', `${tDone}/${tTotal}`, tDone === tTotal);
-  setBadge('badge-mcq', mcqAttempts > 0 ? `${mcqBest}%` : '0%', mcqBest >= 90);
+  setBadge('badge-mcq', `${mcqAttempts}/11`, mcqAttempts === 11);
   setBadge('badge-essay', `${progress.essay.viewed.length}/3`, progress.essay.viewed.length === 3);
   setBadge('badge-quoteid', `${progress.quoteId.correct}/${progress.quoteId.total || 14}`, false);
 
   // home stats
   setText('stat-works', `${wDone}/6`);
   setText('stat-terms', `${tDone}/${tTotal}`);
-  setText('stat-mcq', mcqAttempts > 0 ? `${mcqBest}%` : '–');
+  setText('stat-mcq', `${mcqAttempts}/11`);
 
   // jump badges
   setText('jbadge-works', `${wDone} of 6 completed`);
   setText('jbadge-schools', `${sDone} of 5 completed`);
   setText('jbadge-terms', `${tDone} of ${tTotal} learned`);
-  setText('jbadge-mcq', mcqAttempts > 0 ? `Avg: ${mcqBest}% (${mcqAttempts}/11 topics)` : 'Not started');
+  setText('jbadge-mcq', mcqAttempts > 0 ? `${mcqAttempts} of 11 topics done` : 'Not started');
   setText('jbadge-essay', `${progress.essay.viewed.length} of 3 viewed`);
   setText('jbadge-quoteid', progress.quoteId.total > 0
     ? `${progress.quoteId.correct}/${progress.quoteId.total} correct`
@@ -3043,8 +3043,8 @@ function updateHomeBars(wDone, sDone, tDone, tTotal, mcqBest, mcqAttempts) {
   setBar('bar-essay',   (eDone / 3) * 100);
   setText('pbar-count-essay', `${eDone} / 3`);
 
-  setBar('bar-mcq', mcqAttempts > 0 ? mcqBest : 0);
-  setText('pbar-count-mcq', mcqAttempts > 0 ? `${mcqBest}%` : 'not started');
+  setBar('bar-mcq', (mcqAttempts / 11) * 100);
+  setText('pbar-count-mcq', `${mcqAttempts} / 11`);
 
   const qidPct = qTotal > 0 ? Math.round((qDone / qTotal) * 100) : 0;
   setBar('bar-quoteid', qidPct);
