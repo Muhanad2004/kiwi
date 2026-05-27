@@ -1459,88 +1459,21 @@ body {
           <span class="overall-progress-label">Overall readiness</span>
           <span class="overall-progress-pct" id="overall-pct">0%</span>
         </div>
-        <div class="home-bar-track">
+        <div class="home-bar-track" style="height:10px">
           <div class="home-bar-fill home-bar-overall" id="bar-overall" style="width:0%"></div>
-        </div>
-      </div>
-
-      <!-- SECTION BARS -->
-      <div class="progress-bars-grid">
-        <div class="pbar-card" onclick="showSection('works')">
-          <div class="pbar-header">
-            <span class="pbar-emoji">📖</span>
-            <span class="pbar-label">Works</span>
-            <span class="pbar-count" id="pbar-count-works">0 / 6</span>
-          </div>
-          <div class="home-bar-track">
-            <div class="home-bar-fill" id="bar-works" style="width:0%"></div>
-          </div>
-        </div>
-
-        <div class="pbar-card" onclick="showSection('schools')">
-          <div class="pbar-header">
-            <span class="pbar-emoji">🏫</span>
-            <span class="pbar-label">Schools</span>
-            <span class="pbar-count" id="pbar-count-schools">0 / 5</span>
-          </div>
-          <div class="home-bar-track">
-            <div class="home-bar-fill" id="bar-schools" style="width:0%"></div>
-          </div>
-        </div>
-
-        <div class="pbar-card" onclick="showSection('terms')">
-          <div class="pbar-header">
-            <span class="pbar-emoji">🃏</span>
-            <span class="pbar-label">Terms</span>
-            <span class="pbar-count" id="pbar-count-terms">0 / 28</span>
-          </div>
-          <div class="home-bar-track">
-            <div class="home-bar-fill" id="bar-terms" style="width:0%"></div>
-          </div>
-        </div>
-
-        <div class="pbar-card" onclick="showSection('essay')">
-          <div class="pbar-header">
-            <span class="pbar-emoji">✍️</span>
-            <span class="pbar-label">Essay Models</span>
-            <span class="pbar-count" id="pbar-count-essay">0 / 3</span>
-          </div>
-          <div class="home-bar-track">
-            <div class="home-bar-fill" id="bar-essay" style="width:0%"></div>
-          </div>
-        </div>
-
-        <div class="pbar-card" onclick="showSection('mcq')">
-          <div class="pbar-header">
-            <span class="pbar-emoji">❓</span>
-            <span class="pbar-label">MCQ best</span>
-            <span class="pbar-count" id="pbar-count-mcq">not started</span>
-          </div>
-          <div class="home-bar-track">
-            <div class="home-bar-fill home-bar-mcq" id="bar-mcq" style="width:0%"></div>
-          </div>
-        </div>
-
-        <div class="pbar-card" onclick="showSection('quoteid')">
-          <div class="pbar-header">
-            <span class="pbar-emoji">💬</span>
-            <span class="pbar-label">Quote ID</span>
-            <span class="pbar-count" id="pbar-count-quoteid">not started</span>
-          </div>
-          <div class="home-bar-track">
-            <div class="home-bar-fill home-bar-quoteid" id="bar-quoteid" style="width:0%"></div>
-          </div>
         </div>
       </div>
 
       <div class="exam-callout">
         <h3>📌 What the exam will test</h3>
         <ul>
-          <li>Essay on "To Build a Fire" — prepare themes and characteristics</li>
-          <li>Quote identification — know your works cold</li>
-          <li>MCQ — literary schools, authors, analytical links</li>
-          <li>Short answers — terms, devices, specific details</li>
-          <li>Naturalism and Determinism — core of everything</li>
+          <li><strong>Essay (1 question):</strong> write a structured analytical paragraph using the 7-step model — almost certain to be on "To Build a Fire." Prepare a claim about Naturalism and Determinism and know your quote.</li>
+          <li><strong>Excerpt identification:</strong> she gives you a passage and asks "which work is this from?" — know the distinctive lines from all 6 works, especially the poems.</li>
+          <li><strong>Short analytical questions:</strong> explain a theme, a literary device, or a concept in 2–3 sentences. E.g. "What does the dog represent?" or "Why is the oiler's death significant?"</li>
+          <li><strong>MCQ:</strong> link a school to a work or author, identify a device, explain a concept. Analytical connections between works are likely.</li>
+          <li><strong>Line meaning questions:</strong> she said to read the poems line by line. She may give one line and ask: what does it mean? Who wrote it? What device is this?</li>
+          <li><strong>Comparison questions:</strong> Doc Hill vs Abel Melveny, Richard Cory vs The Mill, Naturalism vs Impressionism in "The Open Boat" — know these cold.</li>
+          <li><strong>Core concepts to master:</strong> Naturalism, Determinism, Impressionism, hubris, indifference of nature, instinct vs intellect, dramatic monologue, volta, narrative ellipsis.</li>
         </ul>
       </div>
 
@@ -1550,6 +1483,9 @@ body {
           <div class="jump-info">
             <div class="jump-title">Works</div>
             <div class="jump-badge" id="jbadge-works">0 of 6 completed</div>
+            <div class="home-bar-track" style="margin-top:8px">
+              <div class="home-bar-fill" id="bar-works" style="width:0%"></div>
+            </div>
           </div>
         </div>
         <div class="jump-card" onclick="showSection('schools')">
@@ -1557,6 +1493,9 @@ body {
           <div class="jump-info">
             <div class="jump-title">Schools</div>
             <div class="jump-badge" id="jbadge-schools">0 of 5 completed</div>
+            <div class="home-bar-track" style="margin-top:8px">
+              <div class="home-bar-fill" id="bar-schools" style="width:0%"></div>
+            </div>
           </div>
         </div>
         <div class="jump-card" onclick="showSection('terms')">
@@ -1564,6 +1503,9 @@ body {
           <div class="jump-info">
             <div class="jump-title">Terms</div>
             <div class="jump-badge" id="jbadge-terms">0 of 28 learned</div>
+            <div class="home-bar-track" style="margin-top:8px">
+              <div class="home-bar-fill" id="bar-terms" style="width:0%"></div>
+            </div>
           </div>
         </div>
         <div class="jump-card" onclick="showSection('mcq')">
@@ -1571,6 +1513,9 @@ body {
           <div class="jump-info">
             <div class="jump-title">MCQ</div>
             <div class="jump-badge" id="jbadge-mcq">Not started</div>
+            <div class="home-bar-track" style="margin-top:8px">
+              <div class="home-bar-fill home-bar-mcq" id="bar-mcq" style="width:0%"></div>
+            </div>
           </div>
         </div>
         <div class="jump-card" onclick="showSection('essay')">
@@ -1578,6 +1523,9 @@ body {
           <div class="jump-info">
             <div class="jump-title">Essay Models</div>
             <div class="jump-badge" id="jbadge-essay">0 of 3 viewed</div>
+            <div class="home-bar-track" style="margin-top:8px">
+              <div class="home-bar-fill" id="bar-essay" style="width:0%"></div>
+            </div>
           </div>
         </div>
         <div class="jump-card" onclick="showSection('quoteid')">
@@ -1585,9 +1533,20 @@ body {
           <div class="jump-info">
             <div class="jump-title">Quote ID</div>
             <div class="jump-badge" id="jbadge-quoteid">Not started</div>
+            <div class="home-bar-track" style="margin-top:8px">
+              <div class="home-bar-fill home-bar-quoteid" id="bar-quoteid" style="width:0%"></div>
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- hidden elements for JS compat -->
+      <span id="pbar-count-works" style="display:none"></span>
+      <span id="pbar-count-schools" style="display:none"></span>
+      <span id="pbar-count-terms" style="display:none"></span>
+      <span id="pbar-count-essay" style="display:none"></span>
+      <span id="pbar-count-mcq" style="display:none"></span>
+      <span id="pbar-count-quoteid" style="display:none"></span>
 
     </div>
   </div>
