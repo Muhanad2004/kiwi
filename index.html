@@ -390,14 +390,18 @@ body {
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 10px;
 }
 .exam-callout li {
+  display: grid;
+  grid-template-columns: 28px 1fr;
+  gap: 6px;
+  align-items: baseline;
   font-size: 14px;
   color: var(--text-primary);
-  padding-left: 8px;
+  line-height: 1.6;
 }
-.exam-callout li::before { content: "→ "; color: var(--text-secondary); }
+.exam-callout li .ei { font-size: 16px; line-height: 1.4; }
 
 /* quick jump grid */
 .jump-grid {
@@ -584,31 +588,31 @@ body {
 .ocean-hero .work-title { color: #2a5540; }
 .ocean-tag { background: rgba(42,85,64,0.1); color: #2a5540; border-color: #8dbfa0; }
 .ocean-quote { border-left-color: #5a9e7a; }
-.ocean-theme { border-left: 3px solid #5a9e7a !important; }
-.ocean-device { border-left: 3px solid #5a9e7a !important; }
+.ocean-theme { }
+.ocean-device { }
 
 /* EDITORIAL theme (Doc Hill) */
-.editorial-hero { background: linear-gradient(135deg, #f5f2eb 0%, #ede8d8 100%); border-left: 5px solid #8b6914; }
+.editorial-hero { background: linear-gradient(135deg, #f5f2eb 0%, #ede8d8 100%); }
 .editorial-hero .work-title { color: #4a3a10; }
 .editorial-tag { background: rgba(139,105,20,0.1); color: #4a3a10; border-color: #c8a84a; }
 .editorial-quote { border-left-color: #c8a84a; font-family: 'Lora', serif; }
-.editorial-theme { border-left: 3px solid #c8a84a !important; }
+.editorial-theme { }
 
 /* BITTER theme (Abel Melveny) */
-.bitter-hero { background: linear-gradient(135deg, #f0ebe8 0%, #e8ddd8 100%); border-left: 5px solid var(--brick); }
+.bitter-hero { background: linear-gradient(135deg, #f0ebe8 0%, #e8ddd8 100%); }
 .bitter-hero .work-title { color: #7a2a2a; }
 .bitter-tag { background: rgba(188,71,73,0.1); color: #7a2a2a; border-color: var(--brick); }
 .bitter-quote { border-left-color: var(--brick); }
-.bitter-theme { border-left: 3px solid var(--brick) !important; }
-.bitter-device { border-left: 3px solid var(--brick) !important; }
+.bitter-theme { }
+.bitter-device { }
 
 /* GILDED theme (Richard Cory) */
-.gilded-hero { background: linear-gradient(135deg, #faf5e8 0%, #f0e8c8 100%); border-top: 4px solid #c8a84a; }
+.gilded-hero { background: linear-gradient(135deg, #faf5e8 0%, #f0e8c8 100%); }
 .gilded-hero .work-title { color: #5a4010; }
 .gilded-tag { background: rgba(200,168,74,0.15); color: #5a4010; border-color: #c8a84a; }
 .gilded-quote { border-left-color: var(--brick); background: rgba(188,71,73,0.06); }
-.gilded-theme { border-left: 3px solid #c8a84a !important; }
-.gilded-device { border-left: 3px solid #c8a84a !important; }
+.gilded-theme { }
+.gilded-device { }
 .gilded-volta { background: rgba(188,71,73,0.08) !important; border-left-color: var(--brick) !important; }
 
 /* MILL theme */
@@ -616,8 +620,8 @@ body {
 .mill-hero .work-title { color: #2a3820; }
 .mill-tag { background: rgba(42,56,32,0.1); color: #2a3820; border-color: #6a8050; }
 .mill-quote { border-left-color: #4a5a3a; background: rgba(42,56,32,0.05); }
-.mill-theme { border-left: 3px solid #4a5a3a !important; }
-.mill-device { border-left: 3px solid #4a5a3a !important; }
+.mill-theme { }
+.mill-device { }
 
 /* work content blocks */
 .work-block {
@@ -648,7 +652,6 @@ body {
   align-items: flex-start;
   background: white;
   border: 1px solid var(--border);
-  border-left: 3px solid var(--accent-mid);
   border-radius: 8px;
   padding: 10px 12px;
 }
@@ -664,7 +667,6 @@ body {
   align-items: baseline;
   background: white;
   border-radius: 8px;
-  border-left: 3px solid var(--accent-primary);
   padding: 8px 12px;
 }
 .device-name {
@@ -677,7 +679,7 @@ body {
 .device-desc { font-size: 13px; color: var(--text-primary); }
 
 /* school block */
-.school-block { border-left: 4px solid var(--accent-primary); }
+.school-block { }
 .school-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
 .school-list li { font-size: 14px; padding-left: 8px; border-left: 2px solid var(--border); line-height: 1.6; }
 
@@ -690,8 +692,8 @@ body {
   background: white;
   border: 1px solid var(--border);
 }
-.contrast-positive { border-top: 3px solid var(--vivid-feather); }
-.contrast-negative { border-top: 3px solid var(--brick); }
+.contrast-positive { }
+.contrast-negative { }
 .contrast-label { font-weight: 700; font-size: 13px; color: var(--accent-primary); margin-bottom: 8px; }
 .contrast-col ul { list-style: none; display: flex; flex-direction: column; gap: 4px; }
 .contrast-col li { font-size: 13px; color: var(--text-primary); padding-left: 6px; border-left: 2px solid var(--border); }
@@ -713,7 +715,7 @@ body {
 .kl-meaning { font-size: 13px; color: var(--text-secondary); border-left: 2px solid var(--border); padding-left: 10px; }
 
 /* exam block */
-.exam-block { border-left: 4px solid var(--brick); background: rgba(188,71,73,0.04); }
+.exam-block { background: rgba(188,71,73,0.04); }
 .exam-block .block-title { color: var(--brick); }
 .exam-tips { list-style: none; display: flex; flex-direction: column; gap: 6px; }
 .exam-tips li { font-size: 14px; padding-left: 16px; position: relative; line-height: 1.6; }
@@ -1023,8 +1025,9 @@ body {
   font-weight: 500;
   line-height: 1.6;
 }
-.mcq-feedback.correct-fb { background: rgba(123,192,67,0.15); color: var(--accent-primary); border-left: 3px solid var(--vivid-feather); }
-.mcq-feedback.wrong-fb { background: rgba(188,71,73,0.1); color: #7a2020; border-left: 3px solid var(--brick); }
+.mcq-feedback.correct-fb { background: rgba(123,192,67,0.15); color: var(--accent-primary); }
+.mcq-feedback.wrong-fb { background: rgba(188,71,73,0.1); color: #7a2020; }
+.mcq-explanation { margin-top: 8px; font-size: 12px; font-weight: 400; color: var(--text-secondary); line-height: 1.55; padding-top: 8px; border-top: 1px solid rgba(0,0,0,0.08); }
 .mcq-next-row { margin-top: 20px; text-align: right; }
 .mcq-next-btn {
   padding: 10px 28px;
@@ -1061,7 +1064,6 @@ body {
 
 .essay-intro-card {
   background: rgba(45,90,39,0.06);
-  border-left: 4px solid var(--accent-primary);
   border-radius: 8px;
   padding: 14px 18px;
   margin-bottom: 20px;
@@ -1142,7 +1144,6 @@ body {
 }
 .step-formula {
   background: white;
-  border-left: 3px solid var(--accent-mid);
   border-radius: 6px;
   padding: 9px 13px;
   font-family: 'Lora', serif;
@@ -1197,7 +1198,7 @@ body {
   background: white;
 }
 .applied-step:last-child { border-bottom: none; }
-.applied-step-star { background: rgba(45,90,39,0.05); border-left: 4px solid var(--accent-primary); }
+.applied-step-star { background: rgba(45,90,39,0.05); }
 .applied-step-label {
   font-size: 11px;
   font-weight: 700;
@@ -1282,7 +1283,7 @@ body {
 }
 .cheat-row:last-child { border-bottom: none; }
 .cheat-row:hover { background: rgba(200,232,74,0.08); }
-.cheat-row-star { background: rgba(45,90,39,0.06); border-left: 4px solid var(--accent-primary); }
+.cheat-row-star { background: rgba(45,90,39,0.06); }
 .cheat-row-star:hover { background: rgba(45,90,39,0.1); }
 .cheat-num {
   font-family: 'Playfair Display', serif;
@@ -1523,13 +1524,13 @@ body {
       <div class="exam-callout">
         <h3>📌 What the exam will test</h3>
         <ul>
-          <li><strong>Essay (1 question):</strong> write a structured analytical paragraph using the 7-step model — almost certain to be on "To Build a Fire." Prepare a claim about Naturalism and Determinism and know your quote.</li>
-          <li><strong>Excerpt identification:</strong> she gives you a passage and asks "which work is this from?" — know the distinctive lines from all 6 works, especially the poems.</li>
-          <li><strong>Short analytical questions:</strong> explain a theme, a literary device, or a concept in 2–3 sentences. E.g. "What does the dog represent?" or "Why is the oiler's death significant?"</li>
-          <li><strong>MCQ:</strong> link a school to a work or author, identify a device, explain a concept. Analytical connections between works are likely.</li>
-          <li><strong>Line meaning questions:</strong> she said to read the poems line by line. She may give one line and ask: what does it mean? Who wrote it? What device is this?</li>
-          <li><strong>Comparison questions:</strong> Doc Hill vs Abel Melveny, Richard Cory vs The Mill, Naturalism vs Impressionism in "The Open Boat" — know these cold.</li>
-          <li><strong>Core concepts to master:</strong> Naturalism, Determinism, Impressionism, hubris, indifference of nature, instinct vs intellect, dramatic monologue, volta, narrative ellipsis.</li>
+          <li><span class="ei">✍️</span><span><strong>Essay:</strong> write a structured analytical paragraph using the 7-step model. Almost certain to be on "To Build a Fire." Prepare a claim about Naturalism and Determinism and know your quote.</span></li>
+          <li><span class="ei">🔍</span><span><strong>Excerpt identification:</strong> she gives a passage and asks "which work is this from?" Know the distinctive lines from all 6 works, especially the poems.</span></li>
+          <li><span class="ei">💬</span><span><strong>Short analytical questions:</strong> explain a theme, a literary device, or a concept in 2–3 sentences. E.g. "What does the dog represent?" or "Why is the oiler's death significant?"</span></li>
+          <li><span class="ei">❓</span><span><strong>MCQ:</strong> link a school to a work or author, identify a device, explain a concept. Analytical connections between works are likely.</span></li>
+          <li><span class="ei">📖</span><span><strong>Line meaning:</strong> she said to read the poems line by line. She may give one line and ask: what does it mean? Who wrote it? What device is this?</span></li>
+          <li><span class="ei">⚖️</span><span><strong>Comparison questions:</strong> Doc Hill vs Abel Melveny, Richard Cory vs The Mill, Naturalism vs Impressionism in "The Open Boat" — know these cold.</span></li>
+          <li><span class="ei">🧠</span><span><strong>Core concepts to master:</strong> Naturalism, Determinism, Impressionism, hubris, indifference of nature, instinct vs intellect, dramatic monologue, volta, narrative ellipsis.</span></li>
         </ul>
       </div>
 
@@ -3137,48 +3138,48 @@ function filterTerms(cat, btn) {
 
 /* ── MCQ DATA ────────────────────────────────────────────── */
 const MCQ_BANK = [
-  { q:'Which literary school does "To Build a Fire" most clearly belong to?', options:['Impressionism','Regionalism','Naturalism','Modernism'], correct:2 },
-  { q:'Stephen Crane\'s "The Open Boat" combines which two literary schools?', options:['Realism and Regionalism','Naturalism and Impressionism','Modernism and Naturalism','Realism and Modernism'], correct:1 },
-  { q:'The Spoon River Anthology by Edgar Lee Masters belongs to which school(s)?', options:['Naturalism and Impressionism','Regionalism and Realism','Modernism and Realism','Impressionism and Modernism'], correct:2 },
-  { q:'Edwin Arlington Robinson is best associated with which literary movement?', options:['Naturalism','Regionalism','Impressionism','Modernism and Realism'], correct:3 },
-  { q:'Which author is primarily associated with Naturalism and survival narratives set in the American wilderness?', options:['Stephen Crane','Edwin Arlington Robinson','Jack London','Edgar Lee Masters'], correct:2 },
-  { q:'Which literary school focuses on how individual perception and emotion shape the experience of reality?', options:['Naturalism','Regionalism','Impressionism','Determinism'], correct:2 },
-  { q:'A character dies because the environment and forces of nature made survival impossible, regardless of what choices they made. This best illustrates which concept?', options:['Hubris','Materialism','Impressionism','Determinism'], correct:3 },
-  { q:'In "To Build a Fire," the dog survives while the man dies. This contrast most directly illustrates which theme?', options:['Materialism vs Poverty','Hubris vs Humility','Instinct vs Intellect','Fate vs Free Will'], correct:2 },
-  { q:'"None of them knew the colour of the sky." This opening line of "The Open Boat" is primarily an example of which technique?', options:['Foreshadowing','Symbolism','Impressionism — limited, subjective perception','Dramatic irony'], correct:2 },
-  { q:'A poem ends with a complete reversal of everything established in its previous lines. What is this structural device called?', options:['Free verse','Dramatic monologue','Foreshadowing','Volta'], correct:3 },
-  { q:'All speakers in the Spoon River Anthology are dead and speak from the grave. What literary form does this use?', options:['Stream of consciousness','Free indirect discourse','Dramatic monologue','First-person plural narration'], correct:2 },
-  { q:'In "Richard Cory," who narrates the poem?', options:['Richard Cory himself','An omniscient third-person narrator','A close friend of Richard Cory','The collective working-class townspeople ("we")'], correct:3 },
-  { q:'"The Mill" ends without directly stating that the miller\'s wife died. What technique is this?', options:['Dramatic irony','Understatement','Symbolism','Narrative ellipsis (implication)'], correct:3 },
-  { q:'What does the mill symbolize in Robinson\'s poem "The Mill"?', options:['The beauty of rural American life','The power of nature over humans','Industrial obsolescence and lost livelihood','The American dream'], correct:2 },
-  { q:'What does the dog represent in "To Build a Fire"?', options:['Loyalty and friendship','The cruelty of nature','Instinct and natural law','The human desire for companionship'], correct:2 },
-  { q:'Which work features four men in a lifeboat who can see shore but cannot reach it?', options:['To Build a Fire','Richard Cory','The Mill','The Open Boat'], correct:3 },
-  { q:'In which work does the most physically capable character die while weaker characters survive?', options:['To Build a Fire','Richard Cory','The Open Boat','The Mill'], correct:2 },
-  { q:'Abel Melveny is best described as a character who:', options:['Gave everything to his community and died with dignity','Was destroyed by industrial competition','Drowned himself in despair after losing his trade','Collected machines and tools but never used them, dying with regret'], correct:3 },
-  { q:'Which character in this course\'s works serves as the clearest contrast to Abel Melveny?', options:['Richard Cory','The miller\'s wife','Doc Hill','Billie the oiler'], correct:2 },
-  { q:'The old-timer in "To Build a Fire" warns the protagonist not to travel alone in extreme cold. His warning goes unheeded. This is an example of:', options:['Dramatic monologue','Volta','Foreshadowing','Narrative ellipsis'], correct:2 },
-  { q:'Both "Richard Cory" and "The Mill" share which Modernist technique?', options:['Dramatic monologue with dead speaker','First-person plural narration','Free verse with no rhyme scheme','Understatement and restrained emotional description of tragedy'], correct:3 },
-  { q:'The Naturalist belief that nature is indifferent to human suffering is demonstrated by which specific event in "The Open Boat"?', options:['The men forming a bond during their ordeal','The lighthouse keeper failing to see the men','Billie the oiler\'s death despite being the most hardworking and capable','The correspondent\'s anger at the sea'], correct:2 },
-  { q:'Which of the following best explains why "To Build a Fire" is considered Determinist?', options:['The man makes many bad decisions that lead to his death','The dog deliberately abandons the man to save itself','The story is told from the perspective of nature itself','The man\'s death was inevitable given the environmental conditions — no choice could have saved him'], correct:3 },
-  { q:'Impressionism in literature is most similar to which concept in visual art?', options:['Painting every detail of a scene with photographic accuracy','Using geometric shapes to represent reality','Capturing the fleeting impression, mood, and light of a moment rather than objective reality','Depicting the harsh, brutal facts of working-class life'], correct:2 },
-  { q:'The Second Industrial Revolution is most directly relevant to which work in this course?', options:['To Build a Fire','Doc Hill','Richard Cory','The Mill'], correct:3 },
+  { q:'Which literary school does "To Build a Fire" most clearly belong to?', options:['Impressionism','Regionalism','Naturalism','Modernism'], correct:2, explanation:'London shows nature as an indifferent force that determines the outcome. The cold, terrain, and biology seal the man\'s fate. That is Naturalism.' },
+  { q:'Stephen Crane\'s "The Open Boat" combines which two literary schools?', options:['Realism and Regionalism','Naturalism and Impressionism','Modernism and Naturalism','Realism and Modernism'], correct:1, explanation:'Naturalism: the oiler\'s death proves nature cares nothing for human survival. Impressionism: the story is told through the crew\'s shifting emotions and perceptions, not objective narration.' },
+  { q:'The Spoon River Anthology by Edgar Lee Masters belongs to which school(s)?', options:['Naturalism and Impressionism','Regionalism and Realism','Modernism and Realism','Impressionism and Modernism'], correct:2, explanation:'Modernism: free verse, irony, unconventional dead-speaker form. Realism: ordinary small-town American life depicted honestly, without romanticizing.' },
+  { q:'Edwin Arlington Robinson is best associated with which literary movement?', options:['Naturalism','Regionalism','Impressionism','Modernism and Realism'], correct:3, explanation:'Robinson\'s poems explore hidden inner lives, disillusionment, and the gap between surface and reality — all Modernist concerns — set in realistic American communities.' },
+  { q:'Which author is primarily associated with Naturalism and survival narratives set in the American wilderness?', options:['Stephen Crane','Edwin Arlington Robinson','Jack London','Edgar Lee Masters'], correct:2, explanation:'London wrote To Build a Fire and other Yukon survival stories. Naturalism fits wilderness narratives because nature controls the outcome, not human will.' },
+  { q:'Which literary school focuses on how individual perception and emotion shape the experience of reality?', options:['Naturalism','Regionalism','Impressionism','Determinism'], correct:2, explanation:'Impressionism filters reality through what characters can perceive and feel in the moment, not through objective facts. Experience is subjective.' },
+  { q:'A character dies because the environment and forces of nature made survival impossible, regardless of what choices they made. This best illustrates which concept?', options:['Hubris','Materialism','Impressionism','Determinism'], correct:3, explanation:'Determinism: the outcome was fixed by conditions beyond human control. The cold was too extreme — no choice the man made could have changed the result.' },
+  { q:'In "To Build a Fire," the dog survives while the man dies. This contrast most directly illustrates which theme?', options:['Materialism vs Poverty','Hubris vs Humility','Instinct vs Intellect','Fate vs Free Will'], correct:2, explanation:'The dog has no intelligence but survives by following instinct. The man has intelligence but dies because he trusts reasoning over natural instinct. London\'s point: in nature, instinct beats intellect.' },
+  { q:'"None of them knew the colour of the sky." This opening line of "The Open Boat" is primarily an example of which technique?', options:['Foreshadowing','Symbolism','Impressionism — limited, subjective perception','Dramatic irony'], correct:2, explanation:'Crane opens with what the men cannot see — they are too focused on surviving to look up at the sky. This limited, subjective perception is Impressionism in its purest form.' },
+  { q:'A poem ends with a complete reversal of everything established in its previous lines. What is this structural device called?', options:['Free verse','Dramatic monologue','Foreshadowing','Volta'], correct:3, explanation:'Volta (Italian for turn) is a sudden reversal in a poem\'s direction. Richard Cory builds a golden image for seven stanzas, then the volta destroys it in two lines.' },
+  { q:'All speakers in the Spoon River Anthology are dead and speak from the grave. What literary form does this use?', options:['Stream of consciousness','Free indirect discourse','Dramatic monologue','First-person plural narration'], correct:2, explanation:'Each Spoon River poem is one dead speaker addressing the reader directly, reviewing their own life. This single-voice monologue from a specific persona is the dramatic monologue form.' },
+  { q:'In "Richard Cory," who narrates the poem?', options:['Richard Cory himself','An omniscient third-person narrator','A close friend of Richard Cory','The collective working-class townspeople ("we")'], correct:3, explanation:'Robinson uses \'we\' throughout — the collective voice of the working-class town. We only hear what the town perceived: Cory\'s polished exterior. His inner life is never accessible.' },
+  { q:'"The Mill" ends without directly stating that the miller\'s wife died. What technique is this?', options:['Dramatic irony','Understatement','Symbolism','Narrative ellipsis (implication)'], correct:3, explanation:'Robinson leaves the wife\'s death unstated. The reader infers it from the cold/dead imagery and the fact that she walks toward the pond. Leaving key events out for the reader to complete is narrative ellipsis.' },
+  { q:'What does the mill symbolize in Robinson\'s poem "The Mill"?', options:['The beauty of rural American life','The power of nature over humans','Industrial obsolescence and lost livelihood','The American dream'], correct:2, explanation:'The mill represents the miller\'s identity, livelihood, and purpose. The industrial revolution made his craft obsolete. When the trade dies, so does he — his identity was inseparable from his work.' },
+  { q:'What does the dog represent in "To Build a Fire"?', options:['Loyalty and friendship','The cruelty of nature','Instinct and natural law','The human desire for companionship'], correct:2, explanation:'The dog represents pure instinct and natural law. It knows the cold is deadly without a thermometer or reasoning. It has what the man lacks: a direct, honest relationship with nature.' },
+  { q:'Which work features four men in a lifeboat who can see shore but cannot reach it?', options:['To Build a Fire','Richard Cory','The Mill','The Open Boat'], correct:3, explanation:'Crane\'s story is set in a tiny lifeboat after a shipwreck off the Florida coast. The men can see shore but the dangerous surf prevents them from landing.' },
+  { q:'In which work does the most physically capable character die while weaker characters survive?', options:['To Build a Fire','Richard Cory','The Open Boat','The Mill'], correct:2, explanation:'Billie the oiler is the strongest and most capable of the four men. He is also the one who drowns. This brutal irony is Crane\'s clearest Naturalist statement: nature rewards no one.' },
+  { q:'Abel Melveny is best described as a character who:', options:['Gave everything to his community and died with dignity','Was destroyed by industrial competition','Drowned himself in despair after losing his trade','Collected machines and tools but never used them, dying with regret'], correct:3, explanation:'Abel spent his life collecting tools and machines but never actually used them. His life was all accumulation and no action — potential that was never realized.' },
+  { q:'Which character in this course\'s works serves as the clearest contrast to Abel Melveny?', options:['Richard Cory','The miller\'s wife','Doc Hill','Billie the oiler'], correct:2, explanation:'Doc Hill gave his entire life in service to his community, treating the poor for free. He represents a life of action and giving, not accumulation or self-interest.' },
+  { q:'The old-timer in "To Build a Fire" warns the protagonist not to travel alone in extreme cold. His warning goes unheeded. This is an example of:', options:['Dramatic monologue','Volta','Foreshadowing','Narrative ellipsis'], correct:2, explanation:'The old-timer\'s warning is the most explicit foreshadowing in the story. He predicts exactly what will happen. The man ignores it — which makes the foreshadowing even more pointed.' },
+  { q:'Both "Richard Cory" and "The Mill" share which Modernist technique?', options:['Dramatic monologue with dead speaker','First-person plural narration','Free verse with no rhyme scheme','Understatement and restrained emotional description of tragedy'], correct:3, explanation:'Both Richard Cory and The Mill present tragedy through quiet, restrained language. The most devastating moments are described flatly, without drama. This is understatement.' },
+  { q:'The Naturalist belief that nature is indifferent to human suffering is demonstrated by which specific event in "The Open Boat"?', options:['The men forming a bond during their ordeal','The lighthouse keeper failing to see the men','Billie the oiler\'s death despite being the most hardworking and capable','The correspondent\'s anger at the sea'], correct:2, explanation:'Billie the oiler is the strongest, most capable man in the boat. He dies. Weaker men survive. This random, unjust outcome is exactly what nature is indifferent looks like in practice.' },
+  { q:'Which of the following best explains why "To Build a Fire" is considered Determinist?', options:['The man makes many bad decisions that lead to his death','The dog deliberately abandons the man to save itself','The story is told from the perspective of nature itself','The man\'s death was inevitable given the environmental conditions — no choice could have saved him'], correct:3, explanation:'Determinism says conditions, not choices, determine outcomes. The cold was too extreme before the man even started. No decision he made could have changed the result.' },
+  { q:'Impressionism in literature is most similar to which concept in visual art?', options:['Painting every detail of a scene with photographic accuracy','Using geometric shapes to represent reality','Capturing the fleeting impression, mood, and light of a moment rather than objective reality','Depicting the harsh, brutal facts of working-class life'], correct:2, explanation:'Literary Impressionism takes its name from the Impressionist painting movement. Both prioritize capturing the fleeting, subjective experience of a moment rather than accurate, objective representation.' },
+  { q:'The Second Industrial Revolution is most directly relevant to which work in this course?', options:['To Build a Fire','Doc Hill','Richard Cory','The Mill'], correct:3, explanation:'The Second Industrial Revolution replaced traditional trades and crafts with machines. The miller\'s entire occupation becomes obsolete — the historical backdrop is directly relevant to his death.' },
 
   // UNDERSTANDING-FOCUSED — HARDER
-  { q:'A student argues: "The man in To Build a Fire dies because he made bad decisions." A Naturalist critic would most likely respond:', options:['"He should have listened to the old-timer"','"His death was inevitable regardless of his choices — the environment determined the outcome"','"He lacked the survival skills needed for the wilderness"','"He should have built the fire in a more sheltered spot"'], correct:1 },
-  { q:'In "The Open Boat," Crane writes: "If I am going to be drowned — why was I allowed to come thus far?" What does the correspondent\'s inability to answer this question reveal?', options:['That he is confused after the shipwreck','That the universe offers no meaning or justice — a core Naturalist idea','That he blames the captain for their situation','That he has given up hope of surviving'], correct:1 },
-  { q:'Robinson uses "we" as the narrator in "Richard Cory." What is the most important literary effect of this choice?', options:['It makes the poem feel more personal and intimate','It means we only ever see Cory\'s surface — we never access his inner life, which is the entire point','It shows that the whole town liked Richard Cory','It creates a sense of community solidarity among the working class'], correct:1 },
-  { q:'Doc Hill treated the poor for free throughout his life. In the context of Realism, this detail is significant because:', options:['It makes Doc Hill appear saintly and heroic','It shows class inequality and economic hardship in ordinary American life without romanticizing them','It proves that doctors in this era were poorly paid','It illustrates the theme of divine reward for good deeds'], correct:1 },
-  { q:'Abel Melveny lists machine after machine — sewing machines, grinders, cranes. As the list grows longer, what emotional effect does this catalogue create?', options:['Excitement and admiration for his ambition','A growing sense of absurdity and sadness — each machine is another life goal never pursued','Respect for Abel\'s knowledge of technology','Confusion about what Abel actually wanted to build'], correct:1 },
-  { q:'"The tea was cold, the fire was dead." These domestic details at the start of "The Mill" function primarily as:', options:['Realistic description of a typical evening at home','Symbols of warmth and comfort that contrast with what follows','Foreshadowing — the cold and dead details signal that the miller is dead and warmth has left their life','A Naturalistic description of poverty'], correct:2 },
-  { q:'The correspondent in "The Open Boat" feels a strange calm and even humor at certain moments despite being in mortal danger. This shifting emotional state is most characteristic of:', options:['Naturalism — humans adapt to environmental threats','Impressionism — inner emotional states shift constantly and do not follow logical patterns','Realism — people behave practically under pressure','Determinism — the correspondent accepts his fate'], correct:1 },
-  { q:'Why is it significant that the man in "To Build a Fire" has no name?', options:['London forgot to name him','It is a common technique in short stories to create mystery','It universalizes him — he represents any human being who overestimates their intelligence against nature','It makes the story easier to read'], correct:2 },
-  { q:'Both "Richard Cory" and "The Mill" deal with suicide. What is the key narrative difference in how Robinson presents these deaths?', options:['Richard Cory\'s death is expected; the miller\'s is a shock','Richard Cory\'s death is a sudden shock ending; the miller\'s death is discovered slowly through domestic details and the wife\'s grief','The Mill is more dramatic and emotional; Richard Cory is more restrained','Richard Cory dies by drowning; the miller shoots himself'], correct:1 },
-  { q:'A Modernist poet rejects traditional rhyme schemes and writes in free verse. What does this formal choice communicate about their values?', options:['That they are lazy or unskilled','That they believe traditional forms are inadequate or dishonest for representing modern, fragmented experience','That they prefer prose to poetry','That they are following a French poetic tradition'], correct:1 },
-  { q:'Crane\'s story is based on his real shipwreck experience. However, the story is presented as fiction, not journalism. What does this suggest about Crane\'s goal?', options:['He wanted to protect himself legally','He wanted to use Impressionist technique to capture the subjective emotional truth of the experience, not just the factual record','He did not think the real events were interesting enough','He changed the events significantly and needed to call it fiction'], correct:1 },
-  { q:'The miller in "The Mill" does not appear to be a lazy or incompetent man. His trade has simply been replaced by machines. Robinson\'s choice to present him this way suggests:', options:['That the industrial revolution was positive overall','That individual failure is always the result of personal weakness','That economic forces can destroy a person regardless of their worth or effort — connecting to Naturalist ideas','That the miller should have learned a new trade'], correct:2 },
-  { q:'In "Doc Hill," Masters chooses to have the poem\'s narrator speak from the grave, already dead. Compared to a living narrator, what does this device most effectively achieve?', options:['It creates dramatic tension about whether the doctor survived','It removes any motivation to lie, boast, or self-deceive — the dead have nothing to prove, so the account feels more honest','It is a religious statement about life after death','It makes the poem easier to write because the narrator is not limited by time'], correct:1 },
-  { q:'A key contrast between Doc Hill and Abel Melveny is that Doc Hill acted while Abel Melveny accumulated. What broader human truth is Masters arguing through this contrast?', options:['That doctors live better lives than craftsmen','That a meaningful life comes from what you give and do, not from what you own or collect','That small towns produce both generous and selfish people','That regret is an inevitable part of human life'], correct:1 },
-  { q:'The dog in "To Build a Fire" never makes a single bad decision, while the man — who is much more intelligent — makes several. What is London\'s argument about intelligence and survival?', options:['Intelligence is the most important survival tool','Intelligence without instinct or humility is actually dangerous — the man\'s confidence in his reasoning is what kills him','Dogs are better suited to cold climates than humans','The man was unlucky, not unintelligent'], correct:1 },
+  { q:'A student argues: "The man in To Build a Fire dies because he made bad decisions." A Naturalist critic would most likely respond:', options:['"He should have listened to the old-timer"','"His death was inevitable regardless of his choices — the environment determined the outcome"','"He lacked the survival skills needed for the wilderness"','"He should have built the fire in a more sheltered spot"'], correct:1, explanation:'A Naturalist says environment and biology determine outcomes, not individual choices. The cold was simply too extreme. His decisions were irrelevant once he was out in those conditions.' },
+  { q:'In "The Open Boat," Crane writes: "If I am going to be drowned — why was I allowed to come thus far?" What does the correspondent\'s inability to answer this question reveal?', options:['That he is confused after the shipwreck','That the universe offers no meaning or justice — a core Naturalist idea','That he blames the captain for their situation','That he has given up hope of surviving'], correct:1, explanation:'The correspondent wants the universe to explain or justify his possible death. There is no answer because Naturalism says the universe has no interest in individual human lives or fates.' },
+  { q:'Robinson uses "we" as the narrator in "Richard Cory." What is the most important literary effect of this choice?', options:['It makes the poem feel more personal and intimate','It means we only ever see Cory\'s surface — we never access his inner life, which is the entire point','It shows that the whole town liked Richard Cory','It creates a sense of community solidarity among the working class'], correct:1, explanation:'The \'we\' narrator means the reader only ever sees what the town saw: Cory\'s polished exterior. His inner pain is completely hidden. We never hear his voice — the irony is that nobody actually knew him.' },
+  { q:'Doc Hill treated the poor for free throughout his life. In the context of Realism, this detail is significant because:', options:['It makes Doc Hill appear saintly and heroic','It shows class inequality and economic hardship in ordinary American life without romanticizing them','It proves that doctors in this era were poorly paid','It illustrates the theme of divine reward for good deeds'], correct:1, explanation:'Realism shows life as it is, without sentimentalizing. Doc Hill\'s quiet service is an honest depiction of class, poverty, and economic hardship in small-town America — no heroic framing.' },
+  { q:'Abel Melveny lists machine after machine — sewing machines, grinders, cranes. As the list grows longer, what emotional effect does this catalogue create?', options:['Excitement and admiration for his ambition','A growing sense of absurdity and sadness — each machine is another life goal never pursued','Respect for Abel\'s knowledge of technology','Confusion about what Abel actually wanted to build'], correct:1, explanation:'The list of machines becomes absurd and sad because none were ever used. The longer it gets, the more pitiful Abel becomes. Each machine represents one more plan, one more dream, never pursued.' },
+  { q:'"The tea was cold, the fire was dead." These domestic details at the start of "The Mill" function primarily as:', options:['Realistic description of a typical evening at home','Symbols of warmth and comfort that contrast with what follows','Foreshadowing — the cold and dead details signal that the miller is dead and warmth has left their life','A Naturalistic description of poverty'], correct:2, explanation:'The cold tea and dead fire are domestic symbols of warmth that is gone. They signal something is wrong before we are told what. This is foreshadowing — and a symbol of death entering the household.' },
+  { q:'The correspondent in "The Open Boat" feels a strange calm and even humor at certain moments despite being in mortal danger. This shifting emotional state is most characteristic of:', options:['Naturalism — humans adapt to environmental threats','Impressionism — inner emotional states shift constantly and do not follow logical patterns','Realism — people behave practically under pressure','Determinism — the correspondent accepts his fate'], correct:1, explanation:'Impressionism tracks shifting, illogical emotional states. The correspondent\'s calm and humor in the face of death makes no rational sense — and that is exactly the point. Inner states don\'t follow logic.' },
+  { q:'Why is it significant that the man in "To Build a Fire" has no name?', options:['London forgot to name him','It is a common technique in short stories to create mystery','It universalizes him — he represents any human being who overestimates their intelligence against nature','It makes the story easier to read'], correct:2, explanation:'A nameless man becomes every man. London removes his identity so he becomes a universal symbol: any human who overestimates their intelligence and underestimates the power of nature.' },
+  { q:'Both "Richard Cory" and "The Mill" deal with suicide. What is the key narrative difference in how Robinson presents these deaths?', options:['Richard Cory\'s death is expected; the miller\'s is a shock','Richard Cory\'s death is a sudden shock ending; the miller\'s death is discovered slowly through domestic details and the wife\'s grief','The Mill is more dramatic and emotional; Richard Cory is more restrained','Richard Cory dies by drowning; the miller shoots himself'], correct:1, explanation:'Richard Cory: the entire poem builds him up, then one flat line destroys it — sudden shock. The Mill: the wife discovers death slowly, grief accumulates through domestic detail. Two different applications of Modernist understatement.' },
+  { q:'A Modernist poet rejects traditional rhyme schemes and writes in free verse. What does this formal choice communicate about their values?', options:['That they are lazy or unskilled','That they believe traditional forms are inadequate or dishonest for representing modern, fragmented experience','That they prefer prose to poetry','That they are following a French poetic tradition'], correct:1, explanation:'Free verse rejects imposed poetic order. Modernists believed rhyme and meter were artificial structures that could not honestly represent the fragmentation and complexity of modern experience.' },
+  { q:'Crane\'s story is based on his real shipwreck experience. However, the story is presented as fiction, not journalism. What does this suggest about Crane\'s goal?', options:['He wanted to protect himself legally','He wanted to use Impressionist technique to capture the subjective emotional truth of the experience, not just the factual record','He did not think the real events were interesting enough','He changed the events significantly and needed to call it fiction'], correct:1, explanation:'Crane could have written journalism. Instead he fictionalized his shipwreck to use Impressionist technique — capturing how the experience felt subjectively, not just what factually occurred.' },
+  { q:'The miller in "The Mill" does not appear to be a lazy or incompetent man. His trade has simply been replaced by machines. Robinson\'s choice to present him this way suggests:', options:['That the industrial revolution was positive overall','That individual failure is always the result of personal weakness','That economic forces can destroy a person regardless of their worth or effort — connecting to Naturalist ideas','That the miller should have learned a new trade'], correct:2, explanation:'The miller did not fail through laziness or incompetence. Industrial forces beyond his control made his trade obsolete. External conditions destroyed him regardless of his personal worth — that connects to Naturalist ideas.' },
+  { q:'In "Doc Hill," Masters chooses to have the poem\'s narrator speak from the grave, already dead. Compared to a living narrator, what does this device most effectively achieve?', options:['It creates dramatic tension about whether the doctor survived','It removes any motivation to lie, boast, or self-deceive — the dead have nothing to prove, so the account feels more honest','It is a religious statement about life after death','It makes the poem easier to write because the narrator is not limited by time'], correct:1, explanation:'Dead speakers have no reason to lie, boast, or perform. They have nothing left to prove. The grave-speaking device strips away social pretense and allows honest, unfiltered reflection on a life.' },
+  { q:'A key contrast between Doc Hill and Abel Melveny is that Doc Hill acted while Abel Melveny accumulated. What broader human truth is Masters arguing through this contrast?', options:['That doctors live better lives than craftsmen','That a meaningful life comes from what you give and do, not from what you own or collect','That small towns produce both generous and selfish people','That regret is an inevitable part of human life'], correct:1, explanation:'Doc Hill gave everything and is remembered with love. Abel Melveny owned everything and is remembered with pity. The contrast argues: what you give and do gives life meaning — what you accumulate does not.' },
+  { q:'The dog in "To Build a Fire" never makes a single bad decision, while the man — who is much more intelligent — makes several. What is London\'s argument about intelligence and survival?', options:['Intelligence is the most important survival tool','Intelligence without instinct or humility is actually dangerous — the man\'s confidence in his reasoning is what kills him','Dogs are better suited to cold climates than humans','The man was unlucky, not unintelligent'], correct:1, explanation:'The man knows facts about cold but cannot feel the real danger. The dog cannot reason but feels the threat instantly. London argues: intellectual confidence without instinct and humility is a fatal flaw.' },
 ];
 
 /* ── MCQ ENGINE ──────────────────────────────────────────── */
@@ -3241,13 +3242,14 @@ function answerMCQ(chosen) {
   const fb = document.getElementById('mcq-feedback');
   fb.style.display = 'block';
 
+  const expHtml = q.explanation ? `<div class="mcq-explanation">💡 ${q.explanation}</div>` : '';
+
   if (isCorrect) {
     mcqState.score++;
     mcqState.streak++;
     fb.className = 'mcq-feedback correct-fb';
-    fb.textContent = mcqState.streak >= 3
-      ? `🔥 ${mcqState.streak} in a row! Correct.`
-      : '✓ Correct!';
+    const streakMsg = mcqState.streak >= 3 ? `🔥 ${mcqState.streak} in a row! Correct.` : '✓ Correct!';
+    fb.innerHTML = `<strong>${streakMsg}</strong>${expHtml}`;
     // confetti
     if (mcqState.streak >= 3) {
       confetti({ particleCount: 120, spread: 100, origin: { y: 0.55 }, colors: ['#c8e84a','#2d5a27','#7bc043','#f2e8cf','#bc4749'] });
@@ -3257,7 +3259,7 @@ function answerMCQ(chosen) {
   } else {
     mcqState.streak = 0;
     fb.className = 'mcq-feedback wrong-fb';
-    fb.innerHTML = `✗ Incorrect. Correct answer: <strong>${q.options[correct]}</strong>`;
+    fb.innerHTML = `<strong>✗ Incorrect. Correct answer: ${q.options[correct]}</strong>${expHtml}`;
   }
 
   document.getElementById('mcq-next-row').style.display = 'block';
